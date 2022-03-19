@@ -1,0 +1,369 @@
+ 001 Sallet                     Sallet
+ 002 Bicocette                  Bicocette
+*003 Barbuta                    Barbut
+ 004 Armet                      Armet
+ 005 Bascinet                   Bascinet
+ 006 Zurvan                     Zurvan
+ 007 Varan                      Varan
+ 008 Arast                      Arast
+ 009 Coyote                     Coyote
+ 010 Wild Wolf                  Wild Wolf
+ 011 Killer Hound               Killer Hound
+ 012 White Fang                 White Fang
+ 013 Canis Major                Canis Major
+ 014 Lupus                      Lupus
+ 015 Tindalos                   Tindalos
+*016 Flan Azul                  Blue Pudding
+*017 Flan Amarillo              Yellow Pudding
+*018 Flan Palido                Pale Pudding
+*019 Flan Blanco                White Pudding
+*020 Flan Rojo                  Red Pudding
+*021 Flan Azabache              Black Pudding
+ 022 Gecko                      Gecko
+ 023 Agama                      Agama
+ 024 Skink                      Skink
+ 025 Anole                      Anole
+ 026 Archaeothyris              Archaeothyris
+ 027 Lacerta                    Lacerta
+*028 Divebeak                   Dive Pecker
+*029 Peregrine                  Eagle
+*030 Aquila                     Falcon
+*031 Death Dauber               Bite Wasp
+*032 Assassin Bee               Piercing Bug
+*033 Aculeate                   Assassin Bee
+ 034 Vespa                      Vespa
+ 035 Ahriman                    Ahriman
+ 036 Fly Eye                    Fly Eye
+ 037 Vertigo                    Vertigo
+*038 Grim Gaze                  Death Gaze
+ 039 Purpurea                   Purpurea
+ 040 Leucophylla                Leucophylla
+ 041 Cephalotus                 Cephalotus
+ 042 Shantak                    Shantak
+ 043 Zu                         Zu
+ 044 Sand Worm                  Sand Worm
+ 045 Earth Worm                 Earth Worm
+*046 YSLS-99                    Machine-Type 99
+*047 YSLS-Zero                  Machine-Type Zero
+ 048 Haunt                      Haunt
+ 049 Phantom                    Phantom
+ 050 Nashorn                    Nashorn
+*051 Quadricorn                 Quattro Horn
+ 052 Balivarha                  Balivarha
+ 053 Lesser Drake               Lesser Drake
+ 054 Spine Drake                Spine Drake
+ 055 Bolt Drake                 Bolt Drake
+*056 Greater Drake              Greater Drake                       Great Drake
+ 057 Elder Drake                Elder Drake
+*058 Malboro                    Morbol
+*059 Great Malboro              Great Morbol
+ 060 Gigas                      Gigas
+ 061 Gug                        Gug
+ 062 Hrimthurs                  Hrimthurs
+ 063 Yellow Elemental           Yellow Elemental
+ 064 White Elemental            White Elemental
+ 065 Red Elemental              Red Elemental
+ 066 Gold Elemental             Gold Elemental
+ 067 Blue Elemental             Blue Elemental
+ 068 Dark Elemental             Dark Elemental
+ 069 Black Elemental            Black Elemental
+ 070 Takouba                    Takouba
+ 071 Barong                     Barong
+ 072 Behemoth                   Behemoth
+ 073 Humbaba                    Humbaba
+*074 Protochimera               Proto Chimera
+*075 Rhyos                      Gorgimera
+ 076 Coeurl                     Coeurl
+ 077 Queen Coeurl               Queen Coeurl
+ 078 Machina Ranger             Machina Ranger
+ 079 Machina Hunter             Machina Hunter
+ 080 Machina Soldier            Machina Soldier
+ 081 Tomb                       Tomb
+ 082 Scout Machina              Scout Machina
+ 083 Guard Machina              Guard Machina
+ 084 Assault Machina            Assault Machina
+ 085 Iron Giant                 Iron Giant
+*086 Gemini                     Wolframiter
+*087 Gemini                     Wolframiter
+ 088 Kukulcan                   Kukulcan
+ 089 Gucumatz                   Gucumatz
+*090 Adamantoise                Adamant Hawksbill
+ 091 Daeva                      Daeva
+*092 Ochu                       Otyugh
+*093 Flailing Ochu              Raging Otyugh
+*094 YAC-13                     Cannon Machine Soldier-Type 13
+*095 YAC-62                     Cannon Machine Soldier-Type 62
+ 096 Bomb                       Bomb
+ 097 Detonator                  Detonator
+ 098 Volcano                    Volcano
+*099 YAU-28                     Attack Machine Soldier-Type 28
+*100 YAU-71                     Attack Machine Soldier-Type 71
+*101 Yevon Guard                Defense Unit
+*102 Yevon Striker              Assault Unit
+*103 Yevon Defender             Protection Unit
+*104 Yevon's Finest             Heavy Unit
+*105 Magic Urn                  Magic Pot
+*106 Cactuar                    Sabotenda
+*107 Cactuar                    Sabotenda
+*108 Stalwart                   Defender
+*109 Bully Cap                  Torment Mushroom
+*110 Mycotoxin                  Leccinum
+*111 Mushroom Cloud             Chrysenteroides
+ 112 Pairika                    Pairika
+ 113 Jahi                       Jahi
+ 114 Tonberry                   Tonberry
+ 115 Mega Tonberry              Mega Tonberry
+*116 Guado Guardian             Guado Guard
+ 117 Rifle                      Rifle
+ 118 Flamethrower               Flamethrower
+*119 Sahagin                    Sahuagin
+*120 Claret Dragon              Rubrum Dragon
+*121 Zalamander                 Salamander
+ 122 Flame Dragon               Flame Dragon
+*123 Recoil                     Snake Machinegun
+*124 Flak Python                Shot Python
+*125 Viper Sniper               Cannon Viper
+ 126 Creeper                    Creeper
+*127 Hug Bug                    Hugger Bug
+*128 King VERMIN!               King Vermin
+*129 Ormi                       Uno
+*130 Logos                      Sano
+ 131 Leblanc                    Leblanc
+*132 Boris                      Borispider
+*133 Goon                       Male Combatant
+*134 Mr. Goon                   Senior Male Combatant
+*135 Dr. Goon                   Supreme Male Combatant
+*136 She-Goon                   Female Combatant
+*137 Ms. Goon                   Senior Female Combatant
+*138 Fem-Goon                   Supreme Female Combatant
+ 139 Fan                        Fan
+ 140 Piranha                    Piranha
+ 141 Splasher                   Splasher
+ 142 Vepar                      Vepar
+*143 Sahagin                    Sahuagin
+*144 Sahagin                    Sahuagin
+*145 Haizhe                     Hayzor
+*146 Deep Haizhe                Deep Hayzor
+ 147 Xiphactinus                Xiphactinus
+ 148 Dinictus                   Dinictus
+ 149 Tentacles                  Tentacles
+ 150 Ultima Weapon              Ultima Weapon
+ 151 Omega Weapon               Omega Weapon
+*152 Paragon                    The All Trasher
+ 153 Chocobo Eater              Chocobo Eater
+*154 Anything Eater             Globe Eater
+*155 Shell Shocker              Rock Snail
+*156 Pop Fry                    Machina Shooter
+ 157 Evrae                      Evrae
+*158 Amorphous Gel              Huge Gel
+*159 Protean Gel                Variable Gel
+ 160 Machina Panzer             Machina Panzer
+*161 Watcher-A                  A Recorder
+*162 Guardian Beast             Treasure Guardian              Ancient Guardian
+ 163 Azi Dahaka                 Azi Dahaka
+ 164 Valefor                    Valefor
+*165 Ifrit                      Efreet
+ 166 Ixion                      Ixon
+*167 Shiva                      Siva
+ 168 Bahamut                    Bahamut
+ 169 Anima                      Anima
+*170 Yojimbo                    Youjinbo
+*171 Cindy                      Magu
+*172 Sandy                      Dogu
+*173 Mindy                      Lagu
+ 174 Daigoro                    Daigoro
+ 175 Baralai                    Baralai
+ 176 Baralai                    Baralai
+ 177 Gippal                     Gippal
+*178 League Fighter             Alliance Fighter
+*179 League Ranger              Alliance Ranger
+*180 Bandit                     Thief
+*181 Ronso Youth                Young Ronso
+ 182 Garik Ronso                Garik Ronso
+ 183 Yaibal                     Yaibal
+ 184 Lucil                      Lucil
+ 185 Elma                       Elma
+ 186 Sword                      Sword
+ 187 Spear                      Spear
+ 188 Chocobo                    Chocobo
+*189 League Trooper             Alliance Warrior
+*190 League Scout               Alliance Scout
+*191 League Soldier             Alliance Commando
+*192 League Raider              Alliance Attacker
+*193 League Slasher             Alliance Fencer
+ 194 Experiment                 Experiment
+ 195 Experiment                 Experiment
+ 196 Experiment                 Experiment
+ 197 Experiment                 Experiment
+ 198 Experiment                 Experiment
+ 199 Experiment                 Experiment
+ 200 Experiment                 Experiment
+ 201 Weapon                     Weapon
+ 202 Weapon                     Weapon
+ 203 Weapon                     Weapon
+ 204 Weapon                     Weapon
+ 205 Weapon                     Weapon
+ 206 Spear                      Spear
+ 207 Gun                        Gun
+ 208 Experiment                 Experiment
+ 209 Experiment                 Experiment
+*210 League Warrior             Alliance Trooper
+*211 League Veteran             Alliance Soldier
+*212 Ruffian                    Rogue
+*213 Crimson Shadow             Akagi Shadow
+*214 League Mage                Alliance Sorceress
+*215 League Master              Alliance Master
+*216 Crusader                   Suppression Unit
+*217 Hexapod                    Hexafeet
+*218 Machina Leader             Machina Commander
+*219 Killer Machina             Killing Machina
+*220 Sahagin Prince             Sahuagin Prince
+ 221 Aranea                     Aranea
+*222 Monolith                   Monument
+ 223 Dolmen                     Dolmen
+ 224 Aeshma                     Aeshma
+ 225 Aka Manah                  Aka Manah
+ 226 Taromaiti                  Taromaiti
+ 227 Wight                      Wight
+ 228 Lich                       Lich
+ 229 Adamantortoise             Adamantortoise
+ 230 Ironside                   Ironside
+ 231 Rukh                       Rukh
+*232 Concherer                  Mount Snail
+*233 Watcher-S                  S Recorder
+*234 Watcher-R                  R Recorder
+*235 Machina Striker            Machina Striker                  Machina Strike
+*236 Trick Urn                  Trick Pot
+*237 Jumbo Cactuar              Jabotender
+*238 Drowsy Ochu                Sleepy Otyugh
+ 239 Chac                       Chac
+ 240 Chocobo                    Chocobo
+*241 Ormi                       Uno
+*242 Ormi                       Uno
+*243 Ormi                       Uno
+*244 Ormi                       Uno
+*245 Ormi                       Uno
+*246 Ormi                       Uno
+*247 Logos                      Sano
+*248 Logos                      Sano
+*249 Logos                      Sano
+*250 Logos                      Sano
+*251 Logos                      Sano
+ 252 Leblanc                    Leblanc
+ 253 Leblanc                    Leblanc
+ 254 Rikku                      Rikku
+*255 WEAPON                     Weapon
+ 256 Paine                      Paine
+*257 WEAPON                     Weapon
+ 258 Nooj                       Nooj
+*259 WEAPON                     Weapon
+ 260 Shuyin                     Shuyin
+*261 WEAPON                     Weapon
+*262 Georapella                 Geoproud
+*263 Precepts Guardian          Religious Doctrine Guardian
+ 264 Shuyin                     Shuyin
+*265 SHIELD                     Shield
+*266 Blackguard                 Ruffian
+*267 Negator                    Al Bhed Sealer
+ 268 Angra Mainyu               Angra Mainyu
+ 269 Zarich                     Zarich
+*270 Tawrich                    Taurvi
+*271 Elder Zurvan               Elder Zurvan                        Evil Zurvan
+ 272 Schwalbe                   Schwalbe
+ 273 Wasp Queen                 Wasp Queen
+*274 Sahagin Chief              Sahuagin Chief
+ 275 Great Haunt                Great Haunt
+ 276 King Takouba               King Takouba
+*277 Big Bully Cap              Torment Pholiota
+ 278 Epitaph                    Epitaph
+ 279 Elma                       Elma
+ 280 ????                       ????
+*281 MIC                        Mic
+ 282 Vegnagun                   Vegnagun
+ 283 Vegnagun                   Vegnagun
+*284 Node A                     Turret A
+*285 Node B                     Turret B
+*286 Node C                     Turret C
+ 287 Vegnagun                   Vegnagun
+*288 Right Bulwark              Bulwark R
+*289 Left Bulwark               Bulwark L
+ 290 Vegnagun                   Vegnagun
+*291 Right Redoubt              Redoubt R
+*292 Left Redoubt               Redbout L
+ 293 Shuyin                     Shuyin
+ 294 Heavy Sallet               Heavy Sallet
+ 295 Trema                      Trema
+ 296 Monster 0                  Monster 0
+ 297 Blitzball                  Blitzball
+*298 WEAPON                     Weapon
+ 299 Vegnagun                   Vegnagun
+ 300 Vegnagun                   Vegnagun
+ 301 Drum Machine               Drum Machine
+*302 Battlesnake                Gatling Cobra
+*303 Insect Matriarch           Insect Mother
+ 304 Critical Bug               Critical Bug
+ 305 Vegnagun                   Vegnagun
+ 306 Vegnagun                   Vegnagun
+ 307 Vegnagun                   Vegnagun
+*308 Brother                    Anaki
+*309 Buddy                      Dachi
+*310 Buddy's Weapon             Dachi's Weapon
+ 311 Auron                      Auron
+ 312 Auron's Weapon             Auron's Weapon
+ 313 Kimahri                    Kimahri
+ 314 Kimahri's Weapon           Kimahri's Weapon
+ 315 Lulu                       Lulu
+ 316 Lulu's Weapon              Lulu's Weapon
+ 317 ????                       ????
+ 318 Tidus' Weapon              Tidus' Weapon
+ 319 Seymour                    Seymour
+ 320 Seymour's Weapon           Seymour's Weapon
+ 321 Baralai                    Baralai
+ 322 Nooj                       Nooj
+ 323 Gippal                     Gippal
+ 324 Gark Ronso                 Garik Ronoso
+ 325 Yaibal                     Yaibal
+ 326 Lucil                      Lucil
+ 327 Elma                       Elma
+ 328 Trema                      Trema
+ 329 Supra Shinra               Strongest Shinra
+ 330 Unum                       Unum
+ 331 Duo                        Duo
+ 332 Tria                       Tria
+ 333 Quartum                    Quartum
+ 334 Major Numerus <?>          Yadonoki Boss <?>
+ 335 Major Numerus Pod          Yadonoki Boss Pod
+ 336 Major Numerus Tail         Yadonoki Boss Tail
+ 337 General Rock               General Rock
+ 338 Small Rock                 Small Rock
+ 339 Chocobo                    Chocobo
+ 340 Chocobo                    Chocobo
+*341 Barbuta                    Barbut
+ 342 White Fang                 White Fang
+*343 Aquila                     Falcon
+ 344 Vertigo                    Vertigo
+*345 YSLS-99                    Machine-Type 99
+ 346 Balivarha                  Balivarha
+*347 Zalamander                 Salamander
+ 348 Spine Drake                Spine Drake
+ 349 Hrimthurs                  Hrimthurs
+ 350 Barong                     Barong
+*351 Protochimera               Proto Chimera
+ 352 Iron Giant                 Iron Giant
+*353 Adamantoise                Adamant Hawksbill
+*354 Stalwart                   Defender
+*355 Black Goon                 Black Combatant
+*356 Haizhe                     Hayzor
+*357 Deep Haizhe                Deep Hayzor
+ 358 Tentacles                  Tentacles
+ 359 Chocobo Eater              Chocobo Eater
+*360 Shell Shocker              Rock Snail
+*361 Guardian Beast             Treasure Guardian              Ancient Guardian
+*362 Battlensnake               Gatling Cobra
+ 363 Valefor                    Valefor
+*364 Ifrit                      Efreet
+ 365 Ixion                      Ixion
+ 366 Bahamut                    Bahamut
+*367 Cactuar                    Sabotenda
+*368 Red Goon                   Red Combatant
+*369 Purple Goon                Purple Combatant

@@ -1,0 +1,369 @@
+Sallet                
+Bicocette             
+Barbuta               
+Armet                 
+Bascinet              
+Zurvan                
+Varan                 
+Arast                 
+Coyote                
+Wild Wolf             
+Killer Hound          
+White Fang            
+Canis Major           
+Lupus                 
+Tindalos              
+Flan Azul             
+Flan Amarillo         
+Flan Palido           
+Flan Blanco           
+Flan Rojo             
+Flan Azabache         
+Gecko                 
+Agama                 
+Skink                 
+Anole                 
+Archaeothyris         
+Lacerta               
+Divebeak              
+Peregrine             
+Aquila                
+Death Dauber          
+Assassin Bee          
+Aculeate              
+Vespa                 
+Ahriman               
+Fly Eye               
+Vertigo               
+Grim Gaze             
+Purpurea              
+Leucophylla           
+Cephalotus            
+Shantak               
+Zu                    
+Sand Worm             
+Earth Worm            
+YSLS-99               
+YSLS-Zero             
+Haunt                 
+Phantom               
+Nashorn               
+Quadricorn            
+Balivarha             
+Lesser Drake          
+Spine Drake           
+Bolt Drake            
+Greater Drake         
+Elder Drake           
+Malboro               
+Great Malboro         
+Gigas                 
+Gug                   
+Hrimthurs             
+Yellow Elemental      
+White Elemental       
+Red Elemental         
+Gold Elemental        
+Blue Elemental        
+Dark Elemental        
+Black Elemental       
+Takouba               
+Barong                
+Behemoth              
+Humbaba               
+Protochimera          
+Rhyos                 
+Coeurl                
+Queen Coeurl          
+Machina Ranger        
+Machina Hunter        
+Machina Soldier       
+Tomb                  
+Scout Machina         
+Guard Machina         
+Assault Machina       
+Iron Giant            
+Gemini                
+Gemini                
+Kukulcan              
+Gucumatz              
+Adamantoise           
+Daeva                 
+Ochu                  
+Flailing Ochu         
+YAC-13                
+YAC-62                
+Bomb                  
+Detonator             
+Volcano               
+YAU-28                
+YAU-71                
+Yevon Guard           
+Yevon Striker         
+Yevon Defender        
+Yevon's Finest        
+Magic Urn             
+Cactuar               
+Cactuar               
+Stalwart              
+Bully Cap             
+Mycotoxin             
+Mushroom Cloud        
+Pairika               
+Jahi                  
+Tonberry              
+Mega Tonberry         
+Guado Guardian        
+Rifle                 
+Flamethrower          
+Sahagin               
+Claret Dragon         
+Zalamander            
+Flame Dragon          
+Recoil                
+Flak Python           
+Viper Sniper          
+Creeper               
+Hug Bug               
+King VERMIN!          
+Ormi                  
+Logos                 
+Leblanc               
+Boris                 
+Goon                  
+Mr. Goon              
+Dr. Goon              
+She-Goon              
+Ms. Goon              
+Fem-Goon              
+Fan                   
+Piranha               
+Splasher              
+Vepar                 
+Sahagin               
+Sahagin               
+Haizhe                
+Deep Haizhe           
+Xiphactinus           
+Dinictus              
+Tentacles             
+Ultima Weapon         
+Omega Weapon          
+Paragon               
+Chocobo Eater         
+Anything Eater        
+Shell Shocker         
+Pop Fry               
+Evrae                 
+Amorphous Gel         
+Protean Gel           
+Machina Panzer        
+Watcher-A             
+Guardian Beast        
+Azi Dahaka            
+Valefor               
+Ifrit                 
+Ixion                 
+Shiva                 
+Bahamut               
+Anima                 
+Yojimbo               
+Cindy                 
+Sandy                 
+Mindy                 
+Daigoro               
+Baralai               
+Baralai               
+Gippal                
+League Fighter        
+League Ranger         
+Bandit                
+Ronso Youth           
+Garik Ronso           
+Yaibal                
+Lucil                 
+Elma                  
+Sword                 
+Spear                 
+Chocobo               
+League Trooper        
+League Scout          
+League Soldier        
+League Raider         
+League Slasher        
+Experiment            
+Experiment            
+Experiment            
+Experiment            
+Experiment            
+Experiment            
+Experiment            
+Weapon                
+Weapon                
+Weapon                
+Weapon                
+Weapon                
+Spear                 
+Gun                   
+Experiment            
+Experiment            
+League Warrior        
+League Veteran        
+Ruffian               
+Crimson Shadow        
+League Mage           
+League Master         
+Crusader              
+Hexapod               
+Machina Leader        
+Killer Machina        
+Sahagin Prince        
+Aranea                
+Monolith              
+Dolmen                
+Aeshma                
+Aka Manah             
+Taromaiti             
+Wight                 
+Lich                  
+Adamantortoise        
+Ironside              
+Rukh                  
+Concherer             
+Watcher-S             
+Watcher-R             
+Machina Striker       
+Trick Urn             
+Jumbo Cactuar         
+Drowsy Ochu           
+Chac                  
+Chocobo               
+Ormi                  
+Ormi                  
+Ormi                  
+Ormi                  
+Ormi                  
+Ormi                  
+Logos                 
+Logos                 
+Logos                 
+Logos                 
+Logos                 
+Leblanc               
+Leblanc               
+Rikku                 
+WEAPON                
+Paine                 
+WEAPON                
+Nooj                  
+WEAPON                
+Shuyin                
+WEAPON                
+Georapella            
+Precepts Guardian     
+Shuyin                
+SHIELD                
+Blackguard            
+Negator               
+Angra Mainyu          
+Zarich                
+Tawrich               
+Elder Zurvan          
+Schwalbe              
+Wasp Queen            
+Sahagin Chief         
+Great Haunt           
+King Takouba          
+Big Bully Cap         
+Epitaph               
+Elma                  
+????                  
+MIC                   
+Vegnagun              
+Vegnagun              
+Node A                
+Node B                
+Node C                
+Vegnagun              
+Right Bulwark         
+Left Bulwark          
+Vegnagun              
+Right Redoubt         
+Left Redoubt          
+Shuyin                
+Heavy Sallet          
+Trema                 
+Monster 0             
+Blitzball             
+WEAPON                
+Vegnagun              
+Vegnagun              
+Drum Machine          
+Battlesnake           
+Insect Matriarch      
+Critical Bug          
+Vegnagun              
+Vegnagun              
+Vegnagun              
+Brother               
+Buddy                 
+Buddy's Weapon        
+Auron                 
+Auron's Weapon        
+Kimahri               
+Kimahri's Weapon      
+Lulu                  
+Lulu's Weapon         
+????                  
+Tidus' Weapon         
+Seymour               
+Seymour's Weapon      
+Baralai               
+Nooj                  
+Gippal                
+Gark Ronso            
+Yaibal                
+Lucil                 
+Elma                  
+Trema                 
+Supra Shinra          
+Unum                  
+Duo                   
+Tria                  
+Quartum               
+Major Numerus <?>     
+Major Numerus Pod     
+Major Numerus Tail    
+General Rock          
+Small Rock            
+Chocobo               
+Chocobo               
+Barbuta               
+White Fang            
+Aquila                
+Vertigo               
+YSLS-99               
+Balivarha             
+Zalamander            
+Spine Drake           
+Hrimthurs             
+Barong                
+Protochimera          
+Iron Giant            
+Adamantoise           
+Stalwart              
+Black Goon            
+Haizhe                
+Deep Haizhe           
+Tentacles             
+Chocobo Eater         
+Shell Shocker         
+Guardian Beast        
+Battlensnake          
+Valefor               
+Ifrit                 
+Ixion                 
+Bahamut               
+Cactuar               
+Red Goon              
+Purple Goon           
