@@ -112,6 +112,23 @@ class Enemy:
         position = self.enemy_hex_data.find(stat_hex)
         return position
 
+    def get_original_hex_stat_position(self):
+        stat_hex = self.output_HP_MP(formatted=False, oversoul=False)
+        position = self.enemy_hex_data.find(stat_hex)
+        return position
+
+    def get_original_hex_stat(self, oversoul_bool = False):
+        if oversoul_bool == False:
+            stat_hex = self.output_HP_MP(formatted=False, oversoul=False)
+            position = self.enemy_hex_data.find(stat_hex)
+            original_hex = self.enemy_hex_data[position:position+16]
+        else:
+            stat_hex = self.output_HP_MP(formatted=False, oversoul=True)
+            position = self.enemy_hex_data.find(stat_hex)
+            original_hex = self.enemy_hex_data[position:position + 16]
+        return original_hex
+
+
     def __repr__(self):
         return f'<Enemy ID = {self.__enemy_id}, Enemy Name = {self.__enemy_name}>'
 

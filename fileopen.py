@@ -1,6 +1,7 @@
 import binascii
 import re
 import pickle
+import copy
 from enemy import Enemy
 from pathlib import Path
 
@@ -107,8 +108,17 @@ def test_enemy_maker(hexes, max=369):
     return enemies
 
 
+def redo_hex(enemy_object: Enemy, new_HP: int, new_oversoul_HP: int):
+    og_hex = enemy_object.get_original_hex_stat()
+    new_enemy_instance = copy.deepcopy(enemy_object)
+    new_enemy_instance.stat_bank["HP"] = new_HP
+    new_enemy_instance.oversoul_stat_bank["HP"] = new_oversoul_HP
+    new_hex = enemy_object.output_HP_MP(formatted=False)
+    new_oversoul_hex = enemy_object.output_HP_MP(formatted=False,oversoul=True)
+    new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
+    new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
 
-enemies = []
+
 
 
 # Tests
@@ -129,8 +139,8 @@ normal_errors = 0
 oversoul_errors = 0
 
 for index, enemy in enumerate(enemies):
-    hpmphex = enemy.output_HP_MP(formatted=False, oversoul=False)
-    position = str(enemy.enemy_hex_data).find(hpmphex)
+    hp_mp_hex = enemy.output_HP_MP(formatted=False, oversoul=False)
+    position = str(enemy.enemy_hex_data).find(hp_mp_hex)
     # ignore = False
     # if (enemy.stat_bank["HP"] == 0 or enemy.stat_bank["HP"] == 1) and (enemy.stat_bank["MP"] == 0 or enemy.stat_bank["MP"] == 1):
     #     ignore = True
@@ -143,8 +153,8 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 for index, enemy in enumerate(enemies):
-    hpmphex = enemy.output_HP_MP(formatted=False, oversoul=True)
-    position = str(enemy.enemy_hex_data).find(hpmphex)
+    hp_mp_hex = enemy.output_HP_MP(formatted=False, oversoul=True)
+    position = str(enemy.enemy_hex_data).find(hp_mp_hex)
     if position == -1:
         errors = errors + 1
         oversoul_errors = oversoul_errors + 1
@@ -156,7 +166,9 @@ print("%%%%%%%%%%%%%%%%%%")
 print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
 print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
 
-
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
 
 
 
