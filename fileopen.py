@@ -4,7 +4,7 @@ import pickle
 from enemy import Enemy
 from pathlib import Path
 
-file_iterations = 183
+file_iterations = 369
 
 # Read a binary file and convert it into hex data
 def read_hex(path):

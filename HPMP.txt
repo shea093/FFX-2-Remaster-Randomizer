@@ -83,8 +83,8 @@ ScoutMachina, 3444, 0, 2913, 0
 GuardMachina, 2460, 0, 2583, 0
 AssaultMachina, 4477, 0, 5121, 0
 IronGiant, 222, 0, 233, 0
-Gemini, 2044, 0, 2046, 0
 Gemini, 1, 1, 1, 1
+Gemini, 2044, 0, 2046, 0
 Kukulcan, 3220, 85, 9480, 85
 Gucumatz, 3720, 140, 13820, 140
 Adamantoise, 7850, 210, 8243, 210
@@ -116,12 +116,12 @@ MegaTonberry, 48600, 0, 51030, 0
 GuadoGuardian, 1, 1, 1, 1
 Rifle, 1, 1, 1, 1
 Flamethrower, 1, 1, 1, 1
-Sahagin, 60, 28, 240, 28
+Sahagin, 1, 1, 1, 1
 ClaretDragon, 17320, 840, 18186, 378
-Zalamander, 12850, 710, 14243, 710
+Zalamander, 12850, 710, 14243, 276
 FlameDragon, 980, 620, 1883, 84
 Recoil, 38, 0, 40, 0
-FlakPython, 98, 0, 160, 0
+FlakPython, 152, 0, 160, 0
 ViperSniper, 256, 0, 269, 0
 Creeper, 1974, 870, 7896, 870
 HugBug, 2350, 950, 9400, 950
@@ -134,13 +134,13 @@ Goon, 13, 8, 14, 8
 Mr.Goon, 120, 28, 126, 28
 Dr.Goon, 232, 41, 244, 41
 She-Goon, 7, 38, 7, 38
-Ms.Goon, 80, 85, 84, 85
-Fem-Goon, 167, 172, 175, 172
+Ms.Goon**, 80, 85, 84, 85
+Fem-Goon**, 167, 172, 175, 172
 Fan, 1, 1, 1, 1
 Piranha, 1, 1, 1, 1
 Splasher, 1, 1, 1, 1
 Vepar, 1, 1, 1, 1
-Sahagin, 60, 28, 240, 28
+Sahagin, 1, 1, 1, 1
 Sahagin, 60, 28, 240, 28
 Haizhe, 653, 333, 2612, 0
 DeepHaizhe, 1030, 453, 4119, 122
@@ -150,7 +150,7 @@ Tentacles, 2530, 64, 10120, 64
 UltimaWeapon, 34300, 9999, 67515, 9999
 OmegaWeapon, 24200, 9999, 25410, 9999
 Paragon, 200000, 9999, 210000, 9999
-ChocoboEater, 2350, 480, 2993, 480
+ChocoboEater, 2350, 480, 2993, 230
 AnythingEater, 11600, 999, 36980, 310
 ShellShocker, 4700, 82, 4935, 82
 PopFry, 4293, 0, 4508, 0
@@ -181,189 +181,189 @@ Bandit, 132, 22, 139, 22
 RonsoYouth, 4060, 170, 4263, 170
 GarikRonso, 6880, 444, 6510, 238
 Yaibal, 4330, 48, 4515, 48
-Lucil
-Elma
-Sword
-Spear
-Chocobo
-LeagueTrooper
-LeagueScout
-LeagueSoldier
-LeagueRaider
-LeagueSlasher
-Experiment
-Experiment
-Experiment
-Experiment
-Experiment
-Experiment
-Experiment
-Weapon
-Weapon
-Weapon
-Weapon
-Weapon
-Spear
-Gun
-Experiment
-Experiment
-LeagueWarrior
-LeagueVeteran
-Ruffian
-CrimsonShadow
-LeagueMage
-LeagueMaster
-Crusader
-Hexapod
-MachinaLeader
-KillerMachina
-SahaginPrince
-Aranea
-Monolith
-Dolmen
-Aeshma
-AkaManah
-Taromaiti
-Wight
-Lich
-Adamantortoise
-Ironside
-Rukh
-Concherer
-Watcher-S
-Watcher-R
-MachinaStriker
-TrickUrn
-JumboCactuar
-DrowsyOchu
-Chac
-Chocobo
+Lucil, 7324, 370, 6615, 370
+Elma, 1640, 450, 1722, 450
+Sword, 1, 1, 1, 1
+Spear, 1, 1, 1, 1
+Chocobo, 368, 0, 368, 0
+LeagueTrooper, 244, 16, 256, 16
+LeagueScout, 128, 18, 134, 18
+LeagueSoldier, 178, 28, 187, 28
+LeagueRaider, 293, 30, 308, 30
+LeagueSlasher, 1650, 58, 1733, 58
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+Weapon, 1, 1, 1, 1
+Weapon, 1, 1, 1, 1
+Weapon, 1, 1, 1, 1
+Weapon, 1, 1, 1, 1
+Weapon, 1, 1, 1, 1
+Spear, 1, 1, 1, 1
+Gun, 1, 1, 1, 1
+Experiment, 18324, 0, 25540, 0
+Experiment, 18324, 0, 25540, 0
+LeagueWarrior, 422, 26, 443, 26
+LeagueVeteran, 1720, 42, 1806, 42
+Ruffian, 1480, 45, 1554, 45
+CrimsonShadow, 2020, 114, 1491, 120
+LeagueMage, 1020, 420, 1071, 420
+LeagueMaster, 1732, 670, 1785, 670
+Crusader, 1, 1, 1, 1
+Hexapod, 2805, 980, 11220, 980
+MachinaLeader, 2774, 0, 2913, 0
+KillerMachina, 4222, 0, 4118, 0
+SahaginPrince, 6430, 25, 13720, 25
+Aranea, 18280, 178, 33394, 178
+Monolith, 7143, 9999, 9180, 9999
+Dolmen, 5320, 9999, 6636, 9999
+Aeshma, 8788, 9999, 9227, 9999
+AkaManah, 6322, 6550, 6638, 6550
+Taromaiti, 1782, 999, 8277, 1000
+Wight, 4278, 2100, 4492, 2100
+Lich, 3444, 1300, 3616, 1300
+Adamantortoise, 14580, 850, 25809, 270
+Ironside, 8432, 1400, 12154, 1400
+Rukh, 12850, 112, 16493, 112
+Concherer, 343280, 170, 360444, 170
+Watcher-S, 620, 512, 651, 512
+Watcher-R, 620, 512, 651, 512
+MachinaStriker, 6722, 0, 7058, 0
+TrickUrn, 1, 1, 1, 1
+JumboCactuar, 22222, 1111, 33333, 1111
+DrowsyOchu, 2484, 103, 2608, 103
+Chac, 437850, 820, 459743, 820
+Chocobo, 1, 0, 1, 0
 Ormi, 130, 10, 137, 10
 Ormi, 1350, 22, 1418, 22
-Ormi, 1150, 22, 1208, 22
 Ormi, 1640, 40, 1722, 40
 Ormi, 1840, 42, 1932, 42
 Ormi, 1344, 45, 1411, 45
+Ormi, 1150, 22, 1208, 22
 Logos, 100, 25, 105, 25
-Logos, 1030, 48, 1082, 48
 Logos, 1220, 46, 1281, 46
 Logos, 1432, 64, 1504, 64
 Logos, 989, 70, 1038, 70
-Leblanc, 120, 260, 126, 260
+Logos, 1030, 48, 1082, 48
+Leblanc, 120, 320, 126, 260
 Leblanc, 1380, 460, 1449, 460
-Rikku
-WEAPON
-Paine
-WEAPON
-Nooj
-WEAPON
-Shuyin
-WEAPON
-Georapella
-PreceptsGuardian
-Shuyin
-SHIELD
-Blackguard
-Negator
-AngraMainyu
-Zarich
-Tawrich
-ElderZurvan
-Schwalbe
-WaspQueen
-SahaginChief
-GreatHaunt
-KingTakouba
-BigBullyCap
-Epitaph
-Elma
-????
-MIC
-Vegnagun
-Vegnagun
-NodeA
-NodeB
-NodeC
-Vegnagun
-RightBulwark
-LeftBulwark
-Vegnagun
-RightRedoubt
-LeftRedoubt
-Shuyin
-HeavySallet
-Trema
-Monster0
-Blitzball
-WEAPON
-Vegnagun
-Vegnagun
-DrumMachine
-Battlesnake
-InsectMatriarch
-CriticalBug
-Vegnagun
-Vegnagun
-Vegnagun
-Brother
-Buddy
-Buddy'sWeapon
-Auron
-Auron'sWeapon
-Kimahri
-Kimahri'sWeapon
-Lulu
-Lulu'sWeapon
-????
-Tidus'Weapon
-Seymour
-Seymour'sWeapon
-Baralai
-Nooj
-Gippal
-GarkRonso
-Yaibal
-Lucil
-Elma
-Trema
-SupraShinra
-Unum
-Duo
-Tria
-Quartum
-MajorNumerus<?>
-MajorNumerusPod
-MajorNumerusTail
-GeneralRock
-SmallRock
-Chocobo
-Chocobo
-Barbuta
-WhiteFang
-Aquila
-Vertigo
-YSLS-99
-Balivarha
-Zalamander
-SpineDrake
-Hrimthurs
-Barong
-Protochimera
-IronGiant
-Adamantoise
-Stalwart
-BlackGoon
-Haizhe
-DeepHaizhe
-Tentacles
-ChocoboEater
-ShellShocker
-GuardianBeast
-Battlensnake
-Valefor
-Ifrit
-Ixion
-Bahamut
-Cactuar
-RedGoon
-PurpleGoon
+Rikku, 7800, 92, 10290, 92
+WEAPON, 1, 1, 1, 1
+Paine, 9200, 55, 12495, 50
+WEAPON, 1, 1, 1, 1
+Nooj, 23800, 720, 24990, 720
+WEAPON, 1, 1, 1, 1
+Shuyin, 80000, 1, 84000, 1
+WEAPON, 1, 1, 1, 1
+Georapella, 4420, 9999, 6641, 9999
+PreceptsGuardian?, 2886, 1000, 4030, 1000
+Shuyin, 80000, 1, 84000, 1
+SHIELD, 1, 1, 1, 1
+Blackguard, 760, 35, 798, 35
+Negator, 1, 1, 1, 1
+AngraMainyu, 333444, 9999, 350116, 9999
+Zarich, 5440, 9999, 5712, 9999
+Tawrich, 5440, 9999, 5712, 9999
+ElderZurvan, 7520, 999, 16296, 210
+Schwalbe, 1, 1, 1, 1
+WaspQueen, 7334, 385, 9815, 23
+SahaginChief, 9660, 65, 13093, 65
+GreatHaunt, 8483, 720, 13020, 720
+KingTakouba, 18004, 0, 22104, 0
+BigBullyCap, 4880, 128, 5124, 128
+Epitaph, 17433, 9999, 18305, 9999
+Elma, 4882, 870, 5040, 870
+????, 82, 9999, 86, 9999
+MIC, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+NodeA, 300000, 9999, 315000, 9999
+NodeB, 300000, 9999, 315000, 9999
+NodeC, 300000, 9999, 315000, 9999
+Vegnagun, 1, 1, 1, 1
+RightBulwark, 3000, 9999, 31450, 9999
+LeftBulwark, 3000, 9999, 3150, 9999
+Vegnagun, 1, 1, 1, 1
+RightRedoubt, 2500, 99999, 2625, 99999
+LeftRedoubt, 2500, 99999, 2625, 99999
+Shuyin, 80000, 1, 84000, 1
+HeavySallet, 11200, 0, 12915, 0
+Trema, 999999, 999, 1049999, 999
+Monster0, 1, 1, 1, 1
+Blitzball, 1, 1, 1, 1
+WEAPON, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+DrumMachine, 1, 1, 1, 1
+Battlesnake, 252, 0, 265, 0
+InsectMatriarch, 48796, 868, 51236, 868
+CriticalBug, 57234, 908, 60096, 908
+Vegnagun, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+Vegnagun, 1, 1, 1, 1
+Brother, 89500, 0, 1, 1
+Buddy, 76200, 0, 1, 1
+Buddy'sWeapon, 1, 1, 1, 1
+Auron, 187500, 999, 1, 1
+Auron'sWeapon, 1, 1, 1, 1
+Kimahri, 223400, 999, 1, 1
+Kimahri'sWeapon, 1, 1, 1, 1
+Lulu, 69800, 999, 1, 1
+Lulu'sWeapon, 1, 1, 1, 1
+???? (Tidus), 136200, 257, 1, 1
+Tidus'Weapon, 1, 1, 1, 1
+Seymour, 145500, 999, 1, 1
+Seymour'sWeapon, 1, 1, 1, 1
+Baralai, 125000, 999, 1, 1
+Nooj, 178000, 999, 1, 1
+Gippal, 134700, 999, 1, 1
+GarkRonso, 88000, 860, 1, 1
+Yaibal, 64400, 85, 1, 1
+Lucil, 71000, 999, 1, 1
+Elma, 62000, 384, 1, 1
+Trema, 999999, 999, 1, 1
+SupraShinra, 275000, 999, 1, 1
+Unum, 555555, 999, 1, 1
+Duo, 666666, 999, 1, 1
+Tria, 666666, 999, 1, 1
+Quartum, 777777, 999, 1, 1
+MajorNumerus<?>, 1, 1, 1, 1
+MajorNumerusPod, 1, 1, 1, 1
+MajorNumerusTail, 1, 1, 1, 1
+GeneralRock, 1, 1, 1, 1
+SmallRock, 1, 1, 1, 1
+Chocobo (Colosseum A), 4290, 999, 1, 1
+Chocobo (Colosseum B), 8850, 999, 1, 1
+Barbuta, 7340, 999, 11010, 0
+WhiteFang, 3855, 185, 5782, 277
+Aquila, 5548, 385, 8322, 577
+Vertigo, 4852, 777, 7278, 1165
+YSLS-99, 15200, 999, 22800, 0
+Balivarha, 13300, 555, 19950, 832
+Zalamander, 23800, 999, 35700, 1498
+SpineDrake, 7285, 484, 10927, 726
+Hrimthurs, 4248, 95, 6372, 142
+Barong, 12100, 0, 18150, 0
+Protochimera, 5253, 999, 7879, 1498
+IronGiant, 3020, 0, 4530, 0
+Adamantoise, 17580, 999, 26370, 1498
+Stalwart, 9800, 999, 14700, 1498
+BlackGoon, 17700, 999, 1, 1
+Haizhe, 4250, 721, 6375, 1081
+DeepHaizhe, 5350, 999, 8025, 1498
+Tentacles, 7790, 343, 11685, 514
+ChocoboEater, 11800, 999, 17700, 1498
+ShellShocker, 18500, 193, 27750, 289
+GuardianBeast, 8950, 999, 13425, 1498
+Battlensnake, 3338, 888, 1, 1
+Valefor, 38000, 9999, 1, 1
+Ifrit, 53000, 9999, 1, 1
+Ixion, 56000, 9999, 1, 1
+Bahamut, 124000, 9999, 1, 1
+Cactuar, 4004, 707, 6006, 1060
+RedGoon, 18880, 999, 1, 1
+PurpleGoon, 15800, 999, 1, 1
