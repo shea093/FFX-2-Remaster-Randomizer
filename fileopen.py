@@ -4,6 +4,7 @@ import pickle
 from enemy import Enemy
 from pathlib import Path
 
+file_iterations = 94
 
 # Read a binary file and convert it into hex data
 def read_hex(path):
@@ -26,7 +27,7 @@ def get_subdirectories(path):
 
 # Possibly useless lol
 def mon_binlist_generator():
-    mon_nums = list(range(1, 20)) #Range of files to traverse
+    mon_nums = list(range(1, file_iterations+1)) #Range of files to traverse
     mon_list = []
     for n in mon_nums:
         if n < 10:
@@ -118,11 +119,41 @@ print(get_subdirectories("VBF_X2"))
 print(mon_binlist_generator())
 hex_test = traverse_files()
 print(type(hex_test[0]))
-enemies = test_enemy_maker(hex_test, max=19)
+enemies = test_enemy_maker(hex_test, max=file_iterations)
 print(enemies)
 
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+errors = 0
+normal_errors = 0
+oversoul_errors = 0
 for index, enemy in enumerate(enemies):
-    print(f"{index:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=False))
+    hpmphex = enemy.output_HP_MP(formatted=False, oversoul=False)
+    position = str(enemy.enemy_hex_data).find(hpmphex)
+    if position == -1:
+        errors = errors + 1
+        normal_errors = normal_errors + 1
+        print(enemy)
+        print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=False))
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+for index, enemy in enumerate(enemies):
+    hpmphex = enemy.output_HP_MP(formatted=False, oversoul=True)
+    position = str(enemy.enemy_hex_data).find(hpmphex)
+    if position == -1:
+        errors = errors + 1
+        oversoul_errors = oversoul_errors + 1
+        print(enemy)
+        print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=True))
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+print("%%%%%%%%%%%%%%%%%%")
+print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
+print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
+#print("Total Errors: ", errors)
+
 
 # object_test = Enemy("Sallet", 1, hex_test[0])
 # object_test.stat_bank["HP"] = 60

@@ -79,6 +79,9 @@ class Enemy:
             elif len(str(hex(stat)[2:])) == 3:
                 temp = "00000" + str(hex(stat)[2:])
                 num = temp[6:8] + "0" + temp[5] + "0000"
+            elif len(str(hex(stat)[2:])) == 4:
+                temp = "0000" + str(hex(stat)[2:])
+                num = temp[6:8] + temp[4:6] + "0000"
             elif len(str(hex(stat)[2:])) == 5:
                 temp = "000" + str(hex(stat)[2:])
                 #print(temp)
