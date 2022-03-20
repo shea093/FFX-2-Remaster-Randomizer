@@ -4,7 +4,7 @@ import pickle
 from enemy import Enemy
 from pathlib import Path
 
-file_iterations = 94
+file_iterations = 183
 
 # Read a binary file and convert it into hex data
 def read_hex(path):
@@ -152,7 +152,6 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
 print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
-#print("Total Errors: ", errors)
 
 
 # object_test = Enemy("Sallet", 1, hex_test[0])

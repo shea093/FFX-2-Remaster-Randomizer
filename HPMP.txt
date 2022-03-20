@@ -92,95 +92,95 @@ Daeva, 3230, 4480, 3392, 4480
 Ochu, 1480, 62, 3755, 62
 FlailingOchu, 9860, 85, 24650, 85
 YAC-13, 1380, 0, 1449, 0
-YAC-62
-Bomb
-Detonator
-Volcano
-YAU-28
-YAU-71
-YevonGuard
-YevonStriker
-YevonDefender
-Yevon'sFinest
-MagicUrn
-Cactuar
-Cactuar
-Stalwart
-BullyCap
-Mycotoxin
-MushroomCloud
-Pairika
-Jahi
-Tonberry
-MegaTonberry
-GuadoGuardian
-Rifle
-Flamethrower
-Sahagin
-ClaretDragon
-Zalamander
-FlameDragon
-Recoil
-FlakPython
-ViperSniper
-Creeper
-HugBug
-KingVERMIN!
-Ormi
-Logos
-Leblanc
-Boris
-Goon
-Mr.Goon
-Dr.Goon
-She-Goon
-Ms.Goon
-Fem-Goon
-Fan
-Piranha
-Splasher
-Vepar
-Sahagin
-Sahagin
-Haizhe
-DeepHaizhe
-Xiphactinus
-Dinictus
-Tentacles
-UltimaWeapon
-OmegaWeapon
-Paragon
-ChocoboEater
-AnythingEater
-ShellShocker
-PopFry
-Evrae
-AmorphousGel
-ProteanGel
-MachinaPanzer
-Watcher-A
-GuardianBeast
-AziDahaka
-Valefor
-Ifrit
-Ixion
-Shiva
-Bahamut
-Anima
-Yojimbo
-Cindy
-Sandy
-Mindy
-Daigoro
-Baralai
-Baralai
-Gippal
-LeagueFighter
-LeagueRanger
-Bandit
-RonsoYouth
-GarikRonso
-Yaibal
+YAC-62, 4100, 0, 5460, 0
+Bomb, 140, 265, 545, 265
+Detonator, 1860, 423, 7220, 423
+Volcano, 6210, 488, 10840, 488
+YAU-28, 1270, 0, 1334, 0
+YAU-71, 3800, 0, 4305, 0
+YevonGuard, 223, 22, 234, 22
+YevonStriker, 1730, 65, 1817, 65
+YevonDefender, 186, 38, 195, 38
+Yevon'sFinest, 1722, 89, 1808, 89
+MagicUrn, 1, 1, 1, 1
+Cactuar, 2002, 120, 7777, 777
+Cactuar, 1, 1, 1, 1
+Stalwart, 1240, 175, 1312, 175
+BullyCap, 94, 188, 376, 83
+Mycotoxin, 810, 230, 3240, 120
+MushroomCloud, 9999, 999, 10998, 270
+Pairika, 1130, 312, 1187, 312
+Jahi, 2033, 360, 1817, 360
+Tonberry, 9999, 0, 39996, 0
+MegaTonberry, 48600, 0, 51030, 0
+GuadoGuardian, 1, 1, 1, 1
+Rifle, 1, 1, 1, 1
+Flamethrower, 1, 1, 1, 1
+Sahagin, 60, 28, 240, 28
+ClaretDragon, 17320, 840, 18186, 378
+Zalamander, 12850, 710, 14243, 710
+FlameDragon, 980, 620, 1883, 84
+Recoil, 38, 0, 40, 0
+FlakPython, 98, 0, 160, 0
+ViperSniper, 256, 0, 269, 0
+Creeper, 1974, 870, 7896, 870
+HugBug, 2350, 950, 9400, 950
+KingVERMIN!, 39857, 872, 41850, 872
+Ormi, 97, 0, 102, 0
+Logos, 86, 18, 90, 18
+Leblanc, 130, 101, 137, 101
+Boris, 480, 0, 804, 0
+Goon, 13, 8, 14, 8
+Mr.Goon, 120, 28, 126, 28
+Dr.Goon, 232, 41, 244, 41
+She-Goon, 7, 38, 7, 38
+Ms.Goon, 80, 85, 84, 85
+Fem-Goon, 167, 172, 175, 172
+Fan, 1, 1, 1, 1
+Piranha, 1, 1, 1, 1
+Splasher, 1, 1, 1, 1
+Vepar, 1, 1, 1, 1
+Sahagin, 60, 28, 240, 28
+Sahagin, 60, 28, 240, 28
+Haizhe, 653, 333, 2612, 0
+DeepHaizhe, 1030, 453, 4119, 122
+Xiphactinus, 773, 122, 2892, 0
+Dinictus, 1873, 177, 7792, 0
+Tentacles, 2530, 64, 10120, 64
+UltimaWeapon, 34300, 9999, 67515, 9999
+OmegaWeapon, 24200, 9999, 25410, 9999
+Paragon, 200000, 9999, 210000, 9999
+ChocoboEater, 2350, 480, 2993, 480
+AnythingEater, 11600, 999, 36980, 310
+ShellShocker, 4700, 82, 4935, 82
+PopFry, 4293, 0, 4508, 0
+Evrae, 1, 1, 1, 1
+AmorphousGel, 973, 999, 2333, 999
+ProteanGel, 6680, 9999, 16700, 9999
+MachinaPanzer, 30500, 1247, 32025, 1247
+Watcher-A, 624, 512, 655, 512
+GuardianBeast, 2886, 1000, 4030, 1000
+AziDahaka, 146200, 869, 153510, 869
+Valefor, 8430, 9999, 8852, 9999
+Ifrit, 8820, 9999, 9261, 9999
+Ixion, 12380, 9999, 12999, 9999
+Shiva, 14800, 9999, 15540, 9999
+Bahamut, 8400, 9999, 8820, 9999
+Anima, 36000, 9999, 37800, 9999
+Yojimbo, 22000, 9999, 33600, 9999
+Cindy, 12240, 9999, 12852, 9999
+Sandy, 10330, 9999, 10847, 9999
+Mindy, 9788, 9999, 10277, 9999
+Daigoro, 1, 1, 1, 1
+Baralai, 3380, 540, 3549, 540
+Baralai, 12220, 720, 17031, 720
+Gippal, 14800, 235, 19740, 235
+LeagueFighter, 168, 14, 176, 14
+LeagueRanger, 230, 180, 242, 180
+Bandit, 132, 22, 139, 22
+RonsoYouth, 4060, 170, 4263, 170
+GarikRonso, 6880, 444, 6510, 238
+Yaibal, 4330, 48, 4515, 48
 Lucil
 Elma
 Sword
@@ -238,19 +238,19 @@ JumboCactuar
 DrowsyOchu
 Chac
 Chocobo
-Ormi
-Ormi
-Ormi
-Ormi
-Ormi
-Ormi
-Logos
-Logos
-Logos
-Logos
-Logos
-Leblanc
-Leblanc
+Ormi, 130, 10, 137, 10
+Ormi, 1350, 22, 1418, 22
+Ormi, 1150, 22, 1208, 22
+Ormi, 1640, 40, 1722, 40
+Ormi, 1840, 42, 1932, 42
+Ormi, 1344, 45, 1411, 45
+Logos, 100, 25, 105, 25
+Logos, 1030, 48, 1082, 48
+Logos, 1220, 46, 1281, 46
+Logos, 1432, 64, 1504, 64
+Logos, 989, 70, 1038, 70
+Leblanc, 120, 260, 126, 260
+Leblanc, 1380, 460, 1449, 460
 Rikku
 WEAPON
 Paine
