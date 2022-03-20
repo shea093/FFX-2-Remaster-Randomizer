@@ -12,7 +12,7 @@ KillerHound, 202, 0, 818, 0
 WhiteFang, 378, 4, 1412, 4
 CanisMajor, 943, 8, 2458, 8
 Lupus, 1262, 10, 3455, 10
-Tindalos, 3324,12,7330,12
+Tindalos, 3324, 12, 7330, 12
 FlanAzul, 55, 87, 220, 87
 FlanAmarillo, 303, 322, 1172, 322
 FlanPalido, 188, 222, 851, 222

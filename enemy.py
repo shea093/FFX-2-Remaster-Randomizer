@@ -74,14 +74,14 @@ class Enemy:
             count = count + 1
             num = ""
             if len(str(hex(stat)[2:])) == 1:
-                print(str(hex(stat)[2:]))
+                #print(str(hex(stat)[2:]))
                 num = "0" + str(hex(stat)[2:])
             elif len(str(hex(stat)[2:])) == 3:
                 temp = "00000" + str(hex(stat)[2:])
                 num = temp[6:8] + "0" + temp[5] + "0000"
             elif len(str(hex(stat)[2:])) == 5:
                 temp = "000" + str(hex(stat)[2:])
-                print(temp)
+                #print(temp)
                 num = temp[6:8] + temp[4:6] + temp[2:4] + temp[0:2]
             else:
                 num = str(hex(stat)[2:])
@@ -108,4 +108,7 @@ class Enemy:
         stat_hex = value
         position = self.enemy_hex_data.find(stat_hex)
         return position
+
+    def __repr__(self):
+        return f'<Enemy ID = {self.__enemy_id}, Enemy Name = {self.__enemy_name}>'
 

@@ -26,7 +26,7 @@ def get_subdirectories(path):
 
 # Possibly useless lol
 def mon_binlist_generator():
-    mon_nums = list(range(1, 5)) #Range of files to traverse
+    mon_nums = list(range(1, 20)) #Range of files to traverse
     mon_list = []
     for n in mon_nums:
         if n < 10:
@@ -39,7 +39,7 @@ def mon_binlist_generator():
     return mon_list
 
 
-# Get hex data from the files
+# Get list of hex strings from the files
 def traverse_files():
     mon_filenames = mon_binlist_generator()
     mon_directories = get_subdirectories("VBF_X2")
@@ -80,27 +80,60 @@ def search_stats(hexes):
     position = str(hexes[0]).find(stat_hex)
     return position
 
-def test_enemy_maker():
-    pass
+
+def cut_line_HPMP(line: str):
+    value = line
+    returnlist = value.split(", ")
+    returnlist[-1] = returnlist[-1].strip()
+    return returnlist
+
+
+def test_enemy_maker(hexes, max=369):
+    enemies = []
+    with open("HPMP.txt", "r") as f:
+        id = 0
+        for line in f.readlines():
+            id = id + 1
+            enemy_info = cut_line_HPMP(line)
+            enemy = Enemy(enemy_info[0],id,hexes[id-1])
+            enemy.stat_bank["HP"] = int(enemy_info[1])
+            enemy.stat_bank["MP"] = int(enemy_info[2])
+            enemy.oversoul_stat_bank["HP"] = int(enemy_info[3])
+            enemy.oversoul_stat_bank["MP"] = int(enemy_info[4])
+            enemies.append(enemy)
+            if id == max:
+                break
+    return enemies
+
+
+
 
 enemies = []
 
 
 # Tests
+print(cut_line_HPMP("etc"))
 cut_creature_english_names()
 print(get_subdirectories("VBF_X2"))
 print(mon_binlist_generator())
 hex_test = traverse_files()
 print(type(hex_test[0]))
-object_test = Enemy("Sallet", 1, hex_test[0])
-object_test.stat_bank["HP"] = 60
-object_test.stat_bank["MP"] = 4
-object_test.oversoul_stat_bank["HP"] = 248
-object_test.oversoul_stat_bank["MP"] = 4
-print(object_test.stat_bank)
-print(object_test.output_HP_MP(formatted=True))
-print(object_test.output_HP_MP(formatted=True, oversoul=True))
-print(search_stats(hex_test))
-print(object_test.search_stats(object_test.output_HP_MP(oversoul=True)))
+enemies = test_enemy_maker(hex_test, max=19)
+print(enemies)
+
+for index, enemy in enumerate(enemies):
+    print(f"{index:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=False))
+
+# object_test = Enemy("Sallet", 1, hex_test[0])
+# object_test.stat_bank["HP"] = 60
+# object_test.stat_bank["MP"] = 4
+# object_test.oversoul_stat_bank["HP"] = 248
+# object_test.oversoul_stat_bank["MP"] = 4
+# print(test_enemy_maker(hex_test, max=2))
+# print(object_test.stat_bank)
+# print(object_test.output_HP_MP(formatted=True))
+# print(object_test.output_HP_MP(formatted=True, oversoul=True))
+# print(search_stats(hex_test))
+# print(object_test.search_stats(object_test.output_HP_MP(oversoul=True)))
 # cut_creature_values()
 
