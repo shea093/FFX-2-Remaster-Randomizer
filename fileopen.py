@@ -108,16 +108,20 @@ def test_enemy_maker(hexes, max=369):
     return enemies
 
 
-def redo_hex(enemy_object: Enemy, new_HP: int, new_oversoul_HP: int):
-    og_hex = enemy_object.get_original_hex_stat()
-    new_enemy_instance = copy.deepcopy(enemy_object)
-    new_enemy_instance.stat_bank["HP"] = new_HP
-    new_enemy_instance.oversoul_stat_bank["HP"] = new_oversoul_HP
-    new_hex = enemy_object.output_HP_MP(formatted=False)
-    new_oversoul_hex = enemy_object.output_HP_MP(formatted=False,oversoul=True)
-    new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
-    new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
-
+def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float):
+    if (enemy.stat_bank["HP"] == 0 or enemy.stat_bank["HP"] == 1) and (enemy.stat_bank["MP"] == 0 or enemy.stat_bank["MP"] == 1):
+        return enemy_object
+    else:
+        og_hex = enemy_object.get_original_hex_stat()
+        og_oversoul_hex = enemy_object.get_original_hex_stat(oversoul_bool=True)
+        new_enemy_instance = copy.deepcopy(enemy_object)
+        new_enemy_instance.stat_bank["HP"] = round(new_enemy_instance.stat_bank["HP"] * multiplier)
+        new_enemy_instance.oversoul_stat_bank["HP"] = round(new_enemy_instance.oversoul_stat_bank["HP"] * oversoul_multiplier)
+        new_hex = enemy_object.output_HP_MP(formatted=False)
+        new_oversoul_hex = enemy_object.output_HP_MP(formatted=False,oversoul=True)
+        new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
+        new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_oversoul_hex, new_oversoul_hex)
+        return new_enemy_instance
 
 
 
@@ -130,6 +134,7 @@ hex_test = traverse_files()
 print(type(hex_test[0]))
 enemies = test_enemy_maker(hex_test, max=file_iterations)
 print(enemies)
+
 
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
@@ -170,7 +175,15 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 
+new_enemies = []
+for enemy in enemies:
+    new_enemies.append(redo_hex(enemy,2.1,2.1))
 
+for enemy in new_enemies:
+    print(enemy)
+
+print(str(new_enemies[294].enemy_id) + ".  " + str(new_enemies[294].stat_bank["HP"]))
+print(new_enemies[294].output_HP_MP())
 
 # object_test = Enemy("Sallet", 1, hex_test[0])
 # object_test.stat_bank["HP"] = 60

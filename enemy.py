@@ -44,11 +44,11 @@ class Enemy:
 
     @enemy_id.setter
     def enemy_id(self, value: int):
-        self.__enemy_name = value
+        self.__enemy_id = value
 
     @enemy_hex_data.setter
     def enemy_hex_data(self, value: str):
-        self.__enemy_name = value
+        self.__enemy_hex_data = value
 
     @stat_bank.setter
     def stat_bank(self, value: dict):
@@ -84,6 +84,10 @@ class Enemy:
                 num = temp[6:8] + temp[4:6] + "0000"
             elif len(str(hex(stat)[2:])) == 5:
                 temp = "000" + str(hex(stat)[2:])
+                #print(temp)
+                num = temp[6:8] + temp[4:6] + temp[2:4] + temp[0:2]
+            elif len(str(hex(stat)[2:])) == 6:
+                temp = "00" + str(hex(stat)[2:])
                 #print(temp)
                 num = temp[6:8] + temp[4:6] + temp[2:4] + temp[0:2]
             else:
