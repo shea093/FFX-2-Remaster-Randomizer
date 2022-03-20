@@ -1,0 +1,369 @@
+Sallet, 60, 4, 248, 4
+Bicocette, 182, 10, 738, 10
+Barbuta, 562, 13, 2144, 13
+Armet, 788, 21, 2370, 21
+Bascinet, 1342, 27, 3355, 27
+Zurvan, 583, 310, 612, 310
+Varan, 1132, 480, 1189, 480
+Arast, 2742, 650, 3614, 650
+Coyote, 74, 0, 296, 0
+WildWolf, 185, 0, 740, 0
+KillerHound, 202, 0, 818, 0
+WhiteFang, 378, 4, 1412, 4
+CanisMajor, 943, 8, 2458, 8
+Lupus, 1262, 10, 3455, 10
+Tindalos, 3324,12,7330,12
+FlanAzul, 55, 87, 220, 87
+FlanAmarillo, 303, 322, 1172, 322
+FlanPalido, 188, 222, 851, 222
+FlanBlanco, 625, 542, 2113, 542
+FlanRojo, 1220, 674, 3050, 674
+FlanAzabache, 7730, 999, 9667, 999
+Gecko, 228, 10, 911, 10
+Agama, 133, 29, 532, 29
+Skink, 822, 44, 2328, 46
+Anole, 734, 33, 2736, 43
+Archaeothyris, 1332, 58, 3320, 58
+Lacerta, 12324, 62, 13556, 62
+Divebeak, 10, 2, 72, 2
+Peregrine, 735, 28, 3040, 28
+Aquila, 1897, 42, 4843, 42
+DeathDauber, 78, 1, 312, 1
+AssassinBee, 233, 1, 832, 1
+Aculeate, 776, 27, 1840, 27
+Vespa, 983, 32, 2758, 32
+Ahriman, 99, 15, 396, 15
+FlyEye, 258, 52, 1032, 52
+Vertigo, 688, 57, 2352, 57
+GrimGaze, 1720, 388, 4223, 388
+Purpurea, 196, 0, 784, 0
+Leucophylla, 2234, 0, 8936, 0
+Cephalotus, 1830, 0, 6075, 0
+Shantak, 1130, 47, 1187, 47
+Zu, 9338, 112, 10805, 112
+SandWorm, 12722, 42, 20558, 42
+EarthWorm, 36233, 95, 52545, 95
+YSLS-99, 2775, 0, 6838, 0
+YSLS-Zero, 1935, 0, 4831, 0
+Haunt, 813, 433, 854, 433
+Phantom, 1755, 852, 2158, 1352
+Nashorn, 482, 0, 1928, 0
+Quadricorn, 188, 0, 752, 0
+Balivarha, 3688, 0, 8758, 0
+LesserDrake, 577, 33, 2108, 33
+SpineDrake, 2582, 82, 8826, 103
+BoltDrake, 623, 42, 2492, 42
+GreaterDrake, 1819, 103, 6658, 107
+ElderDrake, 38500, 135, 42350, 135
+Malboro, 5877, 110, 6171, 110
+GreatMalboro, 12988, 152, 19937, 152
+Gigas, 2290, 22, 9360, 22
+Gug, 6433, 67, 16300, 67
+Hrimthurs, 552, 11, 2208, 11
+YellowElemental, 12, 120, 48, 120
+WhiteElemental, 77, 155, 308, 155
+RedElemental, 99, 330, 336, 330
+GoldElemental, 84, 280, 396, 280
+BlueElemental, 363, 350, 788, 350
+DarkElemental, 433, 1028, 983, 1028
+BlackElemental, 9999, 2380, 10998, 2380
+Takouba, 984, 0, 3936, 0
+Barong, 2733, 0, 6833, 0
+Behemoth, 1420, 280, 1491, 280
+Humbaba, 27772, 785, 30163, 785
+Protochimera, 420, 210, 1680, 210
+Rhyos, 4360, 485, 14440, 485
+Coeurl, 320, 310, 1380, 310
+QueenCoeurl, 3270, 1340, 12480, 1400
+MachinaRanger, 2490, 0, 2615, 0
+MachinaHunter, 1780, 0, 1869, 0
+MachinaSoldier, 3048, 0, 3620, 0
+Tomb, 4820, 999, 5481, 999
+ScoutMachina, 2774, 0, 2913, 0
+GuardMachina, 2460, 0, 2583, 0
+AssaultMachina, 4477, 0, 5121, 0
+IronGiant, 222, 0, 233, 0
+Gemini, 2044, 0, 2046, 0
+Gemini, 1, 0, 1, 0
+Kukulcan, 3220, 85, 9480, 85
+Gucumatz, 3720, 140, 13820, 140
+Adamantoise, 7850, 210, 8243, 210
+Daeva, 3230, 4480, 3392, 4480
+Ochu, 1480, 62, 3755, 62
+FlailingOchu, 9860, 85, 24650, 85
+YAC-13, 1380, 0, 1449, 0
+YAC-62
+Bomb
+Detonator
+Volcano
+YAU-28
+YAU-71
+YevonGuard
+YevonStriker
+YevonDefender
+Yevon'sFinest
+MagicUrn
+Cactuar
+Cactuar
+Stalwart
+BullyCap
+Mycotoxin
+MushroomCloud
+Pairika
+Jahi
+Tonberry
+MegaTonberry
+GuadoGuardian
+Rifle
+Flamethrower
+Sahagin
+ClaretDragon
+Zalamander
+FlameDragon
+Recoil
+FlakPython
+ViperSniper
+Creeper
+HugBug
+KingVERMIN!
+Ormi
+Logos
+Leblanc
+Boris
+Goon
+Mr.Goon
+Dr.Goon
+She-Goon
+Ms.Goon
+Fem-Goon
+Fan
+Piranha
+Splasher
+Vepar
+Sahagin
+Sahagin
+Haizhe
+DeepHaizhe
+Xiphactinus
+Dinictus
+Tentacles
+UltimaWeapon
+OmegaWeapon
+Paragon
+ChocoboEater
+AnythingEater
+ShellShocker
+PopFry
+Evrae
+AmorphousGel
+ProteanGel
+MachinaPanzer
+Watcher-A
+GuardianBeast
+AziDahaka
+Valefor
+Ifrit
+Ixion
+Shiva
+Bahamut
+Anima
+Yojimbo
+Cindy
+Sandy
+Mindy
+Daigoro
+Baralai
+Baralai
+Gippal
+LeagueFighter
+LeagueRanger
+Bandit
+RonsoYouth
+GarikRonso
+Yaibal
+Lucil
+Elma
+Sword
+Spear
+Chocobo
+LeagueTrooper
+LeagueScout
+LeagueSoldier
+LeagueRaider
+LeagueSlasher
+Experiment
+Experiment
+Experiment
+Experiment
+Experiment
+Experiment
+Experiment
+Weapon
+Weapon
+Weapon
+Weapon
+Weapon
+Spear
+Gun
+Experiment
+Experiment
+LeagueWarrior
+LeagueVeteran
+Ruffian
+CrimsonShadow
+LeagueMage
+LeagueMaster
+Crusader
+Hexapod
+MachinaLeader
+KillerMachina
+SahaginPrince
+Aranea
+Monolith
+Dolmen
+Aeshma
+AkaManah
+Taromaiti
+Wight
+Lich
+Adamantortoise
+Ironside
+Rukh
+Concherer
+Watcher-S
+Watcher-R
+MachinaStriker
+TrickUrn
+JumboCactuar
+DrowsyOchu
+Chac
+Chocobo
+Ormi
+Ormi
+Ormi
+Ormi
+Ormi
+Ormi
+Logos
+Logos
+Logos
+Logos
+Logos
+Leblanc
+Leblanc
+Rikku
+WEAPON
+Paine
+WEAPON
+Nooj
+WEAPON
+Shuyin
+WEAPON
+Georapella
+PreceptsGuardian
+Shuyin
+SHIELD
+Blackguard
+Negator
+AngraMainyu
+Zarich
+Tawrich
+ElderZurvan
+Schwalbe
+WaspQueen
+SahaginChief
+GreatHaunt
+KingTakouba
+BigBullyCap
+Epitaph
+Elma
+????
+MIC
+Vegnagun
+Vegnagun
+NodeA
+NodeB
+NodeC
+Vegnagun
+RightBulwark
+LeftBulwark
+Vegnagun
+RightRedoubt
+LeftRedoubt
+Shuyin
+HeavySallet
+Trema
+Monster0
+Blitzball
+WEAPON
+Vegnagun
+Vegnagun
+DrumMachine
+Battlesnake
+InsectMatriarch
+CriticalBug
+Vegnagun
+Vegnagun
+Vegnagun
+Brother
+Buddy
+Buddy'sWeapon
+Auron
+Auron'sWeapon
+Kimahri
+Kimahri'sWeapon
+Lulu
+Lulu'sWeapon
+????
+Tidus'Weapon
+Seymour
+Seymour'sWeapon
+Baralai
+Nooj
+Gippal
+GarkRonso
+Yaibal
+Lucil
+Elma
+Trema
+SupraShinra
+Unum
+Duo
+Tria
+Quartum
+MajorNumerus<?>
+MajorNumerusPod
+MajorNumerusTail
+GeneralRock
+SmallRock
+Chocobo
+Chocobo
+Barbuta
+WhiteFang
+Aquila
+Vertigo
+YSLS-99
+Balivarha
+Zalamander
+SpineDrake
+Hrimthurs
+Barong
+Protochimera
+IronGiant
+Adamantoise
+Stalwart
+BlackGoon
+Haizhe
+DeepHaizhe
+Tentacles
+ChocoboEater
+ShellShocker
+GuardianBeast
+Battlensnake
+Valefor
+Ifrit
+Ixion
+Bahamut
+Cactuar
+RedGoon
+PurpleGoon
