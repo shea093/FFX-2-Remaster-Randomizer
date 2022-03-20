@@ -108,7 +108,6 @@ def test_enemy_maker(hexes, max=369):
 
 
 
-
 enemies = []
 
 
@@ -128,9 +127,13 @@ print("%%%%%%%%%%%%%%%%%%")
 errors = 0
 normal_errors = 0
 oversoul_errors = 0
+
 for index, enemy in enumerate(enemies):
     hpmphex = enemy.output_HP_MP(formatted=False, oversoul=False)
     position = str(enemy.enemy_hex_data).find(hpmphex)
+    # ignore = False
+    # if (enemy.stat_bank["HP"] == 0 or enemy.stat_bank["HP"] == 1) and (enemy.stat_bank["MP"] == 0 or enemy.stat_bank["MP"] == 1):
+    #     ignore = True
     if position == -1:
         errors = errors + 1
         normal_errors = normal_errors + 1
@@ -152,6 +155,9 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
 print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
+
+
+
 
 
 # object_test = Enemy("Sallet", 1, hex_test[0])
