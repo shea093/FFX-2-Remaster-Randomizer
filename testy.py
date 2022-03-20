@@ -1,6 +1,6 @@
 mys = "Not found!"
 mys = mys.replace("Nota", "aaaa")
-print(mys)
+print(len(mys))
 
 # from itertools import permutations
 #

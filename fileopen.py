@@ -16,7 +16,7 @@ def read_hex(path):
 
 # Get the directories with the monster files
 def get_subdirectories(path):
-    vbf_str = "/" + path
+    vbf_str = path
     vbf_dir = Path(vbf_str)  # VBF Directory
     vbf_subdirs = []   # Subdirectory list initialized
 
@@ -108,7 +108,7 @@ def test_enemy_maker(hexes, max=369):
     return enemies
 
 
-def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float):
+def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float, oversoul_yesno = False):
     if (enemy.stat_bank["HP"] == 0 or enemy.stat_bank["HP"] == 1) and (enemy.stat_bank["MP"] == 0 or enemy.stat_bank["MP"] == 1):
         return enemy_object
     else:
@@ -117,10 +117,15 @@ def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float)
         new_enemy_instance = copy.deepcopy(enemy_object)
         new_enemy_instance.stat_bank["HP"] = round(new_enemy_instance.stat_bank["HP"] * multiplier)
         new_enemy_instance.oversoul_stat_bank["HP"] = round(new_enemy_instance.oversoul_stat_bank["HP"] * oversoul_multiplier)
-        new_hex = enemy_object.output_HP_MP(formatted=False)
-        new_oversoul_hex = enemy_object.output_HP_MP(formatted=False,oversoul=True)
+        new_hex = new_enemy_instance.output_HP_MP(formatted=False)
         new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_hex, new_hex)
-        new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_oversoul_hex, new_oversoul_hex)
+        if oversoul_yesno == False:
+            new_oversoul_hex = new_enemy_instance.output_HP_MP(formatted=False, oversoul=True)
+            new_enemy_instance.enemy_hex_data = new_enemy_instance.enemy_hex_data.replace(og_oversoul_hex, new_oversoul_hex)
+        if len(enemy_object.enemy_hex_data) != len(new_enemy_instance.enemy_hex_data):
+            print("***********")
+            print("UH OH")
+            print(str(enemy_object)," is bugged.")
         return new_enemy_instance
 
 
@@ -143,6 +148,9 @@ errors = 0
 normal_errors = 0
 oversoul_errors = 0
 
+normal_error_ids = []
+oversoul_error_ids = []
+
 for index, enemy in enumerate(enemies):
     hp_mp_hex = enemy.output_HP_MP(formatted=False, oversoul=False)
     position = str(enemy.enemy_hex_data).find(hp_mp_hex)
@@ -150,6 +158,7 @@ for index, enemy in enumerate(enemies):
     # if (enemy.stat_bank["HP"] == 0 or enemy.stat_bank["HP"] == 1) and (enemy.stat_bank["MP"] == 0 or enemy.stat_bank["MP"] == 1):
     #     ignore = True
     if position == -1:
+        normal_error_ids.append(enemy.enemy_id)
         errors = errors + 1
         normal_errors = normal_errors + 1
         print(enemy)
@@ -161,10 +170,12 @@ for index, enemy in enumerate(enemies):
     hp_mp_hex = enemy.output_HP_MP(formatted=False, oversoul=True)
     position = str(enemy.enemy_hex_data).find(hp_mp_hex)
     if position == -1:
+        oversoul_error_ids.append(enemy.enemy_id)
         errors = errors + 1
         oversoul_errors = oversoul_errors + 1
         print(enemy)
         print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=True))
+
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
@@ -176,14 +187,50 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 
 new_enemies = []
+count_of_successful_changes = 0
 for enemy in enemies:
-    new_enemies.append(redo_hex(enemy,2.1,2.1))
+    if enemy.enemy_id not in normal_error_ids:
+        if enemy.enemy_id not in oversoul_error_ids:
+            new_enemies.append(redo_hex(enemy,2.1,2.1))
+            count_of_successful_changes = count_of_successful_changes + 1
+        else:
+            new_enemies.append(redo_hex(enemy, 2.1, 2.1,oversoul_yesno=True))
+            count_of_successful_changes = count_of_successful_changes + 1
 
-for enemy in new_enemies:
-    print(enemy)
+print("Count of successful changes: " + str(count_of_successful_changes))
 
-print(str(new_enemies[294].enemy_id) + ".  " + str(new_enemies[294].stat_bank["HP"]))
-print(new_enemies[294].output_HP_MP())
+print(Path.cwd())
+print(get_subdirectories("VBF_X2_NEW"))
+
+
+for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
+    bin_name = str(directory.name[1:]) + ".bin"
+    if bin_name not in mon_binlist_generator():
+        pass
+    # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
+    #     print("please")
+    #     print(new_enemies[index])
+    else:
+        id = int(directory.name[2:])
+        for enemy in new_enemies:
+            if enemy.enemy_id == id:
+                filepath = directory / bin_name
+                print("Enemy ID: " + str(enemy.enemy_id))
+                print("Bin name: "+ str(bin_name))
+                print(enemy.output_HP_MP(formatted=True, oversoul=False))
+                binary_converted = binascii.unhexlify(enemy.enemy_hex_data)
+                with filepath.open(mode="wb") as f:
+                    f.write(binary_converted)
+                print("Done i think????")
+
+print(new_enemies[0].output_HP_MP(formatted=False, oversoul=False))
+print(new_enemies[0].enemy_hex_data.find(new_enemies[0].output_HP_MP(formatted=False, oversoul=False)))
+
+# for enemy in new_enemies:
+#     print(enemy)
+
+# print(str(new_enemies[333].enemy_id) + ".  " + str(new_enemies[333].stat_bank["HP"]))
+# print(new_enemies[333].output_HP_MP())
 
 # object_test = Enemy("Sallet", 1, hex_test[0])
 # object_test.stat_bank["HP"] = 60
@@ -197,4 +244,3 @@ print(new_enemies[294].output_HP_MP())
 # print(search_stats(hex_test))
 # print(object_test.search_stats(object_test.output_HP_MP(oversoul=True)))
 # cut_creature_values()
-
