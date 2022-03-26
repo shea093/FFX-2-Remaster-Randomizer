@@ -30,6 +30,15 @@ def find_chunk(id_input: int, hex_file_data: str, problematic_id=0):
         if problematic_id==23:
             class_line = "1a5c"
             position = hex_file_data.find(class_line) - 4
+        elif problematic_id==24:
+            class_line = "1b5c"
+            position = hex_file_data.find(class_line) - 4
+        elif problematic_id==25:
+            class_line = "1c5e"
+            position = hex_file_data.find(class_line) - 4
+        elif problematic_id==26:
+            class_line = "1d5e"
+            position = hex_file_data.find(class_line) - 4
         else:
             adjacent_to_id = hex(id_input+80)[2:]
             class_line = id + str(adjacent_to_id)
@@ -62,6 +71,8 @@ def parse_chunk(chunk: str):
         return seperated_chunks
 
 
+
+
 #Get the job file string
 hex_string = job_bin_to_hex()
 
@@ -85,15 +96,33 @@ for index, job in enumerate(jobs_names):
         new_dressphere = Dressphere(job, index + 1)
         new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=14)
         dresspheres.append(new_dressphere)
-    #Trainer02
-    if index+1 == 23:
+    #Trainer02and03
+    if index+1 == 23 or index+1 == 24 or index+1 == 25 or index+1 == 26:
         new_dressphere = Dressphere(job, index + 1)
-        new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=23)
+        new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=index+1)
         dresspheres.append(new_dressphere)
 
-
+#Add formulae to dresspheres
 for dressphere in dresspheres:
-    print(dressphere)
-    print(parse_chunk(dressphere.hex_chunk))
+    formulae = parse_chunk(dressphere.hex_chunk)
+    stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+    for index, stat in enumerate(stat_names):
+        dressphere.stats[stat] = formulae[index+1]
+
+
+print("_---------------------------")
+print(dresspheres[2])
+print(dresspheres[2].stats["STR"])
+variableA_tohex = 35
+variableA_tohex = hex(variableA_tohex)[2:]
+dresspheres[2].stats["STR"] = variableA_tohex + dresspheres[2].stats["STR"][2:]
+variable_str = "10 42 0d 0d 01"
+variable_str = variable_str.replace(" ", "")
+dresspheres[2].stats["STR"] = variable_str
+stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+dresspheres[2].stat_formula("STR")
+
+
+
 
 
