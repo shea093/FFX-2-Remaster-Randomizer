@@ -7,7 +7,7 @@ class Dressphere:
         self.__ability_table = {}
         self.__hex_chunk = ""
         for stat_name in stat_names:
-            self.__stats[stat_name] = 0
+            self.__stat_variables[stat_name] = 0
 
     @property
     def stat_variables(self):
@@ -24,3 +24,10 @@ class Dressphere:
     @hex_chunk.setter
     def hex_chunk(self, value: str):
         self.__hex_chunk = value
+
+    @property
+    def dress_name(self):
+        return self.__dress_name
+
+    def __repr__(self):
+        return f'<Dressphere ID = {self.__dress_id}, Dressphere Name = {self.__dress_name}>'

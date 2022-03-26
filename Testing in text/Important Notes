@@ -2,6 +2,8 @@
 
 Songstress "Samba Silence" replaced with "Attack" (Offset 0780, 2D 30 is attack)
 
+Psychic id is 16 (FF 00 10)
+
 AMORPHOUS GEL ABILITIES: (ID 158)
 OFFSET 1470-1480
 40 E1 = Barrier Shift
