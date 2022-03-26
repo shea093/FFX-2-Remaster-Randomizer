@@ -1,0 +1,102 @@
+00 00
+2D 30
+01 00
+7D 30
+00 00
+71 30
+01 00
+72 30
+72 30
+73 30
+73 30
+74 30
+01 00
+75 30
+75 30
+76 30
+75 30
+77 30
+77 30
+78 30
+01 00
+79 30
+79 30
+7A 30
+7A 30
+7B 30
+7B 30
+7C 30
+78 30
+7E 30
+76 30
+7B 80
+
+
+C8 04 00 14 0A C8 04 00 11 68 C8 04 00 16 0D C8 04
+
+2D 01 35 00 32 01 4B 01 FF 00 05 55 2D 30 26 85 4E 1A B4 12 14 0A 0F
+
+
+### SAMURAI TESTING ###
+0C 01 03
+C8 20
+C8 02 06
+04 12   Magic
+C8 02 03
+10 26   Magic Defense
+C8 02 00
+11 36   Agility
+C8 04 00
+14 0A   Evasion
+C8 04 00
+11 68   Accuracy
+C8 04 00
+16 0D   Luck
+C8 04 00
+### SAMURAI TESTING ###
+
+
+
+
+### GUNNER TESTING ###
+38 00 12 00 FD 00 FF 00
+01
+51
+2C 30
+2A 46 4F             HP
+10 BC 12             MP
+0F 04 0C 0D 01       STR
+0A 96 0B 0C 01       DEF
+06 21 0C C8 02       MAG
+04 0B 0C C8 02       MDEF
+00 0D 32 C8 04       AGI
+00 16 02 C8 04       EVA
+01 21 78 C8 04       ACC
+01 1B 0C C8 04       LCK
+[lv x (01/10)] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
+[lv x 0] + [(lv / 16) + 8] - [lv^2] / 16 / 200 / 4
+
+00 10 08 C8 04
+ 00 00
+
+
+
+
+Luckup:
+
+16 0D C8 04
+22 13 200 4
+
+Accuracyup:
+
+68 C8 04 00
+ 200
+
+
+OFFSETS:
+
+-----samurai weapon[3][8]-----
+4D0-4F0: abilities
+510: 8 shorts (8*4)
+520: 8 shorts (8*4)
+530: 8 shorts (8*4)

@@ -1,0 +1,72 @@
+FF 00 01 = Gunner
+FF 00 01            ID, 3 bytes
+51 = ?              Unknown, 1 byte
+2C 30 =             Default attack, 2 bytes
+2A 46 4F =          HP formulae, 3 bytes
+10 BC 12 =          MP formulae, 3 bytes
+0F 04 0C 0D 01      STR formulae, 5 bytes
+0A 96 0B 0C 01      DEF formulae, 5 bytes
+06 21 0C C8 02      MAG formulae, 5 bytes
+04 0B 0C C8 02      MDEF formulae, 5 bytes
+00 0D 32 C8 04      AGI formulae, 5 bytes
+00 16 02 C8 04      EVA formulae, 5 bytes
+01 21 78 C8 04      ACC formulae, 5 bytes
+01 1B 0C C8 04      LCK formulae, 5 bytes
+
+00 00               Required ability learned
+2C 30               Default first action?
+
+00 00               ????
+32 30               Trigger happy
+
+01 00               ????
+33 30
+
+33 30
+34 30
+
+01 00
+35 30
+
+35 30
+36 30
+
+36 30
+37 30
+
+36 30
+38 30
+
+01 00
+39 30
+
+33 30
+3A 30
+
+39 30
+3B 30
+
+3B 30
+3C 30
+
+01 00
+52 80
+
+52 80
+4E 80
+
+01 00
+18 80 - Trigger happy lv.2
+
+18 80
+19 80 - Trigger happy lv.2
+
+
+
+65 40
+05 00
+65 40
+04 00 00 00 00 00 00 00 00 00 66 40 05 00 66 40 04 00 00 00 00 00 00 00 00 00 67 40 05 00 67 40 04 00 00 00 00 00 00 00 00 00
+
+FF 00 08 = 08 is dressphere ID??
+58 2D 30 1C B9 3A 21 63 24 01 11 04 C8 02 01 15 03 C8 05 0E 0A 11 12 01 04 78 20 C8 02 01 50 33 C8 04 00 16 08 C8 04 00 12 60 C8 04 00 10 08 C8 04 00 00 94 30 01 00 2D 30 46 70 95 30 47 70 96 30 01 00 97 30 97 30 98 30 01 00 99 30 99 30 9A 30 99 30 9B 30 98 30 9C 30 01 00 9D 30 9D 30 9E 30 01 00 9F 30 9F 30 A0 30 01 00 A1 30 A1 30 A2 30 83 40 0E 00

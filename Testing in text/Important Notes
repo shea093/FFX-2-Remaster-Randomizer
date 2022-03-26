@@ -1,0 +1,15 @@
+***JOB.BIN EDITS***
+
+Songstress "Samba Silence" replaced with "Attack" (Offset 0780, 2D 30 is attack)
+
+AMORPHOUS GEL ABILITIES: (ID 158)
+OFFSET 1470-1480
+40 E1 = Barrier Shift
+40 E2 = Die
+40 EF = Russian Roulette
+41 EE = Blizzara
+41 F0 = Watera
+41 ED = Fira
+41 00 = Chain Attack
+
+

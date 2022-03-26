@@ -1,6 +1,36 @@
-mys = "Not found!"
-mys = mys.replace("Nota", "aaaa")
-print(len(mys))
+# mys = "Not found!"
+# mys = mys.replace("Nota", "aaaa")
+# print(len(mys))
+import math
+from tabulate import tabulate
+
+print(float("0." + str(1)))
+#[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
+#[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E
+def luck_formula(A: int, B: int, C: int, D: int, E: int):
+    table = []
+    temp_list = []
+    count = 0
+    for level in range (1,100):
+        a_frac = A / 10
+        part1 = level * a_frac
+        part2 = (level / B) + C
+        part3 = level**2
+        formula_result = part1 + part2 - part3 / 16 / D / E
+        formula_output = str(level) + ". " + str(formula_result)
+        if count == 4:
+            temp_list.append(formula_output)
+            table.append(temp_list)
+            count = 0
+            temp_list = []
+        else:
+            count = count + 1
+            temp_list.append(formula_output)
+    print(tabulate(table))
+    print(table)
+        #print(str(level) + ". " + str((formula_result)))
+luck_formula(1, 27, 12, 200, 4)
+
 
 # from itertools import permutations
 #

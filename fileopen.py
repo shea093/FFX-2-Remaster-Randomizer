@@ -67,7 +67,7 @@ def cut_creature_values():
 
 def cut_creature_english_names():
     creature_names = []
-    with open("english_creature_names.txt", "r") as f:
+    with open("Obselete/english_creature_names.txt", "r") as f:
         for line in f.readlines():
             pre_slice = line[5:27]
             pre_slice = re.sub(r"\s+", "", pre_slice, flags=re.UNICODE)
@@ -191,10 +191,10 @@ count_of_successful_changes = 0
 for enemy in enemies:
     if enemy.enemy_id not in normal_error_ids:
         if enemy.enemy_id not in oversoul_error_ids:
-            new_enemies.append(redo_hex(enemy,2.1,2.1))
+            new_enemies.append(redo_hex(enemy,2.45,2.45))
             count_of_successful_changes = count_of_successful_changes + 1
         else:
-            new_enemies.append(redo_hex(enemy, 2.1, 2.1,oversoul_yesno=True))
+            new_enemies.append(redo_hex(enemy, 2.45, 2.45,oversoul_yesno=True))
             count_of_successful_changes = count_of_successful_changes + 1
 
 print("Count of successful changes: " + str(count_of_successful_changes))
@@ -202,29 +202,34 @@ print("Count of successful changes: " + str(count_of_successful_changes))
 print(Path.cwd())
 print(get_subdirectories("VBF_X2_NEW"))
 
+print(new_enemies[157].enemy_name)
+print(new_enemies[157].output_HP_MP())
 
-for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
-    bin_name = str(directory.name[1:]) + ".bin"
-    if bin_name not in mon_binlist_generator():
-        pass
-    # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
-    #     print("please")
-    #     print(new_enemies[index])
-    else:
-        id = int(directory.name[2:])
-        for enemy in new_enemies:
-            if enemy.enemy_id == id:
-                filepath = directory / bin_name
-                print("Enemy ID: " + str(enemy.enemy_id))
-                print("Bin name: "+ str(bin_name))
-                print(enemy.output_HP_MP(formatted=True, oversoul=False))
-                binary_converted = binascii.unhexlify(enemy.enemy_hex_data)
-                with filepath.open(mode="wb") as f:
-                    f.write(binary_converted)
-                print("Done i think????")
-
-print(new_enemies[0].output_HP_MP(formatted=False, oversoul=False))
-print(new_enemies[0].enemy_hex_data.find(new_enemies[0].output_HP_MP(formatted=False, oversoul=False)))
+#
+#WRITE ALL THE BIN FILES
+#
+# for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
+#     bin_name = str(directory.name[1:]) + ".bin"
+#     if bin_name not in mon_binlist_generator():
+#         pass
+#     # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
+#     #     print("please")
+#     #     print(new_enemies[index])
+#     else:
+#         id = int(directory.name[2:])
+#         for enemy in new_enemies:
+#             if enemy.enemy_id == id:
+#                 filepath = directory / bin_name
+#                 print("Enemy ID: " + str(enemy.enemy_id))
+#                 print("Bin name: "+ str(bin_name))
+#                 print(enemy.output_HP_MP(formatted=True, oversoul=False))
+#                 binary_converted = binascii.unhexlify(enemy.enemy_hex_data)
+#                 with filepath.open(mode="wb") as f:
+#                     f.write(binary_converted)
+#                 print("Done i think????")
+#
+# print(new_enemies[0].output_HP_MP(formatted=False, oversoul=False))
+# print(new_enemies[0].enemy_hex_data.find(new_enemies[0].output_HP_MP(formatted=False, oversoul=False)))
 
 # for enemy in new_enemies:
 #     print(enemy)
