@@ -205,6 +205,18 @@ print(get_subdirectories("VBF_X2_NEW"))
 print(new_enemies[157].enemy_name)
 print(new_enemies[157].output_HP_MP())
 
+
+
+
+###################
+
+
+
+
+
+
+
+
 #
 #WRITE ALL THE BIN FILES
 #
