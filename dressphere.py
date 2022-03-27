@@ -1,5 +1,17 @@
 from tabulate import tabulate
 
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'
+
 class Dressphere:
     def __init__(self, dress_name_def: str, dress_id_def: int):
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
@@ -41,9 +53,10 @@ class Dressphere:
         return variables
 
 
-    def stat_formula(self, type: str):
+    def stat_formula(self, type: str, tableprint=False):
         table = []
         temp_list = []
+        raw_objects = []
         count = 0
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
         for level in range(1, 100):
@@ -57,8 +70,9 @@ class Dressphere:
                 part3 = level ** 2
                 formula_result = part1 + part2 - part3 / 16 / variables["D"] / variables["E"]
                 formula_result = "{:.2f}".format(formula_result)
-                formula_output = str(level) + ". " + str(formula_result)
-                if count == 4:
+                raw_objects.append(formula_result)
+                formula_output = color.BOLD + color.CYAN + str(level)+ color.END + ". " + str(formula_result)
+                if count == 7:
                     temp_list.append(formula_output)
                     table.append(temp_list)
                     count = 0
@@ -66,10 +80,13 @@ class Dressphere:
                 else:
                     count = count + 1
                     temp_list.append(formula_output)
-        print("**************************")
-        print(type)
-        print("**************************")
-        print(tabulate(table))
+        if tableprint == True:
+            print("**************************")
+            print(type)
+            print("**************************")
+            print(tabulate(table,tablefmt="fancy_grid"))
+        else:
+            return raw_objects
 
 
     def __repr__(self):

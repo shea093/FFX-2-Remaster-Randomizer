@@ -1,6 +1,7 @@
 from dressphere import Dressphere
 import pathlib
 
+
 #INPUT VARIABLES
 job_bin_path = "Test Files/job.bin"
 jobs_names = [
@@ -70,58 +71,58 @@ def parse_chunk(chunk: str):
                 initial_position = initial_position + stat_length
         return seperated_chunks
 
+def initiate_dresspheres():
+    # Get the job file string
+    hex_string = job_bin_to_hex()
+
+    # Initiate dresspheres
+    dresspheres = []
+    for index, job in enumerate(jobs_names):
+        problematic_ids = [12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+
+        if index + 1 not in problematic_ids:
+            new_dressphere = Dressphere(job, index + 1)
+            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string)
+            dresspheres.append(new_dressphere)
+
+        # Trainer01
+        if index + 1 == 12:
+            new_dressphere = Dressphere(job, index + 1)
+            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=12)
+            dresspheres.append(new_dressphere)
+        # Mascot01
+        if index + 1 == 14:
+            new_dressphere = Dressphere(job, index + 1)
+            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=14)
+            dresspheres.append(new_dressphere)
+        # Trainer02and03
+        if index + 1 == 23 or index + 1 == 24 or index + 1 == 25 or index + 1 == 26:
+            new_dressphere = Dressphere(job, index + 1)
+            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=index + 1)
+            dresspheres.append(new_dressphere)
+
+    # Add formulae to dresspheres
+    for dressphere in dresspheres:
+        formulae = parse_chunk(dressphere.hex_chunk)
+        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+        for index, stat in enumerate(stat_names):
+            dressphere.stats[stat] = formulae[index + 1]
+
+    return dresspheres
 
 
 
-#Get the job file string
-hex_string = job_bin_to_hex()
 
-#Initiate dresspheres
-dresspheres = []
-for index, job in enumerate(jobs_names):
-    problematic_ids = [12,14,15,16,17,18,19,20,21,22,23,24,25,26]
-
-    if index+1 not in problematic_ids:
-        new_dressphere = Dressphere(job,index+1)
-        new_dressphere.hex_chunk = find_chunk(index+1,hex_string)
-        dresspheres.append(new_dressphere)
-
-    #Trainer01
-    if index+1 == 12:
-        new_dressphere = Dressphere(job, index + 1)
-        new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=12)
-        dresspheres.append(new_dressphere)
-    #Mascot01
-    if index+1 == 14:
-        new_dressphere = Dressphere(job, index + 1)
-        new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=14)
-        dresspheres.append(new_dressphere)
-    #Trainer02and03
-    if index+1 == 23 or index+1 == 24 or index+1 == 25 or index+1 == 26:
-        new_dressphere = Dressphere(job, index + 1)
-        new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=index+1)
-        dresspheres.append(new_dressphere)
-
-#Add formulae to dresspheres
-for dressphere in dresspheres:
-    formulae = parse_chunk(dressphere.hex_chunk)
-    stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
-    for index, stat in enumerate(stat_names):
-        dressphere.stats[stat] = formulae[index+1]
-
-
+dresspheres = initiate_dresspheres()
 print("_---------------------------")
-print(dresspheres[2])
-print(dresspheres[2].stats["STR"])
-variableA_tohex = 35
-variableA_tohex = hex(variableA_tohex)[2:]
-dresspheres[2].stats["STR"] = variableA_tohex + dresspheres[2].stats["STR"][2:]
-variable_str = "10 42 0d 0d 01"
+print(dresspheres[7])
+print(dresspheres[7].stats["MAG"])
+#0e 0a 11 12 01
+variable_str = "0e 0a 11 12 01"
 variable_str = variable_str.replace(" ", "")
-dresspheres[2].stats["STR"] = variable_str
+dresspheres[7].stats["MAG"] = variable_str
 stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
-dresspheres[2].stat_formula("STR")
-
+dresspheres[7].stat_formula("MAG",tableprint=True)
 
 
 
