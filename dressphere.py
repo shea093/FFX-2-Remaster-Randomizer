@@ -43,13 +43,20 @@ class Dressphere:
     def dress_name(self):
         return self.__dress_name
 
-    def separate_stat_string(self, hex: str):
+    def separate_stat_string(self, hex: str, hpmp=False):
         variables = {}
-        variable_names = ["A","B","C","D","E"]
-        count = 0
-        for index, variable in enumerate(variable_names):
-            count = count + 2
-            variables[variable] = int(hex[count-2:count],16)
+        if hpmp == True:
+            variable_names = ["A","B","C"]
+            count = 0
+            for index, variable in enumerate(variable_names):
+                count = count + 2
+                variables[variable] = int(hex[count-2:count],16)
+        else:
+            variable_names = ["A","B","C","D","E"]
+            count = 0
+            for index, variable in enumerate(variable_names):
+                count = count + 2
+                variables[variable] = int(hex[count-2:count],16)
         return variables
 
 
@@ -57,11 +64,44 @@ class Dressphere:
         table = []
         temp_list = []
         raw_objects = []
+        columns = 7
         count = 0
-        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+        stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
         for level in range(1, 100):
             if level == 99:
                 table.append(temp_list)
+            if type == "HP":
+                variables = self.separate_stat_string(self.stat_variables[type],hpmp=True)
+                part1 = (level * variables["A"])+variables["C"]
+                part2 = (level**2) / (variables["B"]/10)
+                formula_result = part1 - part2
+                formula_result = "{:.2f}".format(formula_result)
+                raw_objects.append(formula_result)
+                formula_output = color.BOLD + color.CYAN + str(level) + color.END + ". " + str(formula_result)
+                if count == columns:
+                    temp_list.append(formula_output)
+                    table.append(temp_list)
+                    count = 0
+                    temp_list = []
+                else:
+                    count = count + 1
+                    temp_list.append(formula_output)
+            if type == "MP":
+                variables = self.separate_stat_string(self.stat_variables[type],hpmp=True)
+                part1 = (level * (variables["A"]/10))+variables["C"]
+                part2 = (level**2) / (variables["B"])
+                formula_result = part1 - part2
+                formula_result = "{:.2f}".format(formula_result)
+                raw_objects.append(formula_result)
+                formula_output = color.BOLD + color.CYAN + str(level) + color.END + ". " + str(formula_result)
+                if count == columns:
+                    temp_list.append(formula_output)
+                    table.append(temp_list)
+                    count = 0
+                    temp_list = []
+                else:
+                    count = count + 1
+                    temp_list.append(formula_output)
             if type in stat_names:
                 variables = self.separate_stat_string(self.stat_variables[type])
                 a_frac = variables["A"] / 10
@@ -72,7 +112,7 @@ class Dressphere:
                 formula_result = "{:.2f}".format(formula_result)
                 raw_objects.append(formula_result)
                 formula_output = color.BOLD + color.CYAN + str(level)+ color.END + ". " + str(formula_result)
-                if count == 7:
+                if count == columns:
                     temp_list.append(formula_output)
                     table.append(temp_list)
                     count = 0

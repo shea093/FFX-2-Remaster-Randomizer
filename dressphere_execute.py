@@ -123,6 +123,7 @@ variable_str = variable_str.replace(" ", "")
 dresspheres[7].stats["MAG"] = variable_str
 stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
 dresspheres[7].stat_formula("MAG",tableprint=True)
+dresspheres[0].stat_formula("MP",tableprint=True)
 
 
 
