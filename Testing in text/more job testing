@@ -13,8 +13,8 @@ FF 00 01            ID, 3 bytes
 01 21 78 C8 04      ACC formulae, 5 bytes
 01 1B 0C C8 04      LCK formulae, 5 bytes
 
-00 00               Required ability learned
-2C 30               Default first action?
+00 00               Required ability learned    2
+2C 30               Default first action?    2
 
 00 00               ????
 32 30               Trigger happy
@@ -58,6 +58,41 @@ FF 00 01            ID, 3 bytes
 01 00
 18 80 - Trigger happy lv.2
 
+18 80
+19 80 - Trigger happy lv.2
+
+
+
+00 00               Required ability learned    2
+2C 30               Default first action?    2
+00 00               ????
+32 30               Trigger happy
+01 00               ????
+33 30
+33 30
+34 30
+01 00
+35 30
+35 30
+36 30
+36 30
+37 30
+36 30
+38 30
+01 00
+39 30
+33 30
+3A 30
+39 30
+3B 30
+3B 30
+3C 30
+01 00
+52 80
+52 80
+4E 80
+01 00
+18 80 - Trigger happy lv.2
 18 80
 19 80 - Trigger happy lv.2
 

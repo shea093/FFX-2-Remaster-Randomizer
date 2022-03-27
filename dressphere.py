@@ -43,21 +43,27 @@ class Dressphere:
     def dress_name(self):
         return self.__dress_name
 
-    def separate_stat_string(self, hex: str, hpmp=False):
-        variables = {}
-        if hpmp == True:
-            variable_names = ["A","B","C"]
-            count = 0
-            for index, variable in enumerate(variable_names):
-                count = count + 2
-                variables[variable] = int(hex[count-2:count],16)
+    def separate_stat_string(self, hex: str, hpmp=False, target="Stats"):
+        if target == "Stats":
+            variables = {}
+            if hpmp == True:
+                variable_names = ["A","B","C"]
+                count = 0
+                for index, variable in enumerate(variable_names):
+                    count = count + 2
+                    variables[variable] = int(hex[count-2:count],16)
+            else:
+                variable_names = ["A","B","C","D","E"]
+                count = 0
+                for index, variable in enumerate(variable_names):
+                    count = count + 2
+                    variables[variable] = int(hex[count-2:count],16)
+            return variables
+        elif target == "Abilities":
+            pass
         else:
-            variable_names = ["A","B","C","D","E"]
-            count = 0
-            for index, variable in enumerate(variable_names):
-                count = count + 2
-                variables[variable] = int(hex[count-2:count],16)
-        return variables
+            return
+
 
 
     def stat_formula(self, type: str, tableprint=False):
@@ -122,7 +128,7 @@ class Dressphere:
                     temp_list.append(formula_output)
         if tableprint == True:
             print("**************************")
-            print(type)
+            print(type + " growth for " + self.__dress_name)
             print("**************************")
             print(tabulate(table,tablefmt="fancy_grid"))
         else:

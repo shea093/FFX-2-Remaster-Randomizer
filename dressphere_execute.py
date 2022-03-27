@@ -1,7 +1,8 @@
 from dressphere import Dressphere
 import pathlib
+import time
 
-
+start_time = time.time()
 #INPUT VARIABLES
 job_bin_path = "Test Files/job.bin"
 jobs_names = [
@@ -50,10 +51,10 @@ def find_chunk(id_input: int, hex_file_data: str, problematic_id=0):
     if position == "-1":
         return "Index position not found."
     else:
-        return hex_file_data[position:position+104] #Returns everything up until Abilities (not including abilities)
+        return hex_file_data[position:position+168] #Returns everything up until after Abilities (including abilities)
 
 def parse_chunk(chunk: str):
-    if chunk == "Index position not found." or len(chunk) != 104:
+    if chunk == "Index position not found." or len(chunk) != 168:
         return "Error"
     else:
         seperated_chunks = []
@@ -124,6 +125,11 @@ dresspheres[7].stats["MAG"] = variable_str
 stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
 dresspheres[7].stat_formula("MAG",tableprint=True)
 dresspheres[0].stat_formula("MP",tableprint=True)
+print(dresspheres[0].hex_chunk)
+
+
+print("--- Completed in %s seconds ---" % (time.time() - start_time))
+
 
 
 
