@@ -21,6 +21,7 @@ class Dressphere:
         self.__ability_table = {}
         self.__hex_chunk = ""
         self.__abilities = []
+        self.__ability_hex = ""
         for stat_name in stat_names:
             self.__stat_variables[stat_name] = 0
 
@@ -29,7 +30,7 @@ class Dressphere:
         return self.__stat_variables
 
     @stat_variables.setter
-    def stats(self, value: dict):
+    def stat_variables(self, value: dict):
         self.__stat_variables = value
 
     @property
@@ -145,6 +146,22 @@ class Dressphere:
 
     def return_as_list(self):
         return [self.__dress_id,self.__dress_name]
+
+    @property
+    def ability_hex(self):
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
+        return self.__ability_hex
+
+    # def return_ability_hex(self):
+    #     abilityhex = ""
+    #     for ability in self.abilities:
+    #         abilityhex = abilityhex + ability[0]
+    #         abilityhex = abilityhex + ability[1]
+    #     return abilityhex
 
 
     def __repr__(self):

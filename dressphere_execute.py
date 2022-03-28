@@ -169,7 +169,7 @@ def initiate_dresspheres():
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
         ability_initial_position = 0
         for index, stat in enumerate(stat_names):
-            dressphere.stats[stat] = formulae[index + 1]
+            dressphere.stat_variables[stat] = formulae[index + 1]
             ability_initial_position = index + 1
         ability_initial_position = ability_initial_position + 1
         ability_list = formulae[ability_initial_position:len(formulae)]
@@ -190,17 +190,17 @@ dresspheres = initiate_dresspheres()
 
 print("_---------------------------")
 print(dresspheres[7])
-print(dresspheres[7].stats["MAG"])
+print(dresspheres[7].stat_variables["MAG"])
 #0e 0a 11 12 01
 variable_str = "0e 0a 11 12 01"
 variable_str = variable_str.replace(" ", "")
-dresspheres[7].stats["MAG"] = variable_str
+dresspheres[7].stat_variables["MAG"] = variable_str
 stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
 print(dresspheres[0].hex_chunk)
 print(dresspheres[7].abilities)
 for ability_tuple in dresspheres[7].abilities:
     print (translate_ability(ability_tuple[1]) + " requires " + translate_ability(ability_tuple[0]))
-
+print(dresspheres[7].ability_hex)
 
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
