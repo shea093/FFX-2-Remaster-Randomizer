@@ -128,6 +128,19 @@ def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float,
             print(str(enemy_object)," is bugged.")
         return new_enemy_instance
 
+def overwrite_HP_batch():
+    new_enemies = []
+    count_of_successful_changes = 0
+    for enemy in enemies:
+        if enemy.enemy_id not in normal_error_ids:
+            if enemy.enemy_id not in oversoul_error_ids:
+                new_enemies.append(redo_hex(enemy, 2.45, 2.45))
+                count_of_successful_changes = count_of_successful_changes + 1
+            else:
+                new_enemies.append(redo_hex(enemy, 2.45, 2.45, oversoul_yesno=True))
+                count_of_successful_changes = count_of_successful_changes + 1
+
+    print("Count of successful changes: " + str(count_of_successful_changes))
 
 
 # Tests
@@ -186,24 +199,10 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 
-new_enemies = []
-count_of_successful_changes = 0
-for enemy in enemies:
-    if enemy.enemy_id not in normal_error_ids:
-        if enemy.enemy_id not in oversoul_error_ids:
-            new_enemies.append(redo_hex(enemy,2.45,2.45))
-            count_of_successful_changes = count_of_successful_changes + 1
-        else:
-            new_enemies.append(redo_hex(enemy, 2.45, 2.45,oversoul_yesno=True))
-            count_of_successful_changes = count_of_successful_changes + 1
 
-print("Count of successful changes: " + str(count_of_successful_changes))
 
 print(Path.cwd())
 print(get_subdirectories("VBF_X2_NEW"))
-
-print(new_enemies[157].enemy_name)
-print(new_enemies[157].output_HP_MP())
 
 
 

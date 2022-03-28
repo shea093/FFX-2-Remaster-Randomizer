@@ -20,6 +20,7 @@ class Dressphere:
         self.__stat_variables = {}
         self.__ability_table = {}
         self.__hex_chunk = ""
+        self.__abilities = []
         for stat_name in stat_names:
             self.__stat_variables[stat_name] = 0
 
@@ -42,6 +43,14 @@ class Dressphere:
     @property
     def dress_name(self):
         return self.__dress_name
+
+    @property
+    def abilities(self):
+        return self.__abilities
+
+    @abilities.setter
+    def abilities(self, value: dict):
+        self.__abilities = value
 
     def separate_stat_string(self, hex: str, hpmp=False, target="Stats"):
         if target == "Stats":
@@ -133,6 +142,9 @@ class Dressphere:
             print(tabulate(table,tablefmt="fancy_grid"))
         else:
             return raw_objects
+
+    def return_as_list(self):
+        return [self.__dress_id,self.__dress_name]
 
 
     def __repr__(self):
