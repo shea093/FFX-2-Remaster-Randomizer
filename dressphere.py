@@ -22,6 +22,7 @@ class Dressphere:
         self.__hex_chunk = ""
         self.__abilities = []
         self.__ability_hex = ""
+        self.__ability_hex_og = ""
         for stat_name in stat_names:
             self.__stat_variables[stat_name] = 0
 
@@ -32,6 +33,14 @@ class Dressphere:
     @stat_variables.setter
     def stat_variables(self, value: dict):
         self.__stat_variables = value
+
+    @property
+    def ability_hex_og(self):
+        return self.__ability_hex_og
+
+    @ability_hex_og.setter
+    def ability_hex_og(self, value: str):
+        self.__ability_hex_og = value
 
     @property
     def hex_chunk(self):
@@ -50,8 +59,13 @@ class Dressphere:
         return self.__abilities
 
     @abilities.setter
-    def abilities(self, value: dict):
+    def abilities(self, value: list):
         self.__abilities = value
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
 
     def separate_stat_string(self, hex: str, hpmp=False, target="Stats"):
         if target == "Stats":
@@ -155,6 +169,18 @@ class Dressphere:
             abilityhex = abilityhex + ability[1]
         self.__ability_hex = abilityhex
         return self.__ability_hex
+
+    def change_ability(self, ability_index: int, ability: str):
+        hex_byte_reverse = ability[2:4] + ability[0:2]
+        hex_byte_reverse = hex_byte_reverse.lower()
+        new_ability = (self.abilities[ability_index][0],hex_byte_reverse)
+        self.abilities[ability_index] = new_ability
+
+    def change_required_ability(self, ability_index: int, ability: str):
+        hex_byte_reverse = ability[2:4] + ability[0:2]
+        hex_byte_reverse = hex_byte_reverse.lower()
+        new_required_ability = (hex_byte_reverse,self.abilities[ability_index][1])
+        self.abilities[ability_index] = new_required_ability
 
     # def return_ability_hex(self):
     #     abilityhex = ""

@@ -1,7 +1,3 @@
-# mys = "Not found!"
-# mys = mys.replace("Nota", "aaaa")
-# print(len(mys))
-import math
 from tabulate import tabulate
 
 print(float("0." + str(1)))

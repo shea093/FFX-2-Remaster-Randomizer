@@ -1,6 +1,7 @@
 from dressphere import Dressphere
 import pathlib
 import time
+import random
 from command import Command
 
 start_time = time.time()
@@ -10,7 +11,7 @@ jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
     "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
-    "mascot03"
+    "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
 
 
@@ -24,6 +25,35 @@ def job_bin_to_hex():
     hex_data = read_hex(job_bin)
     return hex_data
 
+
+#####RANDOMIZE STUFF####
+def get_big_chunks(get_all_segments=False):
+    chunks = []
+    hex_file = job_bin_to_hex()
+    initial_position = 520
+    next_position = 976
+    start_chunk = hex_file[initial_position:next_position]
+    chunks.append(start_chunk)
+    ending_chunk = ""
+    for i in range (1,31):
+        initial_position = next_position
+        next_position = next_position + 456
+        chunks.append(hex_file[initial_position:next_position])
+        if i == 30 and get_all_segments == True:
+            ending_chunk = hex_file[next_position:len(hex_file)]
+    if get_all_segments == True:
+        beginning_chunk = hex_file[0:520]
+        return [beginning_chunk,chunks,ending_chunk]
+    else:
+        return chunks
+
+def test_randomize_big_chunks(seed: int):
+    chunks = get_big_chunks(get_all_segments=True)
+    random.Random(seed).shuffle(chunks[1])
+    return chunks
+
+#####RANDOMIZE STUFF ABOVE####
+##############################
 
 def cut_command_names():
     command_ids = []
@@ -140,7 +170,7 @@ def initiate_dresspheres():
     # Initiate dresspheres
     dresspheres = []
     for index, job in enumerate(jobs_names):
-        problematic_ids = [12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+        problematic_ids = [12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 
         if index + 1 not in problematic_ids:
             new_dressphere = Dressphere(job, index + 1)
@@ -173,13 +203,17 @@ def initiate_dresspheres():
             ability_initial_position = index + 1
         ability_initial_position = ability_initial_position + 1
         ability_list = formulae[ability_initial_position:len(formulae)]
+        ability_hex_og_string = ""
         for i in range (1, len(ability_list)):
             if (i % 2) == 0 or (i==0):
                 pass
             else:
                 # ORDER = (Required Ability, Actual Ability)
+                ability_hex_og_string = ability_hex_og_string + ability_list[i - 1]
+                ability_hex_og_string = ability_hex_og_string + ability_list[i]
                 ability_tuple = (ability_list[i - 1], ability_list[i])
                 dressphere.abilities.append(ability_tuple)
+        dressphere.ability_hex_og = ability_hex_og_string
     return dresspheres
 
 
@@ -198,13 +232,30 @@ dresspheres[7].stat_variables["MAG"] = variable_str
 stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
 print(dresspheres[0].hex_chunk)
 print(dresspheres[7].abilities)
+print(dresspheres[7].ability_hex)
+#Test change ability
+print(abilities[0].id)
+print(dresspheres[7].abilities)
+print(dresspheres[7].ability_hex)
+print(dresspheres[7].ability_hex_og)
 for ability_tuple in dresspheres[7].abilities:
     print (translate_ability(ability_tuple[1]) + " requires " + translate_ability(ability_tuple[0]))
+dresspheres[7].change_ability(0,abilities[0].id)
+dresspheres[7].change_required_ability(0,abilities[11].id)
 print(dresspheres[7].ability_hex)
+print(dresspheres[7].ability_hex_og)
+print(dresspheres[7].stat_variables)
+for chunk in get_big_chunks():
+    print(chunk[16:22])
 
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
-
-
-
+big_chunky = test_randomize_big_chunks(4)
+print_str=big_chunky[0]
+for i, x in enumerate(big_chunky[1]):
+    print(i)
+    print_str = print_str + x
+print_str= print_str + big_chunky[2]
+print(print_str)
+print(len(print_str))
