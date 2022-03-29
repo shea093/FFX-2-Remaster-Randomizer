@@ -13,7 +13,7 @@ jobs_names = [
     "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
-seed = 85466666
+seed = 111876967976853241
 
 def read_hex(path):
     with path.open(mode='rb') as f:
@@ -150,6 +150,7 @@ def initiate_abilities(valid_ability_pooling=False):
         for ability in valid_ability_tuples:
             if int(ability[0],16) <= 12841:
                 cmd = Command(id_value=ability[0], name_value=ability[1], type_value="Command")
+                print(cmd)
                 abilities.append(cmd)
             else:
                 auto = Command(id_value=ability[0].upper(), name_value=ability[1], type_value="Auto-Ability")
@@ -267,6 +268,9 @@ def initiate_dresspheres_new():
 
     return dresspheres
 
+
+#BIG SHUFFLING OF ABILITIES IN EVERY DRESSPHERE EXCEPT SPECIAL DRESSPHERES
+#Mask abilities are problematic so those will not be in the ability pool
 def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50):
     special_jobs = ["super_yuna1", "super-yuna2", "super-yuna3",
     "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3"]
@@ -275,11 +279,12 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     no_ap_abilities =[]
 
     valid_abilities = initiate_abilities(valid_ability_pooling=True)
-    commands_to_shuffle = valid_abilities[0:302]
-    auto_abilities_to_shuffle = valid_abilities[302:len(valid_abilities)]
+    commands_to_shuffle = valid_abilities[0:266]
+    auto_abilities_to_shuffle = valid_abilities[266:len(valid_abilities)]
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
+    print("size before: ", len(commands_to_shuffle))
     for dress in dresspheres_edited:
         if dress.dress_name in special_jobs:
             pass
@@ -288,22 +293,22 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             activated_abilities = [] #To make sure the ability braching always goes to the root
             output_abilities = [dress.abilities[0]]
             root_abilities = []
-            for i in range(1,14):
+            for i in range(1,12):
                 new_command = commands_to_shuffle.pop()
                 this_dress_abilities.append(new_command)
-            for i in range(1,3):
+            for i in range(1,5):
                 new_auto_ability = auto_abilities_to_shuffle.pop()
                 this_dress_abilities.append(new_auto_ability)
             for i, ability in enumerate(dress.abilities[1:len(dress.abilities)]):
                 ability_to_add = ""
                 ability_required = "0001"
-                if i <= 3:
+                if i <= 1:
                     if this_dress_abilities[i].id not in root_abilities:
                         root_abilities.append(this_dress_abilities[i].id)
                     ability_to_add = this_dress_abilities[i].id
                     seed_increment = seed_increment + 1
                     ability_required = "0000"
-                elif i == 4:
+                elif i == 2:
                     activated_abilities.append(this_dress_abilities[i].id)
                     ability_to_add = this_dress_abilities[i].id
                     seed_increment = seed_increment + 1
@@ -326,20 +331,14 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                             found=True
                         else:
                             seed_increment = seed_increment + 1
-                print(dress)
                 ability_required_reverse = ability_required.lower()[2:4] + ability_required.lower()[0:2]
                 ability_to_add_reverse = ability_to_add.lower()[2:4] + ability_to_add.lower()[0:2]
                 ability_tuple = (ability_required_reverse, ability_to_add_reverse)
                 output_abilities.append(ability_tuple)
                 seed_increment = seed_increment + 1
-            print("***********")
-            print(dress.dress_name)
-            print("***********")
-            print(output_abilities)
-            print("***********")
-            print("***********")
-            print("***********")
             dress.abilities = output_abilities
+    print("size after: " , len(commands_to_shuffle))
+    print(len(auto_abilities_to_shuffle))
     return dresspheres_edited
 
 
@@ -415,17 +414,17 @@ print(valid_abilities_test)
 random_dresspheres_test = initiate_abilities(valid_ability_pooling=True)
 print(dresspheres[7].abilities)
 
-dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=50)
+dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=30)
 
 
 chunks_output = get_big_chunks(get_all_segments=True)
 dress_chunks = []
 county = 0
 for dress in dresspheres:
-    print("----POSITION------")
+
     dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
     dress_chunks.append(dress.big_chunk)
-    print("----$$$$$$$#------")
+
 job_bin_string = chunks_output[0]
 for chunk in dress_chunks:
     job_bin_string = job_bin_string + chunk
