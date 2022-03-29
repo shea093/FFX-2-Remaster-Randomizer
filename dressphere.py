@@ -37,7 +37,7 @@ class Dressphere:
 
     @property
     def big_chunk(self):
-        return self.__stat_variables
+        return self.__big_chunk
 
     @big_chunk.setter
     def big_chunk(self, value: str):

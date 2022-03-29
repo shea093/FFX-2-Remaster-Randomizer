@@ -13,7 +13,7 @@ jobs_names = [
     "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
-
+seed = 85466666
 
 def read_hex(path):
     with path.open(mode='rb') as f:
@@ -55,9 +55,12 @@ def test_randomize_big_chunks(seed: int):
 #####RANDOMIZE STUFF ABOVE####
 ##############################
 
-def cut_command_names():
+def cut_command_names(valid_abilities=False):
     command_ids = []
-    with open("Test Files/commands.txt", "r") as f:
+    filename = "Test Files/commands.txt"
+    if valid_abilities == True:
+        filename = "Test Files/valid_commands.txt"
+    with open(filename, "r") as f:
         for line in f.readlines():
             id = line[32:36]
             name = line[46:len(line)]
@@ -136,16 +139,28 @@ def parse_chunk(chunk: str):
 
 
 
-def initiate_abilities():
-    command_tuples = cut_command_names()
-    autoability_tuples = cut_autoability_names()
+def initiate_abilities(valid_ability_pooling=False):
     abilities = []
-    for command in command_tuples:
-        cmd = Command(id_value=command[0],name_value=command[1],type_value="Command")
-        abilities.append(cmd)
-    for autoability in autoability_tuples:
-        auto = Command(id_value=autoability[0].upper(),name_value=autoability[1],type_value="Auto-Ability")
-        abilities.append(auto)
+    if valid_ability_pooling == True:
+        valid_ability_tuples = cut_command_names(valid_abilities=True)
+    else:
+        command_tuples = cut_command_names()
+        autoability_tuples = cut_autoability_names()
+    if valid_ability_pooling == True:
+        for ability in valid_ability_tuples:
+            if int(ability[0],16) <= 12841:
+                cmd = Command(id_value=ability[0], name_value=ability[1], type_value="Command")
+                abilities.append(cmd)
+            else:
+                auto = Command(id_value=ability[0].upper(), name_value=ability[1], type_value="Auto-Ability")
+                abilities.append(auto)
+    else:
+        for command in command_tuples:
+            cmd = Command(id_value=command[0],name_value=command[1],type_value="Command")
+            abilities.append(cmd)
+        for autoability in autoability_tuples:
+            auto = Command(id_value=autoability[0].upper(),name_value=autoability[1],type_value="Auto-Ability")
+            abilities.append(auto)
     return abilities
 
 
@@ -225,7 +240,9 @@ def initiate_dresspheres_new():
     for index, job in enumerate(jobs_names):
         new_dressphere = Dressphere(job, index + 1)
         new_dressphere.hex_chunk = hex_chunks[index][16:16+232]
+        new_dressphere.big_chunk = hex_chunks[index]
         dresspheres.append(new_dressphere)
+
 
     for dressphere in dresspheres:
         formulae = parse_chunk(dressphere.hex_chunk)
@@ -247,7 +264,121 @@ def initiate_dresspheres_new():
                 ability_tuple = (ability_list[i - 1], ability_list[i])
                 dressphere.abilities.append(ability_tuple)
         dressphere.ability_hex_og = ability_hex_og_string
+
     return dresspheres
+
+def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50):
+    special_jobs = ["super_yuna1", "super-yuna2", "super-yuna3",
+    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3"]
+    dresspheres_edited = dresspheres
+
+    no_ap_abilities =[]
+
+    valid_abilities = initiate_abilities(valid_ability_pooling=True)
+    commands_to_shuffle = valid_abilities[0:302]
+    auto_abilities_to_shuffle = valid_abilities[302:len(valid_abilities)]
+    random.Random(seed).shuffle(commands_to_shuffle)
+    random.Random(seed).shuffle(auto_abilities_to_shuffle)
+    seed_increment = 1
+    for dress in dresspheres_edited:
+        if dress.dress_name in special_jobs:
+            pass
+        else:
+            this_dress_abilities = []
+            activated_abilities = [] #To make sure the ability braching always goes to the root
+            output_abilities = [dress.abilities[0]]
+            root_abilities = []
+            for i in range(1,14):
+                new_command = commands_to_shuffle.pop()
+                this_dress_abilities.append(new_command)
+            for i in range(1,3):
+                new_auto_ability = auto_abilities_to_shuffle.pop()
+                this_dress_abilities.append(new_auto_ability)
+            for i, ability in enumerate(dress.abilities[1:len(dress.abilities)]):
+                ability_to_add = ""
+                ability_required = "0001"
+                if i <= 3:
+                    if this_dress_abilities[i].id not in root_abilities:
+                        root_abilities.append(this_dress_abilities[i].id)
+                    ability_to_add = this_dress_abilities[i].id
+                    seed_increment = seed_increment + 1
+                    ability_required = "0000"
+                elif i == 4:
+                    activated_abilities.append(this_dress_abilities[i].id)
+                    ability_to_add = this_dress_abilities[i].id
+                    seed_increment = seed_increment + 1
+                    ability_required = "0001"
+                elif random.Random(seed+seed_increment).randint(1, 100) < percent_chance_of_branch:
+                    if this_dress_abilities[i].id not in activated_abilities:
+                        activated_abilities.append(this_dress_abilities[i].id)
+                    ability_required = "0001"
+                    ability_to_add = this_dress_abilities[i].id
+                    seed_increment = seed_increment + 1
+                else:
+                    found = False
+                    while(found == False):
+                        index_check = random.Random(seed+seed_increment).randint(0, len(this_dress_abilities)-1)
+                        if this_dress_abilities[index_check].id in activated_abilities:
+                            ability_to_add = this_dress_abilities[i].id
+                            ability_required = this_dress_abilities[index_check].id
+                            activated_abilities.append(this_dress_abilities[i].id)
+                            seed_increment = seed_increment + 1
+                            found=True
+                        else:
+                            seed_increment = seed_increment + 1
+                print(dress)
+                ability_required_reverse = ability_required.lower()[2:4] + ability_required.lower()[0:2]
+                ability_to_add_reverse = ability_to_add.lower()[2:4] + ability_to_add.lower()[0:2]
+                ability_tuple = (ability_required_reverse, ability_to_add_reverse)
+                output_abilities.append(ability_tuple)
+                seed_increment = seed_increment + 1
+            print("***********")
+            print(dress.dress_name)
+            print("***********")
+            print(output_abilities)
+            print("***********")
+            print("***********")
+            print("***********")
+            dress.abilities = output_abilities
+    return dresspheres_edited
+
+
+def job_bin_randomizer_bad():
+    chunks_output = get_big_chunks(get_all_segments=True)
+    dress_chunks = []
+    county = 0
+    for dress in dresspheres:
+        print("----POSITION------")
+        dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
+        dress_chunks.append(dress.big_chunk)
+        print("----$$$$$$$#------")
+    job_bin_string_randomed = chunks_output[0]
+    chunks_to_random = dress_chunks[0:14]
+
+    for chunk in dress_chunks[22:30]:
+        chunks_to_random.append(chunk)
+
+    random.Random(seed).shuffle(chunks_to_random)
+
+    joined_chunks = []
+    for i in range(1, 15):
+        joined_chunks.append(chunks_to_random[i - 1])
+    for i in range(1, 9):
+        joined_chunks.append(dress_chunks[i + 13])
+    for i in range(1, 9):
+        joined_chunks.append(chunks_to_random[i + 13])
+
+    for chunk in joined_chunks:
+        job_bin_string_randomed = job_bin_string_randomed + chunk
+
+    job_bin_string_randomed = job_bin_string_randomed + chunks_output[1][30] + chunks_output[2]
+    print("size: ", len(job_bin_string_randomed))
+    print(job_bin_string_randomed)
+    print("complete")
+    print(chunks_output[1][30])
+
+
+
 
 
 
@@ -272,20 +403,45 @@ print(dresspheres[7].ability_hex)
 print(dresspheres[7].ability_hex_og)
 for ability_tuple in dresspheres[7].abilities:
     print (translate_ability(ability_tuple[1]) + " requires " + translate_ability(ability_tuple[0]))
-dresspheres[7].change_ability(0,abilities[0].id)
-dresspheres[7].change_required_ability(0,abilities[11].id)
 print(dresspheres[7].ability_hex)
 print(dresspheres[7].ability_hex_og)
 print(dresspheres[7].stat_variables)
 
 
 
+valid_abilities_test = initiate_abilities(valid_ability_pooling=True)
 
-for dress in initiate_dresspheres_new():
-    print(dress)
-    for ability in dress.abilities:
-        print(translate_ability(ability[1]))
-print("--- Completed in %s seconds ---" % (time.time() - start_time))
+print(valid_abilities_test)
+random_dresspheres_test = initiate_abilities(valid_ability_pooling=True)
+print(dresspheres[7].abilities)
+
+dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=50)
+
+
+chunks_output = get_big_chunks(get_all_segments=True)
+dress_chunks = []
+county = 0
+for dress in dresspheres:
+    print("----POSITION------")
+    dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
+    dress_chunks.append(dress.big_chunk)
+    print("----$$$$$$$#------")
+job_bin_string = chunks_output[0]
+for chunk in dress_chunks:
+    job_bin_string = job_bin_string + chunk
+job_bin_string = job_bin_string + chunks_output[1][30] + chunks_output[2]
+print(job_bin_string)
+
+#TEST JOBBIN REPLACE
+
+
+print(dresspheres[0].abilities)
+
+# for dress in initiate_dresspheres_new():
+#     print(dress)
+#     for ability in dress.abilities:
+#         print(translate_ability(ability[1]))
+# print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
 

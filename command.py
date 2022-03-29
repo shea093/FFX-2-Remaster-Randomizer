@@ -3,6 +3,7 @@ class Command:
         self.__id = id_value
         self.__name = name_value
         self.__type = type_value
+        self.__ap = 0
 
     @property
     def id(self):
