@@ -19,7 +19,8 @@ class Dressphere:
         self.__dress_id = dress_id_def
         self.__stat_variables = {}
         self.__ability_table = {}
-        self.__hex_chunk = ""
+        self.__hex_chunk = "" #Legacy
+        self.__big_chunk = ""
         self.__abilities = []
         self.__ability_hex = ""
         self.__ability_hex_og = ""
@@ -33,6 +34,14 @@ class Dressphere:
     @stat_variables.setter
     def stat_variables(self, value: dict):
         self.__stat_variables = value
+
+    @property
+    def big_chunk(self):
+        return self.__stat_variables
+
+    @big_chunk.setter
+    def big_chunk(self, value: str):
+        self.__big_chunk = value
 
     @property
     def ability_hex_og(self):

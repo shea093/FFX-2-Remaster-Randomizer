@@ -163,7 +163,8 @@ def translate_ability(hex_byte: str):
     return "N/A"
 
 
-def initiate_dresspheres():
+#Unused
+def initiate_dresspheres_legacy():
     # Get the job file string
     hex_string = job_bin_to_hex()
 
@@ -216,11 +217,42 @@ def initiate_dresspheres():
         dressphere.ability_hex_og = ability_hex_og_string
     return dresspheres
 
+def initiate_dresspheres_new():
+    # Initiate dresspheres
+    dresspheres = []
+    hex_chunks = get_big_chunks()
+
+    for index, job in enumerate(jobs_names):
+        new_dressphere = Dressphere(job, index + 1)
+        new_dressphere.hex_chunk = hex_chunks[index][16:16+232]
+        dresspheres.append(new_dressphere)
+
+    for dressphere in dresspheres:
+        formulae = parse_chunk(dressphere.hex_chunk)
+        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+        ability_initial_position = 0
+        for index, stat in enumerate(stat_names):
+            dressphere.stat_variables[stat] = formulae[index + 1]
+            ability_initial_position = index + 1
+        ability_initial_position = ability_initial_position + 1
+        ability_list = formulae[ability_initial_position:len(formulae)]
+        ability_hex_og_string = ""
+        for i in range (1, len(ability_list)):
+            if (i % 2) == 0 or (i==0):
+                pass
+            else:
+                # ORDER = (Required Ability, Actual Ability)
+                ability_hex_og_string = ability_hex_og_string + ability_list[i - 1]
+                ability_hex_og_string = ability_hex_og_string + ability_list[i]
+                ability_tuple = (ability_list[i - 1], ability_list[i])
+                dressphere.abilities.append(ability_tuple)
+        dressphere.ability_hex_og = ability_hex_og_string
+    return dresspheres
 
 
 
 #Initialization
-dresspheres = initiate_dresspheres()
+dresspheres = initiate_dresspheres_new()
 
 print("_---------------------------")
 print(dresspheres[7])
@@ -245,17 +277,24 @@ dresspheres[7].change_required_ability(0,abilities[11].id)
 print(dresspheres[7].ability_hex)
 print(dresspheres[7].ability_hex_og)
 print(dresspheres[7].stat_variables)
-for chunk in get_big_chunks():
-    print(chunk[16:22])
 
+
+
+
+for dress in initiate_dresspheres_new():
+    print(dress)
+    for ability in dress.abilities:
+        print(translate_ability(ability[1]))
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
-big_chunky = test_randomize_big_chunks(4)
-print_str=big_chunky[0]
-for i, x in enumerate(big_chunky[1]):
-    print(i)
-    print_str = print_str + x
-print_str= print_str + big_chunky[2]
-print(print_str)
-print(len(print_str))
+
+
+# big_chunky = test_randomize_big_chunks(4)
+# print_str=big_chunky[0]
+# for i, x in enumerate(big_chunky[1]):
+#     print(i)
+#     print_str = print_str + x
+# print_str= print_str + big_chunky[2]
+# print(print_str)
+# print(len(print_str))

@@ -143,6 +143,7 @@ def overwrite_HP_batch():
     print("Count of successful changes: " + str(count_of_successful_changes))
 
 
+
 # Tests
 print(cut_line_HPMP("etc"))
 cut_creature_english_names()
@@ -199,6 +200,29 @@ print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 print("%%%%%%%%%%%%%%%%%%")
 
+
+# def test_write_randomizer(new_enemies_list):
+#     new_enemies = new_enemies_list
+#     for index, directory in enumerate(get_subdirectories("VBF_RANDO_TEST")):
+#         bin_name = str(directory.name[1:]) + ".bin"
+#         if bin_name not in mon_binlist_generator():
+#             pass
+#         # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
+#         #     print("please")
+#         #     print(new_enemies[index])
+#         else:
+#             id = int(directory.name[2:])
+#
+#             for enemy in new_enemies:
+#                 if enemy.enemy_id == id:
+#                     filepath = directory / bin_name
+#                     print("Enemy ID: " + str(enemy.enemy_id))
+#                     print("Bin name: "+ str(bin_name))
+#                     print(enemy.output_HP_MP(formatted=True, oversoul=False))
+#                     binary_converted = binascii.unhexlify(enemy.enemy_hex_data)
+#                     with filepath.open(mode="wb") as f:
+#                         f.write(binary_converted)
+#                     print("Done i think????")
 
 
 print(Path.cwd())
