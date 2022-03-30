@@ -1,3 +1,8 @@
+*MON.GET*
+The monster files are 8C long
+Start right after the 646464 etc in the beginning of the hex file
+
+
 ***JOB.BIN EDITS***
 
 Songstress "Samba Silence" replaced with "Attack" (Offset 0780, 2D 30 is attack)

@@ -269,11 +269,11 @@ def initiate_dresspheres_new():
     return dresspheres
 
 
-#BIG SHUFFLING OF ABILITIES IN EVERY DRESSPHERE EXCEPT SPECIAL DRESSPHERES
-#Mask abilities are problematic so those will not be in the ability pool
+#   RANDOMIZATION OF ABILITIES IN EVERY DRESSPHERE EXCEPT SPECIAL DRESSPHERES
+#   "Mask" abilities have problematic hex so those will not be in the ability pool
 def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50):
     special_jobs = ["super_yuna1", "super-yuna2", "super-yuna3",
-    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3"]
+    "super-rikku1", "super-rikku3", "super_p    aine1", "super_paine2", "super_paine3"]
     dresspheres_edited = dresspheres
 
     no_ap_abilities =[]
@@ -285,6 +285,7 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
     print("size before: ", len(commands_to_shuffle))
+
     for dress in dresspheres_edited:
         if dress.dress_name in special_jobs:
             pass
@@ -435,7 +436,15 @@ print(job_bin_string)
 
 
 print(dresspheres[0].abilities)
-
+dresspheres[0].stat_formula("STR", tableprint=True)
+print(dresspheres[0].stat_variables["STR"])
+for i in range (0,9):
+    if i % 2 != 0:
+        pass
+    else:
+        num = (dresspheres[0].stat_variables["STR"][i] + dresspheres[0].stat_variables["STR"][i+1]).replace(" ","")
+        num = int(num, 16)
+        print(num)
 # for dress in initiate_dresspheres_new():
 #     print(dress)
 #     for ability in dress.abilities:
