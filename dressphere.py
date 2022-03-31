@@ -18,6 +18,7 @@ class Dressphere:
         self.__dress_name = dress_name_def
         self.__dress_id = dress_id_def
         self.__stat_variables = {}
+        self.__stat_hex_og = ""
         self.__ability_table = {}
         self.__hex_chunk = "" #Legacy
         self.__big_chunk = ""
