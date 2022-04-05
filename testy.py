@@ -1,11 +1,9 @@
 from tabulate import tabulate
 import random
+import binascii
 
-for i in range(1,20):
-    print(i)
-
-print(random.Random().randint(1,100))
-#
+listy = [1,2,3,4,5,6,7,8,9,10,11]
+print(listy[10:6])
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E

@@ -3,11 +3,47 @@ class Command:
         self.__id = id_value
         self.__name = name_value
         self.__type = type_value
+        self.__og_hex_chunk = ""
+        self.__curr_hex_chunk = ""
         self.__ap = 0
+        self.__job = ""
+        self.__mug_flag = False
 
     @property
     def id(self):
         return self.__id
+
+    @property
+    def og_hex_chunk(self):
+        return self.__og_hex_chunk
+
+    @og_hex_chunk.setter
+    def og_hex_chunk(self, value: str):
+        self.__og_hex_chunk = value
+
+    @property
+    def mug_flag(self):
+        return self.__mug_flag
+
+    @mug_flag.setter
+    def mug_flag(self, value: bool):
+        self.__mug_flag = value
+
+    @property
+    def curr_hex_chunk(self):
+        return self.__curr_hex_chunk
+
+    @curr_hex_chunk.setter
+    def curr_hex_chunk(self, value: str):
+        self.__curr_hex_chunk = value
+
+    @property
+    def job(self):
+        return self.__job
+
+    @job.setter
+    def job(self, value: str):
+        self.__job = value
 
     @property
     def name(self):

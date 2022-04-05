@@ -3,49 +3,70 @@ import pathlib
 import time
 import random
 from command import Command
+from services import *
 
 start_time = time.time()
 #INPUT VARIABLES
 job_bin_path = "Test Files/job.bin"
+cmd_bin_path = "Test Files/command.bin"
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
     "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
-seed = 111876967976853241
+#previous seed: 111876967976853241
+seed = 14749849
 
-def read_hex(path):
-    with path.open(mode='rb') as f:
-        hex_data = f.read().hex()
-    return hex_data
 
 def job_bin_to_hex():
     job_bin = pathlib.Path(job_bin_path)
     hex_data = read_hex(job_bin)
     return hex_data
 
+def cmd_bin_to_hex():
+    cmd_bin = pathlib.Path(cmd_bin_path)
+    hex_data = read_hex(cmd_bin)
+    return hex_data
 
 #####RANDOMIZE STUFF####
-def get_big_chunks(get_all_segments=False):
+def get_big_chunks(get_all_segments=False, segmentType="job"):
     chunks = []
-    hex_file = job_bin_to_hex()
-    initial_position = 520
-    next_position = 976
+    hex_file = ""
+    if segmentType == "job":
+        hex_file = job_bin_to_hex()
+        initial_position = 520
+        next_position = 976
+    elif segmentType == "command":
+        hex_file = cmd_bin_to_hex()
+        initial_position = 64
+        next_position = 64 + 280
     start_chunk = hex_file[initial_position:next_position]
     chunks.append(start_chunk)
     ending_chunk = ""
-    for i in range (1,31):
-        initial_position = next_position
-        next_position = next_position + 456
-        chunks.append(hex_file[initial_position:next_position])
-        if i == 30 and get_all_segments == True:
-            ending_chunk = hex_file[next_position:len(hex_file)]
+    if segmentType == "command":
+        for i in range(0, 554):
+            initial_position = next_position
+            next_position = next_position + 280
+            chunks.append(hex_file[initial_position:next_position])
+            if i == 553:
+                ending_chunk = hex_file[next_position:len(hex_file)]
+    elif segmentType == "job":
+        for i in range (1,31):
+            initial_position = next_position
+            next_position = next_position + 456
+            chunks.append(hex_file[initial_position:next_position])
+            if i == 30 and get_all_segments == True:
+                ending_chunk = hex_file[next_position:len(hex_file)]
     if get_all_segments == True:
         beginning_chunk = hex_file[0:520]
+        if segmentType=="command":
+            beginning_chunk = hex_file[0:64]
+            return [beginning_chunk, chunks, ending_chunk]
         return [beginning_chunk,chunks,ending_chunk]
     else:
         return chunks
+
 
 def test_randomize_big_chunks(seed: int):
     chunks = get_big_chunks(get_all_segments=True)
@@ -81,61 +102,7 @@ def cut_autoability_names():
             autoability_ids.append(tupl)
     return autoability_ids
 
-
-def find_chunk(id_input: int, hex_file_data: str, problematic_id=0):
-    id = hex(id_input)[2:]
-    unique_ids = []
-    if len(id) == 1:
-        id = "0" + id
-    if problematic_id != 0:
-        if problematic_id==23:
-            class_line = "1a5c"
-            position = hex_file_data.find(class_line) - 4
-        elif problematic_id==24:
-            class_line = "1b5c"
-            position = hex_file_data.find(class_line) - 4
-        elif problematic_id==25:
-            class_line = "1c5e"
-            position = hex_file_data.find(class_line) - 4
-        elif problematic_id==26:
-            class_line = "1d5e"
-            position = hex_file_data.find(class_line) - 4
-        else:
-            adjacent_to_id = hex(id_input+80)[2:]
-            class_line = id + str(adjacent_to_id)
-            position = hex_file_data.find(class_line)-4
-    else:
-        class_line = "ff00" + id
-        position = hex_file_data.find(class_line)
-    if position == "-1":
-        return "Index position not found."
-    else:
-        return hex_file_data[position:position+232] #Returns everything up until after Abilities (including abilities)
-
-def parse_chunk(chunk: str):
-    if chunk == "Index position not found." or len(chunk) != 232:
-        return "Error"
-    else:
-        seperated_chunks = []
-        default_attack = chunk[8:12]
-        seperated_chunks.append(default_attack)
-        hp_mp_length = 6
-        stat_length = 10
-        ability_length = 4
-        initial_position = 12
-        for i in range(1,11):
-            if i < 3:
-                seperated_chunks.append(chunk[initial_position:initial_position+hp_mp_length])
-                initial_position = initial_position+ hp_mp_length
-            else:
-                seperated_chunks.append(chunk[initial_position:initial_position + stat_length])
-                initial_position = initial_position + stat_length
-        for i in range (1,33):
-            seperated_chunks.append(chunk[initial_position:initial_position + ability_length])
-            initial_position = initial_position + ability_length
-        return seperated_chunks
-
-
+command_global_chunks = get_big_chunks(segmentType="command")
 
 
 def initiate_abilities(valid_ability_pooling=False):
@@ -155,8 +122,9 @@ def initiate_abilities(valid_ability_pooling=False):
                 auto = Command(id_value=ability[0].upper(), name_value=ability[1], type_value="Auto-Ability")
                 abilities.append(auto)
     else:
-        for command in command_tuples:
+        for chunkindex, command in enumerate(command_tuples):
             cmd = Command(id_value=command[0],name_value=command[1],type_value="Command")
+            cmd.og_hex_chunk = command_global_chunks[chunkindex]
             abilities.append(cmd)
         for autoability in autoability_tuples:
             auto = Command(id_value=autoability[0].upper(),name_value=autoability[1],type_value="Auto-Ability")
@@ -178,59 +146,7 @@ def translate_ability(hex_byte: str):
     return "N/A"
 
 
-#Unused
-def initiate_dresspheres_legacy():
-    # Get the job file string
-    hex_string = job_bin_to_hex()
 
-    # Initiate dresspheres
-    dresspheres = []
-    for index, job in enumerate(jobs_names):
-        problematic_ids = [12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-
-        if index + 1 not in problematic_ids:
-            new_dressphere = Dressphere(job, index + 1)
-            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string)
-            dresspheres.append(new_dressphere)
-
-        # Trainer01
-        if index + 1 == 12:
-            new_dressphere = Dressphere(job, index + 1)
-            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=12)
-            dresspheres.append(new_dressphere)
-        # Mascot01
-        if index + 1 == 14:
-            new_dressphere = Dressphere(job, index + 1)
-            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=14)
-            dresspheres.append(new_dressphere)
-        # Trainer02and03
-        if index + 1 == 23 or index + 1 == 24 or index + 1 == 25 or index + 1 == 26:
-            new_dressphere = Dressphere(job, index + 1)
-            new_dressphere.hex_chunk = find_chunk(index + 1, hex_string, problematic_id=index + 1)
-            dresspheres.append(new_dressphere)
-
-    # Add formulae to dresspheres
-    for dressphere in dresspheres:
-        formulae = parse_chunk(dressphere.hex_chunk)
-        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
-        ability_initial_position = 0
-        for index, stat in enumerate(stat_names):
-            dressphere.stat_variables[stat] = formulae[index + 1]
-            ability_initial_position = index + 1
-        ability_initial_position = ability_initial_position + 1
-        ability_list = formulae[ability_initial_position:len(formulae)]
-        ability_hex_og_string = ""
-        for i in range (1, len(ability_list)):
-            if (i % 2) == 0 or (i==0):
-                pass
-            else:
-                # ORDER = (Required Ability, Actual Ability)
-                ability_hex_og_string = ability_hex_og_string + ability_list[i - 1]
-                ability_hex_og_string = ability_hex_og_string + ability_list[i]
-                ability_tuple = (ability_list[i - 1], ability_list[i])
-                dressphere.abilities.append(ability_tuple)
-        dressphere.ability_hex_og = ability_hex_og_string
-    return dresspheres
 
 
 def initiate_dresspheres_new():
@@ -249,9 +165,12 @@ def initiate_dresspheres_new():
         formulae = parse_chunk(dressphere.hex_chunk)
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
         ability_initial_position = 0
+        stat_hex_og_string = ""
         for index, stat in enumerate(stat_names):
+            stat_hex_og_string = stat_hex_og_string + formulae[index + 1]
             dressphere.stat_variables[stat] = formulae[index + 1]
             ability_initial_position = index + 1
+        dressphere.stat_hex_og = stat_hex_og_string
         ability_initial_position = ability_initial_position + 1
         ability_list = formulae[ability_initial_position:len(formulae)]
         ability_hex_og_string = ""
@@ -279,8 +198,8 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     no_ap_abilities =[]
 
     valid_abilities = initiate_abilities(valid_ability_pooling=True)
-    commands_to_shuffle = valid_abilities[0:266]
-    auto_abilities_to_shuffle = valid_abilities[266:len(valid_abilities)]
+    commands_to_shuffle = valid_abilities[0:256]
+    auto_abilities_to_shuffle = valid_abilities[256:len(valid_abilities)]
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
@@ -291,11 +210,12 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             pass
         else:
             this_dress_abilities = []
-            activated_abilities = [] #To make sure the ability braching always goes to the root
+            activated_abilities = [] #To make sure the ability branching always goes to the root
             output_abilities = [dress.abilities[0]]
             root_abilities = []
             for i in range(1,12):
                 new_command = commands_to_shuffle.pop()
+                new_command.job = dress.dress_name
                 this_dress_abilities.append(new_command)
             for i in range(1,5):
                 new_auto_ability = auto_abilities_to_shuffle.pop()
@@ -314,7 +234,7 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                     ability_to_add = this_dress_abilities[i].id
                     seed_increment = seed_increment + 1
                     ability_required = "0001"
-                elif random.Random(seed+seed_increment).randint(1, 100) < percent_chance_of_branch:
+                elif random.Random(seed+seed_increment).randint(1, 100) > percent_chance_of_branch:
                     if this_dress_abilities[i].id not in activated_abilities:
                         activated_abilities.append(this_dress_abilities[i].id)
                     ability_required = "0001"
@@ -341,6 +261,96 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     print("size after: " , len(commands_to_shuffle))
     print(len(auto_abilities_to_shuffle))
     return dresspheres_edited
+
+def randomize_stat_pool(stat_pool_values = list):
+    stat_pool = stat_pool_values
+    seed_increment = 1
+    for index, stat_pool_sublist in enumerate(stat_pool):
+        random.Random(seed).shuffle(stat_pool_sublist)
+        if index == 0 or index == 1:    # HP / MP
+            for jndex, stat_hex in enumerate(stat_pool_sublist):
+                var_A = int(stat_hex[0:2], 16) + ( random.Random(seed).randint(-5, 5) )
+                seed_increment = seed_increment + 1
+                if var_A > 81:
+                    var_A = 81
+                if var_A <= 4:
+                    var_A = 5
+
+                var_B = int(stat_hex[2:4], 16) + (random.Random(seed).randint(-5, 5))
+                seed_increment = seed_increment + 1
+                if var_B < 67:
+                    var_B = 67
+                if var_B > 200:
+                    var_B = 200
+
+
+                var_C = int(stat_hex[4:6], 16) + (random.Random(seed).randint(-50, 50))
+                seed_increment = seed_increment + 1
+                if var_C > 200:
+                    var_C = 200
+                if var_C < 50:
+                    var_C = 50
+
+                concat_vars = [hex(var_A)[2:4], hex(var_B)[2:4], hex(var_C)[2:4]]
+                for ccindex, hex_st in enumerate(concat_vars):
+                    if len(hex_st) == 1:
+                        concat_vars[ccindex] = "0" + hex_st
+                hex_output = concat_vars[0] + concat_vars[1] + concat_vars[2]
+                stat_pool[index][jndex] = hex_output
+
+        else:   # All other stats
+            for jndex, stat_hex in enumerate(stat_pool_sublist):
+                var_A = int(stat_hex[0:2], 16)
+                if var_A < 4:
+                    pass
+                else:
+                    var_A = var_A + (random.Random(seed).randint(-2, 2))
+                    seed_increment = seed_increment + 1
+                    if var_A <= 0:
+                        var_A = 1
+                    if var_A > 24:
+                        var_A = 24
+                var_A = round(var_A)
+
+                var_B = int(stat_hex[2:4], 16)
+                #var_B = round(var_B)
+
+                var_C = int(stat_hex[4:6], 16)
+                # + (random.Random(seed+seed_increment).randint(-2, 2))
+                # seed_increment = seed_increment + 1
+                # if var_C < 1:
+                #     var_C = 1
+                # if var_C > 30:
+                #     var_C = 30
+                # var_C = round(var_C)
+
+
+                var_D = int(stat_hex[6:8], 16)
+                #var_D = round(var_D)
+
+                var_E = int(stat_hex[8:10], 16) + (random.Random(seed+seed_increment).randint(5, 100))
+                seed_increment = seed_increment + 1
+                if var_E <= 0:
+                    var_E = 1
+                if var_E > 254:
+                    var_E = 254
+                var_E = round(var_E)
+
+                concat_vars = [hex(var_A)[2:4], hex(var_B)[2:4], hex(var_C)[2:4], hex(var_D)[2:4], hex(var_E)[2:4]]
+                pass
+                for ccindex, hex_st in enumerate(concat_vars):
+                    if len(hex_st) == 1:
+                        concat_vars[ccindex] = "0" + hex_st
+                hex_output = concat_vars[0] + concat_vars[1] + concat_vars[2] + concat_vars[3] + concat_vars[4]
+                stat_pool[index][jndex] = hex_output
+
+    return stat_pool
+
+
+
+
+
+
 
 
 #Initialization
@@ -376,28 +386,36 @@ print(valid_abilities_test)
 random_dresspheres_test = initiate_abilities(valid_ability_pooling=True)
 print(dresspheres[7].abilities)
 
+print("$$$$")
+print(randomize_stat_pool(pool_stats(dresspheres)))
+
+print("$$$$")
+
 dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=30)
 
 
 chunks_output = get_big_chunks(get_all_segments=True)
 dress_chunks = []
 county = 0
+dresspheres = replace_stats(dresspheres,randomize_stat_pool(pool_stats(dresspheres)))
+
+
 for dress in dresspheres:
 
     dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
+    dress.big_chunk = dress.big_chunk.replace(dress.stat_hex_og, dress.stat_hex)
     dress_chunks.append(dress.big_chunk)
 
 job_bin_string = chunks_output[0]
 for chunk in dress_chunks:
     job_bin_string = job_bin_string + chunk
 job_bin_string = job_bin_string + chunks_output[1][30] + chunks_output[2]
-print(job_bin_string)
+
 
 #TEST JOBBIN REPLACE
 
 
 print(dresspheres[0].abilities)
-dresspheres[0].stat_formula("STR", tableprint=True)
 print(dresspheres[0].stat_variables["STR"])
 for i in range (0,9):
     if i % 2 != 0:
@@ -406,11 +424,38 @@ for i in range (0,9):
         num = (dresspheres[0].stat_variables["STR"][i] + dresspheres[0].stat_variables["STR"][i+1]).replace(" ","")
         num = int(num, 16)
         print(num)
-# for dress in initiate_dresspheres_new():
-#     print(dress)
-#     for ability in dress.abilities:
-#         print(translate_ability(ability[1]))
+
+print(pool_stats(dresspheres))
+print(len(pool_stats(dresspheres)))
+for pool in pool_stats(dresspheres):
+    print(len(pool))
+
+
+
+
+for dress in replace_stats(dresspheres,randomize_stat_pool(pool_stats(dresspheres))):
+    dress.stat_formula("MAG", tableprint=True)
+
+
+
+for command in abilities:
+    print("************************")
+    print("ability id: " + command.id)
+    print("ability name: " + command.name)
+    print("************************")
+    print("------------------------")
+
+print(job_bin_string)
+
+print_jobs_edit = [8,9,11,12,13,14,15,16,17,18,19,20,21,496,497,498,499]
+print("****")
+for i in print_jobs_edit:
+    print(get_big_chunks(segmentType="command")[i])
+print("****")
+
+print(get_big_chunks(segmentType="command")[235])
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
+
 
 
 

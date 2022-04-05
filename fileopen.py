@@ -72,7 +72,7 @@ def cut_creature_english_names():
             pre_slice = line[5:27]
             pre_slice = re.sub(r"\s+", "", pre_slice, flags=re.UNICODE)
             creature_names.append(pre_slice)
-    with open("new_english_creature_names.txt", "w") as f:
+    with open("Obselete/new_english_creature_names.txt", "w") as f:
         for line in creature_names:
             f.write(line + "\n")
 

@@ -53,6 +53,15 @@ class Dressphere:
         self.__ability_hex_og = value
 
     @property
+    def stat_hex_og(self):
+        return self.__stat_hex_og
+
+    @stat_hex_og.setter
+    def stat_hex_og(self, value: str):
+        self.__stat_hex_og = value
+
+
+    @property
     def hex_chunk(self):
         return self.__hex_chunk
 
@@ -111,7 +120,7 @@ class Dressphere:
             if level == 99:
                 table.append(temp_list)
             if type == "HP":
-                variables = self.separate_stat_string(self.stat_variables[type],hpmp=True)
+                variables = self.separate_stat_string(self.__stat_variables[type],hpmp=True)
                 part1 = (level * variables["A"])+variables["C"]
                 part2 = (level**2) / (variables["B"]/10)
                 formula_result = part1 - part2
@@ -127,7 +136,7 @@ class Dressphere:
                     count = count + 1
                     temp_list.append(formula_output)
             if type == "MP":
-                variables = self.separate_stat_string(self.stat_variables[type],hpmp=True)
+                variables = self.separate_stat_string(self.__stat_variables[type],hpmp=True)
                 part1 = (level * (variables["A"]/10))+variables["C"]
                 part2 = (level**2) / (variables["B"])
                 formula_result = part1 - part2
@@ -143,7 +152,7 @@ class Dressphere:
                     count = count + 1
                     temp_list.append(formula_output)
             if type in stat_names:
-                variables = self.separate_stat_string(self.stat_variables[type])
+                variables = self.separate_stat_string(self.__stat_variables[type])
                 a_frac = variables["A"] / 10
                 part1 = level * a_frac
                 part2 = (level / variables["B"]) + variables["C"]
@@ -180,17 +189,36 @@ class Dressphere:
         self.__ability_hex = abilityhex
         return self.__ability_hex
 
+    @property
+    def stat_hex(self):
+        stathex = ""
+        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+        for stat in stat_names:
+            stathex = stathex + self.stat_variables[stat]
+        self.__stat_hex = stathex
+        return self.__stat_hex
+
     def change_ability(self, ability_index: int, ability: str):
         hex_byte_reverse = ability[2:4] + ability[0:2]
         hex_byte_reverse = hex_byte_reverse.lower()
         new_ability = (self.abilities[ability_index][0],hex_byte_reverse)
         self.abilities[ability_index] = new_ability
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
 
     def change_required_ability(self, ability_index: int, ability: str):
         hex_byte_reverse = ability[2:4] + ability[0:2]
         hex_byte_reverse = hex_byte_reverse.lower()
         new_required_ability = (hex_byte_reverse,self.abilities[ability_index][1])
         self.abilities[ability_index] = new_required_ability
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
 
     # def return_ability_hex(self):
     #     abilityhex = ""
