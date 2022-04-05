@@ -349,14 +349,14 @@ class Some_Widgets(GUI):  # inherits from the GUI class
                 optVariable = tk.StringVar(self.frame2)
                 optVariable.set("  Select   ")
                 all_ability_names = []
-                for ability in dressphere_execute.abilities:
+                for ability in dressphere_execute.global_abilities:
                     all_ability_names.append(ability.name)
                 optDropdown = tk.OptionMenu(self.frame2,optVariable,*all_ability_names)
                 optDropdown.pack(side='left', anchor='n')
 
 
 
-                for ability_tuple in dress.abilities:
+                for ability_tuple in dress.global_abilities:
                     print(dressphere_execute.translate_ability(ability_tuple[1]) + " requires " + dressphere_execute.translate_ability(ability_tuple[0]))
                     current = [dressphere_execute.translate_ability(ability_tuple[1]),dressphere_execute.translate_ability(ability_tuple[0])]
                     self.ability_tree.insert("", "end", values=current,text=current[0])

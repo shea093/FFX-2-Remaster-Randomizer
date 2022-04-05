@@ -59,6 +59,12 @@ class Command:
         else:
             return "Not found."
 
+    def search_by_name(self, name_value = int):
+        if name_value == str(self.__name):
+            return self.__id
+        else:
+            return "Not found."
+
     def __repr__(self):
         return f'<Ability ID = {self.__id}, Ability Name = {self.__name}, Type = {self.__type}>'
 

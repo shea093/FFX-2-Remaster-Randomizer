@@ -178,6 +178,7 @@
             new Command {ID = 0x30EC, Name = "Four Dice"},
             new Command {ID = 0x30ED, Name = "Luck"},
             new Command {ID = 0x30EE, Name = "Felicity"},
+            new Command {ID = 0x30EF, Name = "Tantalize"},
             new Command {ID = 0x30F0, Name = "Bribe"},
             new Command {ID = 0x30F1, Name = "Moogle Cure"},
             new Command {ID = 0x30F2, Name = "Moogle Regen"},

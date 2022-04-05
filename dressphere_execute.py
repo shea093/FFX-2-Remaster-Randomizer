@@ -132,13 +132,13 @@ def initiate_abilities(valid_ability_pooling=False):
     return abilities
 
 
-abilities = initiate_abilities()
+global_abilities = initiate_abilities()
 
 
 def translate_ability(hex_byte: str):
     hex_byte_reverse = hex_byte[2:4] + hex_byte[0:2]
     hex_byte_reverse = hex_byte_reverse.upper()
-    for ability in abilities:
+    for ability in global_abilities:
         if ability.search_by_id(hex_byte_reverse) != "Not found.":
             return ability.search_by_id(hex_byte_reverse)
         else:
@@ -198,12 +198,17 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     no_ap_abilities =[]
 
     valid_abilities = initiate_abilities(valid_ability_pooling=True)
-    commands_to_shuffle = valid_abilities[0:256]
-    auto_abilities_to_shuffle = valid_abilities[256:len(valid_abilities)]
+    commands_to_shuffle = valid_abilities[0:257]
+    auto_abilities_to_shuffle = valid_abilities[257:len(valid_abilities)]
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
     print("size before: ", len(commands_to_shuffle))
+
+
+    convert_to_mug = ["Pilfer Gil","Borrowed Time","Pilfer HP","Pilfer MP","Sticky Fingers","Master Thief","Soul Swipe","Steal Will","Flee","Tantalize","Bribe","Silence Mask","Darkness Mask",
+                      "Poison Mask", "Sleep Mask", "Stop Mask", "Petrify Mask"]
+    abilities_to_edit = []
 
     for dress in dresspheres_edited:
         if dress.dress_name in special_jobs:
@@ -215,8 +220,17 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             root_abilities = []
             for i in range(1,12):
                 new_command = commands_to_shuffle.pop()
+                if new_command.name in convert_to_mug:
+                    new_command.mug_flag = True
                 new_command.job = dress.dress_name
                 this_dress_abilities.append(new_command)
+                abilities_to_edit.append(new_command) #Might be useless
+
+                #Edit global ability flags
+                for f_index, flag_search in enumerate(global_abilities):
+                    if flag_search.id == new_command.id:
+                        global_abilities[f_index] = new_command
+
             for i in range(1,5):
                 new_auto_ability = auto_abilities_to_shuffle.pop()
                 this_dress_abilities.append(new_auto_ability)
@@ -368,7 +382,7 @@ print(dresspheres[0].hex_chunk)
 print(dresspheres[7].abilities)
 print(dresspheres[7].ability_hex)
 #Test change ability
-print(abilities[0].id)
+print(global_abilities[0].id)
 print(dresspheres[7].abilities)
 print(dresspheres[7].ability_hex)
 print(dresspheres[7].ability_hex_og)
@@ -438,7 +452,7 @@ for dress in replace_stats(dresspheres,randomize_stat_pool(pool_stats(dressphere
 
 
 
-for command in abilities:
+for command in global_abilities:
     print("************************")
     print("ability id: " + command.id)
     print("ability name: " + command.name)
@@ -452,8 +466,16 @@ print("****")
 for i in print_jobs_edit:
     print(get_big_chunks(segmentType="command")[i])
 print("****")
+print("****")
 
+for dress in dresspheres:
+    print(dress.dress_name)
+    print(dress.abilities)
+
+print("****")
+print("****")
 print(get_big_chunks(segmentType="command")[235])
+print("****")
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
