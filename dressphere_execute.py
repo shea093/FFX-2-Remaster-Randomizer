@@ -12,7 +12,7 @@ cmd_bin_path = "Test Files/command.bin"
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
-    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
+    "super-rikku1", "super-rikku2", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
 #previous seed: 111876967976853241
@@ -45,18 +45,19 @@ def get_big_chunks(get_all_segments=False, segmentType="job"):
     chunks.append(start_chunk)
     ending_chunk = ""
     if segmentType == "command":
-        for i in range(0, 554):
+        for i in range(0, 553):
             initial_position = next_position
             next_position = next_position + 280
             chunks.append(hex_file[initial_position:next_position])
-            if i == 553:
+            if i == 552 and get_all_segments == True:
                 ending_chunk = hex_file[next_position:len(hex_file)]
     elif segmentType == "job":
-        for i in range (1,31):
+        for i in range (0,30):
             initial_position = next_position
             next_position = next_position + 456
             chunks.append(hex_file[initial_position:next_position])
-            if i == 30 and get_all_segments == True:
+            useless = ""
+            if i == 29 and get_all_segments == True:
                 ending_chunk = hex_file[next_position:len(hex_file)]
     if get_all_segments == True:
         beginning_chunk = hex_file[0:520]
@@ -105,6 +106,8 @@ def cut_autoability_names():
 command_global_chunks = get_big_chunks(segmentType="command")
 
 
+#Initiates the list of abilities
+#valid_ability_pooling is an argument for shuffle_abilities() that returns only abilities that are intended to be shuffled
 def initiate_abilities(valid_ability_pooling=False):
     abilities = []
     if valid_ability_pooling == True:
@@ -161,6 +164,7 @@ def initiate_dresspheres_new():
         dresspheres.append(new_dressphere)
 
 
+
     for dressphere in dresspheres:
         formulae = parse_chunk(dressphere.hex_chunk)
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
@@ -192,7 +196,7 @@ def initiate_dresspheres_new():
 #   "Mask" abilities have problematic hex so those will not be in the ability pool
 def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50):
     special_jobs = ["super_yuna1", "super-yuna2", "super-yuna3",
-    "super-rikku1", "super-rikku3", "super_p    aine1", "super_paine2", "super_paine3"]
+    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3"]
     dresspheres_edited = dresspheres
 
     no_ap_abilities =[]
@@ -218,10 +222,11 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             activated_abilities = [] #To make sure the ability branching always goes to the root
             output_abilities = [dress.abilities[0]]
             root_abilities = []
+            mug_flaggu = False
             for i in range(1,12):
                 new_command = commands_to_shuffle.pop()
                 if new_command.name in convert_to_mug:
-                    new_command.mug_flag = True
+                    mug_flaggu = True
                 new_command.job = dress.dress_name
                 this_dress_abilities.append(new_command)
                 abilities_to_edit.append(new_command) #Might be useless
@@ -229,7 +234,9 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                 #Edit global ability flags
                 for f_index, flag_search in enumerate(global_abilities):
                     if flag_search.id == new_command.id:
-                        global_abilities[f_index] = new_command
+                        global_abilities[f_index].mug_flag = mug_flaggu
+                        global_abilities[f_index].job = dress.dress_name
+
 
             for i in range(1,5):
                 new_auto_ability = auto_abilities_to_shuffle.pop()
@@ -272,6 +279,14 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                 output_abilities.append(ability_tuple)
                 seed_increment = seed_increment + 1
             dress.abilities = output_abilities
+    print("CHECKU CHECKU")
+    print("CHECKU CHECKU")
+
+    for i in dresspheres_edited:
+        print(i)
+
+    print("CHECKU CHECKU")
+    print("CHECKU CHECKU")
     print("size after: " , len(commands_to_shuffle))
     print(len(auto_abilities_to_shuffle))
     return dresspheres_edited
@@ -361,6 +376,110 @@ def randomize_stat_pool(stat_pool_values = list):
     return stat_pool
 
 
+def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: list):
+    attack_motion_start_index = 24
+    attack_motion_stop_index = 24+2
+    sub_menu_action_start_index = 26     #00 for non-submenu
+    sub_menu_action_start_index = 26+2
+    sub_menu_start_index = 28
+    sub_menu_stop_index = 28+4
+
+    sub_shared_start_index = sub_menu_start_index-2
+    sub_shared_stop_index = sub_menu_stop_index
+
+    belongs_to_job_start_index = 272
+    belongs_to_job_stop_index = 272+4
+
+    # "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
+    # "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
+    # "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
+    # "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
+
+    the_0b0b_jobs = ["gunner", "gunmage","alchemist","darkknight","songstress", "thief", "trainer01", "gambler", "mascot01", "psychic", "festivalist01"]
+    the_0c0c_jobs = ["trainer02", "mascot02", "festivalist02"]
+    the_0d0d_jobs = ["trainer03","mascot03", "festilvalist03"]
+    shared_menu_abilities = ["Swordplay","Bushido","Arcana", "Instinct", "Black Magic", "White Magic","Festivities","Gunplay","Fiend Hunter","Blue Bullet","Dance",
+                             "Sing","Kupo!","Wildcat","Cutlery","Flimflam","Gamble", "Kogoro" ,"Ghiki","Flurry", "Psionics"]
+    edited_abilities = []
+    pass
+
+    for ability_index, ability in enumerate(ability_list):
+
+        if ability.job not in jobs_names or ability.job == "" or ability.type == "Auto-Ability" or ability.name in shared_menu_abilities:
+            edited_abilities.append(ability)
+        else:
+            chunk_edited = ability.og_hex_chunk
+            chunk_length = len(chunk_edited)
+            job_hex = ""
+            for dress_search in dresspheres:
+                a = ability.job
+                b = dress_search.dress_name
+                if a == b:
+                    poppy = "yes"
+                made_it="no"
+                if dress_search.dress_name == ability.job:
+                    job_hex = hex(dress_search.dress_id)
+                    made_it="yas"
+                    break
+            job_hex_sliced = str(job_hex[2:len(job_hex)])
+            useless = "breakpoint"
+            if len(job_hex_sliced) == 1:
+                job_hex_sliced = "0" + job_hex_sliced
+                pass
+            checku = ability.job
+            if ability.mug_flag == True:
+                chunk_edited = chunk_edited[0:attack_motion_start_index] + "00" + chunk_edited[attack_motion_stop_index:chunk_length]
+            if ability.job in the_0b0b_jobs:
+                chunk_edited = chunk_edited[0:sub_menu_start_index] + "0b0b" + chunk_edited[sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[belongs_to_job_stop_index:chunk_length]
+            if ability.job in the_0c0c_jobs:
+                chunk_edited = chunk_edited[0:sub_menu_start_index] + "0c0c" + chunk_edited[sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job in the_0d0d_jobs:
+                chunk_edited = chunk_edited[0:sub_menu_start_index] + "0d0d" + chunk_edited[sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "blackmage":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "whitemage":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000202" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "warrior":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "samurai":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "darkknight":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+            if ability.job == "berserker":
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000A0A" + chunk_edited[
+                                                                               sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+
+            if len(chunk_edited) != len(ability.og_hex_chunk):
+                print("Raise Alarum for: "+ability.name)
+                alarum = "bitch"
+            ability.curr_hex_chunk = chunk_edited
+            edited_abilities.append(ability)
+    return edited_abilities
+
+
+
 
 
 
@@ -369,8 +488,11 @@ def randomize_stat_pool(stat_pool_values = list):
 
 #Initialization
 dresspheres = initiate_dresspheres_new()
-
 print("_---------------------------")
+print(global_abilities[46].og_hex_chunk)
+print("_---------------------------")
+print("_---------------------------")
+
 print(dresspheres[7])
 print(dresspheres[7].stat_variables["MAG"])
 #0e 0a 11 12 01
@@ -405,8 +527,15 @@ print(randomize_stat_pool(pool_stats(dresspheres)))
 
 print("$$$$")
 
-dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=30)
-
+dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=70)
+print("$$$$")
+print("$$$$")
+print("$$$$")
+for dress in dresspheres:
+    print(dress.dress_name)
+print("$$$$")
+print("$$$$")
+print("$$$$")
 
 chunks_output = get_big_chunks(get_all_segments=True)
 dress_chunks = []
@@ -420,10 +549,12 @@ for dress in dresspheres:
     dress.big_chunk = dress.big_chunk.replace(dress.stat_hex_og, dress.stat_hex)
     dress_chunks.append(dress.big_chunk)
 
+dress_number = len(dress_chunks)
+
 job_bin_string = chunks_output[0]
 for chunk in dress_chunks:
     job_bin_string = job_bin_string + chunk
-job_bin_string = job_bin_string + chunks_output[1][30] + chunks_output[2]
+job_bin_string = job_bin_string + chunks_output[2]
 
 
 #TEST JOBBIN REPLACE
@@ -439,10 +570,10 @@ for i in range (0,9):
         num = int(num, 16)
         print(num)
 
-print(pool_stats(dresspheres))
-print(len(pool_stats(dresspheres)))
-for pool in pool_stats(dresspheres):
-    print(len(pool))
+# print(pool_stats(dresspheres))
+# print(len(pool_stats(dresspheres)))
+# for pool in pool_stats(dresspheres):
+#     print(len(pool))
 
 
 
@@ -452,35 +583,84 @@ for dress in replace_stats(dresspheres,randomize_stat_pool(pool_stats(dressphere
 
 
 
-for command in global_abilities:
-    print("************************")
-    print("ability id: " + command.id)
-    print("ability name: " + command.name)
-    print("************************")
-    print("------------------------")
+# for command in global_abilities:
+#     print("************************")
+#     print("ability id: " + command.id)
+#     print("ability name: " + command.name)
+#     print("************************")
+#     print("------------------------")
+
 
 print(job_bin_string)
 
-print_jobs_edit = [8,9,11,12,13,14,15,16,17,18,19,20,21,496,497,498,499]
-print("****")
-for i in print_jobs_edit:
-    print(get_big_chunks(segmentType="command")[i])
-print("****")
-print("****")
+# print_jobs_edit = [8,9,11,12,13,14,15,16,17,18,19,20,21,496,497,498,499]
+# print("****")
+# for i in print_jobs_edit:
+#     print(get_big_chunks(segmentType="command")[i])
+# print("****")
+# print("****")
 
-for dress in dresspheres:
-    print(dress.dress_name)
-    print(dress.abilities)
+# for dress in dresspheres:
+#     print(dress.dress_name)
+#     print(dress.abilities)
+
+# for cmd_search in global_abilities:
+#     print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+# print("****")
+# print("****")
+# print(get_big_chunks(segmentType="command")[235])
+# print("****")
+# print("****")
+# print("Length of og abilities: "+str(len(global_abilities)))
+
+
+global_abilities = change_ability_jobs_to_shuffled(dresspheres,global_abilities)
+
+
+
+print("Length of new abilities: "+str(len(global_abilities)))
 
 print("****")
 print("****")
-print(get_big_chunks(segmentType="command")[235])
+print("START")
+#MAKE STRING FOR COMMAND.BIN
+commands_shuffle_chunks = get_big_chunks(get_all_segments=True,segmentType="command")
+command_string_to_output = commands_shuffle_chunks[0]
+print("beg chunk: "+str(len(command_string_to_output)))
+for cmd_search in global_abilities:
+    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+    if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
+        # print("AB NOT FOUND:"+ cmd_search.name)
+        command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+    else:
+        if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Auto-Ability":
+            # print("NOT IN THE POOL: " + cmd_search.name)
+            command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+        command_string_to_output = command_string_to_output + cmd_search.curr_hex_chunk
+
+
+
+print("middle chunk: "+str(len(command_string_to_output)-64))
+command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
+print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
+print("all chunk: "+str(len(command_string_to_output)))
+
+print(command_string_to_output)
+
+# for command in global_abilities:
+#     print("************************")
+#     print("ability id: " + command.id)
+#     print("ability name: " + command.name)
+#     print("************************")
+#     print("------------------------")
+
 print("****")
 print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
-
-
+# for dress in dresspheres:
+#     print(dress.dress_name)
+#     print(dress.big_chunk)
 
 # big_chunky = test_randomize_big_chunks(4)
 # print_str=big_chunky[0]

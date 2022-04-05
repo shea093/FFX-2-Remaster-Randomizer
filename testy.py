@@ -2,8 +2,10 @@ from tabulate import tabulate
 import random
 import binascii
 
-listy = [1,2,3,4,5,6,7,8,9,10,11]
-print(listy[10:6])
+a = "festivalist02"
+b = "festivalist03"
+if a == b:
+    poppy="yes"
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E

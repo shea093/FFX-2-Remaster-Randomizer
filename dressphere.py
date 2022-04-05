@@ -29,6 +29,10 @@ class Dressphere:
             self.__stat_variables[stat_name] = 0
 
     @property
+    def dress_id(self):
+        return self.__dress_id
+
+    @property
     def stat_variables(self):
         return self.__stat_variables
 
