@@ -356,7 +356,7 @@ class Some_Widgets(GUI):  # inherits from the GUI class
 
 
 
-                for ability_tuple in dress.global_abilities:
+                for ability_tuple in dress.abilities:
                     print(dressphere_execute.translate_ability(ability_tuple[1]) + " requires " + dressphere_execute.translate_ability(ability_tuple[0]))
                     current = [dressphere_execute.translate_ability(ability_tuple[1]),dressphere_execute.translate_ability(ability_tuple[0])]
                     self.ability_tree.insert("", "end", values=current,text=current[0])

@@ -71,7 +71,7 @@ def pool_stats(dresspheres: list[Dressphere]):
     return stat_pool
 
 def replace_stats(dresspheres: list[Dressphere], stat_pool_values: list[list]):
-    randomized_output = dresspheres
+    randomized_output = dresspheres.copy()
     stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
     stat_pool = stat_pool_values
     for index, dress in enumerate(randomized_output):

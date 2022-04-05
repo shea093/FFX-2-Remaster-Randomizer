@@ -8,10 +8,19 @@ class Command:
         self.__ap = 0
         self.__job = ""
         self.__mug_flag = False
+        self.__repeat_flag = False
 
     @property
     def id(self):
         return self.__id
+
+    @property
+    def repeat_flag(self):
+        return self.__repeat_flag
+
+    @repeat_flag.setter
+    def repeat_flag(self, value: bool):
+        self.__repeat_flag = value
 
     @property
     def og_hex_chunk(self):

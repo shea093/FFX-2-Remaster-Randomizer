@@ -2,10 +2,12 @@ from tabulate import tabulate
 import random
 import binascii
 
-a = "festivalist02"
-b = "festivalist03"
-if a == b:
-    poppy="yes"
+a = [1,2]
+print(a.pop())
+print(a.pop())
+print(a.pop())
+print(a.pop())
+
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E

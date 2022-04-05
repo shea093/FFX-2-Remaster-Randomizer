@@ -16,7 +16,7 @@ jobs_names = [
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
 #previous seed: 111876967976853241
-seed = 14749849
+seed = 1934634
 
 
 def job_bin_to_hex():
@@ -202,16 +202,19 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     no_ap_abilities =[]
 
     valid_abilities = initiate_abilities(valid_ability_pooling=True)
-    commands_to_shuffle = valid_abilities[0:257]
-    auto_abilities_to_shuffle = valid_abilities[257:len(valid_abilities)]
+    commands_to_shuffle = valid_abilities[0:250]
+    auto_abilities_to_shuffle = valid_abilities[250:len(valid_abilities)]
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
     print("size before: ", len(commands_to_shuffle))
+    commands_to_shuffle_repeat = commands_to_shuffle.copy()
+    random.Random(seed+500).shuffle(commands_to_shuffle_repeat)
 
 
-    convert_to_mug = ["Pilfer Gil","Borrowed Time","Pilfer HP","Pilfer MP","Sticky Fingers","Master Thief","Soul Swipe","Steal Will","Flee","Tantalize","Bribe","Silence Mask","Darkness Mask",
+    convert_to_mug = ["Pilfer Gil","Borrowed Time","Pilfer HP","Pilfer MP","Sticky Fingers","Master Thief","Soul Swipe","Steal Will","Bribe", "Tantalize","Bribe","Silence Mask","Darkness Mask",
                       "Poison Mask", "Sleep Mask", "Stop Mask", "Petrify Mask"]
+    #ignored_abilities = []
     abilities_to_edit = []
 
     for dress in dresspheres_edited:
@@ -223,8 +226,13 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             output_abilities = [dress.abilities[0]]
             root_abilities = []
             mug_flaggu = False
+            repeat_flaggu = False
             for i in range(1,12):
-                new_command = commands_to_shuffle.pop()
+                try:
+                    new_command = commands_to_shuffle.pop()
+                except IndexError:
+                    new_command = commands_to_shuffle_repeat.pop()
+                    repeat_flaggu = True
                 if new_command.name in convert_to_mug:
                     mug_flaggu = True
                 new_command.job = dress.dress_name
@@ -235,7 +243,11 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                 for f_index, flag_search in enumerate(global_abilities):
                     if flag_search.id == new_command.id:
                         global_abilities[f_index].mug_flag = mug_flaggu
-                        global_abilities[f_index].job = dress.dress_name
+                        if repeat_flaggu == True:
+                            global_abilities[f_index].repeat_flag = True
+                        else:
+                            global_abilities[f_index].job = dress.dress_name
+                mug_flaggu = False
 
 
             for i in range(1,5):
@@ -292,10 +304,15 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     return dresspheres_edited
 
 def randomize_stat_pool(stat_pool_values = list):
-    stat_pool = stat_pool_values
+    stat_pool = stat_pool_values.copy()
     seed_increment = 1
+    for list in stat_pool:
+        seed_increment = seed_increment + 1
+        random.Random(seed+55000+seed_increment).shuffle(list)
+    test = ""
     for index, stat_pool_sublist in enumerate(stat_pool):
-        random.Random(seed).shuffle(stat_pool_sublist)
+        seed_increment = seed_increment + 1
+        random.Random(seed+seed_increment).shuffle(stat_pool_sublist)
         if index == 0 or index == 1:    # HP / MP
             for jndex, stat_hex in enumerate(stat_pool_sublist):
                 var_A = int(stat_hex[0:2], 16) + ( random.Random(seed).randint(-5, 5) )
@@ -377,10 +394,13 @@ def randomize_stat_pool(stat_pool_values = list):
 
 
 def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: list):
+    effect_animation_start_index = 16
+    effect_animation_stop_index = 16+8
     attack_motion_start_index = 24
     attack_motion_stop_index = 24+2
-    sub_menu_action_start_index = 26     #00 for non-submenu
-    sub_menu_action_start_index = 26+2
+
+    sub_menu_action_start_index = 26     #01 for submenu
+    sub_menu_action_stop_index = 26+2
     sub_menu_start_index = 28
     sub_menu_stop_index = 28+4
 
@@ -428,7 +448,10 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 pass
             checku = ability.job
             if ability.mug_flag == True:
-                chunk_edited = chunk_edited[0:attack_motion_start_index] + "00" + chunk_edited[attack_motion_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:attack_motion_start_index] + "03" + chunk_edited[attack_motion_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:effect_animation_start_index] + "52005200" + chunk_edited[effect_animation_stop_index:chunk_length]
+            if ability.repeat_flag == True:
+                chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "01" + chunk_edited[sub_menu_action_stop_index:chunk_length]
             if ability.job in the_0b0b_jobs:
                 chunk_edited = chunk_edited[0:sub_menu_start_index] + "0b0b" + chunk_edited[sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[belongs_to_job_stop_index:chunk_length]
@@ -489,30 +512,30 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
 #Initialization
 dresspheres = initiate_dresspheres_new()
 print("_---------------------------")
-print(global_abilities[46].og_hex_chunk)
+print(global_abilities[239].og_hex_chunk)
 print("_---------------------------")
 print("_---------------------------")
-
-print(dresspheres[7])
-print(dresspheres[7].stat_variables["MAG"])
-#0e 0a 11 12 01
-variable_str = "0e 0a 11 12 01"
-variable_str = variable_str.replace(" ", "")
-dresspheres[7].stat_variables["MAG"] = variable_str
-stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
-print(dresspheres[0].hex_chunk)
-print(dresspheres[7].abilities)
-print(dresspheres[7].ability_hex)
-#Test change ability
-print(global_abilities[0].id)
-print(dresspheres[7].abilities)
-print(dresspheres[7].ability_hex)
-print(dresspheres[7].ability_hex_og)
-for ability_tuple in dresspheres[7].abilities:
-    print (translate_ability(ability_tuple[1]) + " requires " + translate_ability(ability_tuple[0]))
-print(dresspheres[7].ability_hex)
-print(dresspheres[7].ability_hex_og)
-print(dresspheres[7].stat_variables)
+#
+# print(dresspheres[7])
+# print(dresspheres[7].stat_variables["MAG"])
+# #0e 0a 11 12 01
+# variable_str = "0e 0a 11 12 01"
+# variable_str = variable_str.replace(" ", "")
+# dresspheres[7].stat_variables["MAG"] = variable_str
+# stat_names = ["STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+# print(dresspheres[0].hex_chunk)
+# print(dresspheres[7].abilities)
+# print(dresspheres[7].ability_hex)
+# #Test change ability
+# print(global_abilities[0].id)
+# print(dresspheres[7].abilities)
+# print(dresspheres[7].ability_hex)
+# print(dresspheres[7].ability_hex_og)
+# for ability_tuple in dresspheres[7].abilities:
+#     print (translate_ability(ability_tuple[1]) + " requires " + translate_ability(ability_tuple[0]))
+# print(dresspheres[7].ability_hex)
+# print(dresspheres[7].ability_hex_og)
+# print(dresspheres[7].stat_variables)
 
 
 
@@ -560,15 +583,14 @@ job_bin_string = job_bin_string + chunks_output[2]
 #TEST JOBBIN REPLACE
 
 
-print(dresspheres[0].abilities)
-print(dresspheres[0].stat_variables["STR"])
-for i in range (0,9):
-    if i % 2 != 0:
-        pass
-    else:
-        num = (dresspheres[0].stat_variables["STR"][i] + dresspheres[0].stat_variables["STR"][i+1]).replace(" ","")
-        num = int(num, 16)
-        print(num)
+
+# for i in range (0,9):
+#     if i % 2 != 0:
+#         pass
+#     else:
+#         num = (dresspheres[0].stat_variables["STR"][i] + dresspheres[0].stat_variables["STR"][i+1]).replace(" ","")
+#         num = int(num, 16)
+#         print(num)
 
 # print(pool_stats(dresspheres))
 # print(len(pool_stats(dresspheres)))
@@ -578,8 +600,8 @@ for i in range (0,9):
 
 
 
-for dress in replace_stats(dresspheres,randomize_stat_pool(pool_stats(dresspheres))):
-    dress.stat_formula("MAG", tableprint=True)
+# for dress in replace_stats(dresspheres,randomize_stat_pool(pool_stats(dresspheres))):
+#     dress.stat_formula("MAG", tableprint=True)
 
 
 
