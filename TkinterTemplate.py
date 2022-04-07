@@ -169,7 +169,6 @@ class MenuBar(tk.Menu):
         self.add_cascade(label="Menu1", menu=menu_file)
         menu_file.add_command(label="All Widgets", command=lambda: parent.show_frame(Some_Widgets))
         menu_file.add_separator()
-        menu_file.add_command(label="Exit Application", command=lambda: parent.Quit_application())
 
         menu_orders = tk.Menu(self, tearoff=0)
         # self.add_cascade(label="Menu2", menu=menu_orders)
@@ -320,7 +319,6 @@ class Some_Widgets(GUI):  # inherits from the GUI class
 
     def OnClick(self, event):
         item = self.tree.identify('item', event.x, event.y)
-        print("you clicked on", self.tree.item(item, "text"))
         self.refresh_frame2()
         for dress in dressphere_execute.dresspheres:
             if dress.dress_name == self.tree.item(item, "text"):
@@ -357,7 +355,6 @@ class Some_Widgets(GUI):  # inherits from the GUI class
 
 
                 for ability_tuple in dress.abilities:
-                    print(dressphere_execute.translate_ability(ability_tuple[1]) + " requires " + dressphere_execute.translate_ability(ability_tuple[0]))
                     current = [dressphere_execute.translate_ability(ability_tuple[1]),dressphere_execute.translate_ability(ability_tuple[0])]
                     self.ability_tree.insert("", "end", values=current,text=current[0])
                     #self.ability_tree.bind("<Button-1>", self.OnClick)
@@ -422,11 +419,21 @@ class OpenNewWindow(tk.Tk):
         label1 = tk.Label(frame1, font=("Verdana", 20), text="OpenNewWindow Page")
         label1.pack(side="top")
 
+
 def initialize():
+
     top = MyApp()
     top.title("FFX-2 Stuff")
     root = MyApp()
     root.withdraw()
     root.title("Tkinter App Template")
+
+    def on_closing():
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            root.destroy()
+            top.destroy()
+
+    top.protocol("WM_DELETE_WINDOW", on_closing)
+    root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()

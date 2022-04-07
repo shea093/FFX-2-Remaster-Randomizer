@@ -1,7 +1,9 @@
 import TkinterTemplate
+import dressphere_execute
+import menu
 
 def main():
-    TkinterTemplate.initialize()
+    menu.main_menu()
 
 if __name__ == "__main__":
     main()

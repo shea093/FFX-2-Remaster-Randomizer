@@ -1,3 +1,8 @@
+**TO FIX**
+Gun mage has no sub menu, check Fiend Hunter
+Mix is a generic sub menu instead of a proper action
+
+
 *MON.GET*
 The monster files are 8C long
 Start right after the 646464 etc in the beginning of the hex file

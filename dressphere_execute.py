@@ -2,13 +2,20 @@ from dressphere import Dressphere
 import pathlib
 import time
 import random
+import binascii
 from command import Command
 from services import *
+
+#Menu
+
 
 start_time = time.time()
 #INPUT VARIABLES
 job_bin_path = "Test Files/job.bin"
 cmd_bin_path = "Test Files/command.bin"
+seed_path = "Test Files/seed.txt"
+output_jobbin_path = "Output Files/job.bin"
+output_cmdbin_path = "Output Files/command.bin"
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
@@ -16,8 +23,19 @@ jobs_names = [
     "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
     ]
 #previous seed: 111876967976853241
-seed = 1934634
+#659
 
+
+def read_seed():
+    seed = 0
+    with open(seed_path, 'r') as seed_file:
+        try:
+            seed = int(seed_file.read())
+        except:
+            print("Error reading seed.txt file, please make sure it contains a valid integer.")
+            exit()
+    return seed
+seed = read_seed()
 
 def job_bin_to_hex():
     job_bin = pathlib.Path(job_bin_path)
@@ -119,7 +137,7 @@ def initiate_abilities(valid_ability_pooling=False):
         for ability in valid_ability_tuples:
             if int(ability[0],16) <= 12841:
                 cmd = Command(id_value=ability[0], name_value=ability[1], type_value="Command")
-                print(cmd)
+                # print(cmd)
                 abilities.append(cmd)
             else:
                 auto = Command(id_value=ability[0].upper(), name_value=ability[1], type_value="Auto-Ability")
@@ -207,7 +225,7 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
     seed_increment = 1
-    print("size before: ", len(commands_to_shuffle))
+    # print("size before: ", len(commands_to_shuffle))
     commands_to_shuffle_repeat = commands_to_shuffle.copy()
     random.Random(seed+500).shuffle(commands_to_shuffle_repeat)
 
@@ -291,16 +309,16 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
                 output_abilities.append(ability_tuple)
                 seed_increment = seed_increment + 1
             dress.abilities = output_abilities
-    print("CHECKU CHECKU")
-    print("CHECKU CHECKU")
+    # print("CHECKU CHECKU")
+    # print("CHECKU CHECKU")
 
-    for i in dresspheres_edited:
-        print(i)
+    # for i in dresspheres_edited:
+    #     print(i)
 
-    print("CHECKU CHECKU")
-    print("CHECKU CHECKU")
-    print("size after: " , len(commands_to_shuffle))
-    print(len(auto_abilities_to_shuffle))
+    # print("CHECKU CHECKU")
+    # print("CHECKU CHECKU")
+    # print("size after: " , len(commands_to_shuffle))
+    # print(len(auto_abilities_to_shuffle))
     return dresspheres_edited
 
 def randomize_stat_pool(stat_pool_values = list):
@@ -315,14 +333,14 @@ def randomize_stat_pool(stat_pool_values = list):
         random.Random(seed+seed_increment).shuffle(stat_pool_sublist)
         if index == 0 or index == 1:    # HP / MP
             for jndex, stat_hex in enumerate(stat_pool_sublist):
-                var_A = int(stat_hex[0:2], 16) + ( random.Random(seed).randint(-5, 5) )
+                var_A = int(stat_hex[0:2], 16) + ( random.Random(seed+seed_increment).randint(-5, 5) )
                 seed_increment = seed_increment + 1
                 if var_A > 81:
                     var_A = 81
                 if var_A <= 4:
                     var_A = 5
 
-                var_B = int(stat_hex[2:4], 16) + (random.Random(seed).randint(-5, 5))
+                var_B = int(stat_hex[2:4], 16) + (random.Random(seed+seed_increment).randint(-5, 5))
                 seed_increment = seed_increment + 1
                 if var_B < 67:
                     var_B = 67
@@ -330,7 +348,7 @@ def randomize_stat_pool(stat_pool_values = list):
                     var_B = 200
 
 
-                var_C = int(stat_hex[4:6], 16) + (random.Random(seed).randint(-50, 50))
+                var_C = int(stat_hex[4:6], 16) + (random.Random(seed+seed_increment).randint(-50, 50))
                 seed_increment = seed_increment + 1
                 if var_C > 200:
                     var_C = 200
@@ -343,14 +361,13 @@ def randomize_stat_pool(stat_pool_values = list):
                         concat_vars[ccindex] = "0" + hex_st
                 hex_output = concat_vars[0] + concat_vars[1] + concat_vars[2]
                 stat_pool[index][jndex] = hex_output
-
         else:   # All other stats
             for jndex, stat_hex in enumerate(stat_pool_sublist):
                 var_A = int(stat_hex[0:2], 16)
                 if var_A < 4:
                     pass
                 else:
-                    var_A = var_A + (random.Random(seed).randint(-2, 2))
+                    var_A = var_A + (random.Random(seed+seed_increment).randint(-1, 1))
                     seed_increment = seed_increment + 1
                     if var_A <= 0:
                         var_A = 1
@@ -361,22 +378,22 @@ def randomize_stat_pool(stat_pool_values = list):
                 var_B = int(stat_hex[2:4], 16)
                 #var_B = round(var_B)
 
-                var_C = int(stat_hex[4:6], 16)
+                var_C = int(stat_hex[4:6], 16)+ (random.Random(seed+seed_increment).randint(-30, 30))
                 # + (random.Random(seed+seed_increment).randint(-2, 2))
                 # seed_increment = seed_increment + 1
-                # if var_C < 1:
-                #     var_C = 1
-                # if var_C > 30:
-                #     var_C = 30
+                if var_C < 1:
+                     var_C = 1
+                # if var_C > 30 and (index != 5 or index != 6):
+                #      var_C = 55
                 # var_C = round(var_C)
 
 
                 var_D = int(stat_hex[6:8], 16)
                 #var_D = round(var_D)
 
-                var_E = int(stat_hex[8:10], 16) + (random.Random(seed+seed_increment).randint(5, 100))
-                seed_increment = seed_increment + 1
-                if var_E <= 0:
+                var_E = int(stat_hex[8:10], 16) + (random.Random(seed+seed_increment).randint(-200, 200))
+                seed_increment = seed_increment + 15
+                if var_E <= 1:
                     var_E = 1
                 if var_E > 254:
                     var_E = 254
@@ -415,8 +432,8 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
     # "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     # "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
 
-    the_0b0b_jobs = ["gunner", "gunmage","alchemist","darkknight","songstress", "thief", "trainer01", "gambler", "mascot01", "psychic", "festivalist01"]
-    the_0c0c_jobs = ["trainer02", "mascot02", "festivalist02"]
+    the_0b0b_jobs = ["gunner","alchemist","darkknight","songstress", "thief", "trainer01", "gambler", "mascot01", "psychic", "festivalist01"]
+    the_0c0c_jobs = ["trainer02", "mascot02", "festivalist02", "gunmage"]
     the_0d0d_jobs = ["trainer03","mascot03", "festilvalist03"]
     shared_menu_abilities = ["Swordplay","Bushido","Arcana", "Instinct", "Black Magic", "White Magic","Festivities","Gunplay","Fiend Hunter","Blue Bullet","Dance",
                              "Sing","Kupo!","Wildcat","Cutlery","Flimflam","Gamble", "Kogoro" ,"Ghiki","Flurry", "Psionics"]
@@ -452,6 +469,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 chunk_edited = chunk_edited[0:effect_animation_start_index] + "52005200" + chunk_edited[effect_animation_stop_index:chunk_length]
             if ability.repeat_flag == True:
                 chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "01" + chunk_edited[sub_menu_action_stop_index:chunk_length]
+
             if ability.job in the_0b0b_jobs:
                 chunk_edited = chunk_edited[0:sub_menu_start_index] + "0b0b" + chunk_edited[sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[belongs_to_job_stop_index:chunk_length]
@@ -463,6 +481,8 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 chunk_edited = chunk_edited[0:sub_menu_start_index] + "0d0d" + chunk_edited[sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
                                                                                                     belongs_to_job_stop_index:chunk_length]
+            if ability.name == "Mix":
+                chunk_edited = chunk_edited[0:24] + "00090505" + chunk_edited[24+8:chunk_length]
             if ability.job == "blackmage":
                 chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
                                                                                sub_menu_stop_index:chunk_length]
@@ -484,7 +504,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
                                                                                                     belongs_to_job_stop_index:chunk_length]
             if ability.job == "darkknight":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
                                                                                sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
                                                                                                     belongs_to_job_stop_index:chunk_length]
@@ -511,11 +531,11 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
 
 #Initialization
 dresspheres = initiate_dresspheres_new()
-print("_---------------------------")
-print(global_abilities[239].og_hex_chunk)
-print("_---------------------------")
-print("_---------------------------")
-#
+# print("_---------------------------")
+# print(global_abilities[239].og_hex_chunk)
+# print("_---------------------------")
+# print("_---------------------------")
+# #
 # print(dresspheres[7])
 # print(dresspheres[7].stat_variables["MAG"])
 # #0e 0a 11 12 01
@@ -541,24 +561,24 @@ print("_---------------------------")
 
 valid_abilities_test = initiate_abilities(valid_ability_pooling=True)
 
-print(valid_abilities_test)
+# print(valid_abilities_test)
 random_dresspheres_test = initiate_abilities(valid_ability_pooling=True)
-print(dresspheres[7].abilities)
-
-print("$$$$")
-print(randomize_stat_pool(pool_stats(dresspheres)))
-
-print("$$$$")
+# print(dresspheres[7].abilities)
+#
+# print("$$$$")
+# print(randomize_stat_pool(pool_stats(dresspheres)))
+#
+# print("$$$$")
 
 dresspheres = shuffle_abilities(dresspheres,percent_chance_of_branch=70)
-print("$$$$")
-print("$$$$")
-print("$$$$")
-for dress in dresspheres:
-    print(dress.dress_name)
-print("$$$$")
-print("$$$$")
-print("$$$$")
+# print("$$$$")
+# print("$$$$")
+# print("$$$$")
+# for dress in dresspheres:
+#     print(dress.dress_name)
+# print("$$$$")
+# print("$$$$")
+# print("$$$$")
 
 chunks_output = get_big_chunks(get_all_segments=True)
 dress_chunks = []
@@ -580,6 +600,9 @@ for chunk in dress_chunks:
 job_bin_string = job_bin_string + chunks_output[2]
 
 
+
+    #                     with filepath.open(mode="wb") as f:
+    #                         f.write(binary_converted)
 #TEST JOBBIN REPLACE
 
 
@@ -613,7 +636,7 @@ job_bin_string = job_bin_string + chunks_output[2]
 #     print("------------------------")
 
 
-print(job_bin_string)
+# print(job_bin_string)
 
 # print_jobs_edit = [8,9,11,12,13,14,15,16,17,18,19,20,21,496,497,498,499]
 # print("****")
@@ -640,15 +663,9 @@ global_abilities = change_ability_jobs_to_shuffled(dresspheres,global_abilities)
 
 
 
-print("Length of new abilities: "+str(len(global_abilities)))
-
-print("****")
-print("****")
-print("START")
 #MAKE STRING FOR COMMAND.BIN
 commands_shuffle_chunks = get_big_chunks(get_all_segments=True,segmentType="command")
 command_string_to_output = commands_shuffle_chunks[0]
-print("beg chunk: "+str(len(command_string_to_output)))
 for cmd_search in global_abilities:
     # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
     if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
@@ -662,12 +679,14 @@ for cmd_search in global_abilities:
 
 
 
-print("middle chunk: "+str(len(command_string_to_output)-64))
+# print("middle chunk: "+str(len(command_string_to_output)-64))
 command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
-print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
-print("all chunk: "+str(len(command_string_to_output)))
+# print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
+# print("all chunk: "+str(len(command_string_to_output)))
+#
+# print(command_string_to_output)
+# print(global_abilities[88].og_hex_chunk)
 
-print(command_string_to_output)
 
 # for command in global_abilities:
 #     print("************************")
@@ -675,9 +694,21 @@ print(command_string_to_output)
 #     print("ability name: " + command.name)
 #     print("************************")
 #     print("------------------------")
+# print(dresspheres[0].stat_formula(type="STR",tableprint=True))
+# print(dresspheres[26].stat_formula(type="ACC",tableprint=True))
+# print("****")
 
-print("****")
-print("--- Completed in %s seconds ---" % (time.time() - start_time))
+def execute_randomizer():
+    binary_converted_jobbin = binascii.unhexlify(job_bin_string)
+    binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
+    with open(output_jobbin_path, 'wb') as f:
+        f.write(binary_converted_jobbin)
+    with open(output_cmdbin_path, 'wb') as f:
+        f.write(binary_converted_cmdbin)
+    print("Files written successfully!")
+
+
+# print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
 
 # for dress in dresspheres:
