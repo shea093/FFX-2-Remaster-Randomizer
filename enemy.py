@@ -7,9 +7,24 @@ class Enemy:
         self.__enemy_name = enemy_name_def
         self.__enemy_id = enemy_id
         self.__enemy_hex_data = enemy_hex_data_def
+        self.__curr_edited_hex_data = ""
         self.__stat_bank = {}
         self.__oversoul_stat_bank = {}
         self.__starting_position = starting_position
+        self.__experience = 0
+        self.__oversoul_experience = 0
+        self.__dropped_gil = 0
+        self.__stolen_gil = 0
+        self.__ap = 0
+        self.__item_drop_rate = 0
+        self.__steal_rate = 0
+        self.__item_drop = {"Normal": ["",""], "Rare": ["",""]}
+        self.__stolen_item = {"Normal": ["",""], "Rare": ["",""]}
+        self.__bribed_item = {"Normal": ["",""], "Rare": ["",""]}
+        self.__stat_hex_positions = []
+        self.__stat_hex_oversoul_positions = []
+        self.__extra_hex_positions = []
+        self.__extra_oversoul_positions = []
         for stat_name in stat_names:
             self.__stat_bank[stat_name] = 0
             self.__oversoul_stat_bank[stat_name] = 0
@@ -21,6 +36,110 @@ class Enemy:
     @property
     def enemy_id(self):
         return self.__enemy_id
+
+    @property
+    def ap(self):
+        return self.__ap
+
+    @ap.setter
+    def ap(self, value: int):
+        self.__ap = value
+
+    @property
+    def oversoul_experience(self):
+        return self.__oversoul_experience
+
+    @oversoul_experience.setter
+    def oversoul_experience(self, value: int):
+        self.__oversoul_experience = value
+
+    @property
+    def curr_edited_hex_data(self):
+        return self.__curr_edited_hex_data
+
+    @curr_edited_hex_data.setter
+    def curr_edited_hex_data(self, value: str):
+        self.__curr_edited_hex_data = value
+
+    @property
+    def extra_hex_positions(self):
+        return self.__extra_hex_positions
+
+    @extra_hex_positions.setter
+    def extra_hex_positions(self, value: list):
+        self.__extra_hex_positions = value
+
+    @property
+    def extra_oversoul_positions(self):
+        return self.__extra_oversoul_positions
+
+    @extra_oversoul_positions.setter
+    def extra_oversoul_positions(self, value: list):
+        self.__extra_oversoul_positions = value
+
+    @property
+    def item_drop_rate(self):
+        return self.__item_drop_rate
+
+    @item_drop_rate.setter
+    def item_drop_rate(self, value: int):
+        self.__item_drop_rate = value
+
+    @property
+    def steal_rate(self):
+        return self.__steal_rate
+
+    @steal_rate.setter
+    def steal_rate(self, value: int):
+        self.__steal_rate = value
+
+    @property
+    def item_drop(self):
+        return self.__item_drop
+
+    @item_drop.setter
+    def item_drop(self, value: dict):
+        self.__item_drop = value
+
+    @property
+    def stolen_item(self):
+        return self.__item_drop
+
+    @stolen_item.setter
+    def stolen_item(self, value: dict):
+        self.__stolen_item = value
+
+    @property
+    def bribed_item(self):
+        return self.__bribed_item
+
+    @bribed_item.setter
+    def bribed_item(self, value: dict):
+        self.__bribed_item = value
+
+    @property
+    def experience(self):
+        return self.__experience
+
+    @experience.setter
+    def experience(self, value: int):
+        self.__experience = value
+
+    @property
+    def dropped_gil(self):
+        return self.__dropped_gil
+
+    @dropped_gil.setter
+    def dropped_gil(self, value: int):
+        self.__dropped_gil = value
+
+    @property
+    def stolen_gil(self):
+        return self.__stolen_gil
+
+    @stolen_gil.setter
+    def stolen_gil(self, value: int):
+        self.__stolen_gil = value
 
     @property
     def enemy_hex_data(self):
@@ -116,7 +235,11 @@ class Enemy:
         position = self.enemy_hex_data.find(stat_hex)
         return position
 
-    def get_original_hex_stat_position(self):
+    def get_original_hex_stat_position(self, oversoul_bool=False):
+        if oversoul_bool == True:
+            stat_hex = self.output_HP_MP(formatted=False, oversoul=True)
+            position = self.enemy_hex_data.find(stat_hex)
+            return position
         stat_hex = self.output_HP_MP(formatted=False, oversoul=False)
         position = self.enemy_hex_data.find(stat_hex)
         return position

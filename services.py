@@ -81,6 +81,37 @@ def replace_stats(dresspheres: list[Dressphere], stat_pool_values: list[list]):
             pass
     return randomized_output
 
-#
+def reverse_four_bytes(byte_reverse: str):
+    reversed = byte_reverse[6:] + byte_reverse[4:6] + byte_reverse[2:4] + byte_reverse[0:2]
+    return reversed
 
+def reverse_two_bytes(byte_reverse: str):
+    reversed = byte_reverse[2:] + byte_reverse[0:2]
+    return reversed
 
+def search_items_by_id(item_list: list, id_value: str):
+    for item in item_list:
+        if str(id_value) == str(item.id):
+            return item
+    return None
+
+def convert_gamevariable_to_reversed_hex(value: int, bytecount=1):
+    output_prep = hex(value)
+    output_prep = output_prep[2:]
+    #1 Byte
+    if bytecount == 1:
+        output_prep = output_prep.zfill(2)
+        return output_prep
+    #2 Bytes
+    if bytecount == 2:
+        output_prep = output_prep.zfill(4)
+        output_prep = output_prep[2:] + output_prep[0:2]
+        return output_prep
+    if bytecount == 3:
+        output_prep = output_prep.zfill(6)
+        output_prep = output_prep[4:] + output_prep[2:4]+ output_prep[0:2]
+        return output_prep
+    if bytecount == 4:
+        output_prep = output_prep.zfill(8)
+        output_prep = output_prep[6:] + output_prep[4:6] + output_prep[2:4] + output_prep[0:2]
+        return output_prep

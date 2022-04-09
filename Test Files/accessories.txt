@@ -1,0 +1,128 @@
+9000 Iron Bangle
+9001 Titanium Bangle
+9002 Mythril Bangle
+9003 Crystal Bangle
+9004 Silver Bracer
+9005 Gold Bracer
+9006 Rune Bracer
+9007 Wristband
+9008 Power Wrist
+9009 Hyper Wrist
+900A Power Gloves
+900B Kaiser Knuckles
+900C Mythril Gloves
+900D Diamond Gloves
+900E Crystal Gloves
+900F Amulet
+9010 Tarot Card
+9011 Talisman
+9012 Pixie Dust
+9013 Crystal Ball
+9014 Defense Veil
+9015 Mystery Veil
+9016 Oath Veil
+9017 Gauntlets
+9018 Muscle Belt
+9019 Black Belt
+901A Champion Belt
+901B Tiara
+901C Circlet
+901D Hypno Crown
+901E Regal Crown
+901F Rabite's Foot
+9020 Fiery Gleam
+9021 Red Ring
+9022 NulBlaze Ring
+9023 Crimson Ring
+9024 Icy Gleam
+9025 White Ring
+9026 NulFrost Ring
+9027 Snow Ring
+9028 Lightning Gleam
+9029 Yellow Ring
+902A NulShock Ring
+902B Ochre Ring
+902C Water Ring
+902D Blue Ring
+902E NulTide Ring
+902F Cerulean Ring
+9030 Bloodlust
+9031 Wring
+9032 Black Ring
+9033 Freezerburn
+9034 Sublimator
+9035 Electrocutioner
+9036 Short Circuit
+9037 Tetra Gloves
+9038 Tetra Bracelet
+9039 Tetra Band
+903A Tetra Guard
+903B Mortal Shock
+903C Stone Shock
+903D Dream Shock
+903E Mute Shock
+903F Blind Shock
+9040 Venom Shock
+9041 Chaos Shock
+9042 Fury Shock
+9043 Lag Shock
+9044 System Shock
+9045 Angel Earrings
+9046 Gold Anklet
+9047 Twist Headband
+9048 White Cape
+9049 Silver Glasses
+904A Star Pendant
+904B Black Choker
+904C Potpourri
+904D Gris-Gris Bag
+904E Pearl Necklace
+904F Pretty Orb
+9050 Dragonfly Orb
+9051 Beaded Brooch
+9052 Glass Buckle
+9053 Faerie Earrings
+9054 Kinesis Badge
+9055 Safety Bit
+9056 Ribbon
+9057 Wall Ring
+9058 Favorite Outfit
+9059 Lure Bracer
+905A Regen Bangle
+905B Haste Bangle
+905C Moon Bracer
+905D Shining Bracer
+905E Star Bracer
+905F Defense Bracer
+9060 Recovery Bracer
+9061 Speed Bracer
+9062 Sword Lore
+9063 Bushido Lore
+9064 Arcane Lore
+9065 Nature's Lore
+9066 Black Lore
+9067 White Lore
+9068 Sword Tome
+9069 Bushido Tome
+906A Nature's Tome
+906B Arcane Tome
+906C White Tome
+906D Black Tome
+906E Sprint Shoes
+906F AP Egg
+9070 Cat's Bell
+9071 Wizard Bracelet
+9072 Charm Bangle
+9073 Gold Hairpin
+9074 Soul Of Thamasa
+9075 Heady Perfume
+9076 Shmooth Shailing
+9077 Key To Success
+9078 Minerva's Plate
+9079 Adamantite
+907A Force Of Nature
+907B Cat Nip
+907C Iron Duke
+907D Ragnarok
+907E Enterprise
+907F Invincible
