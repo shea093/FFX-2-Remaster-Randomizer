@@ -2,16 +2,15 @@ from tabulate import tabulate
 import random
 import binascii
 
+for i in range (0,100):
+    print("0"+str(i)+ ",")
 
 
 
 
 
-
-a = 255
-a = hex(a)
-
-print(a[2:].zfill(2))
+a = "teatgeaytgey"
+print(len(a))
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E

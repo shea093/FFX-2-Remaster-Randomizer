@@ -23,6 +23,14 @@ class Command:
         self.__repeat_flag = value
 
     @property
+    def ap(self):
+        return self.__ap
+
+    @ap.setter
+    def ap(self, value: int):
+        self.__ap = value
+
+    @property
     def og_hex_chunk(self):
         return self.__og_hex_chunk
 

@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 class Enemy:
-    def __init__(self, enemy_name_def: str, enemy_id: int, enemy_hex_data_def: str, starting_position=0):
+    def __init__(self, enemy_name_def: str, enemy_id: int, enemy_hex_data_def: str, starting_positions=[0,0]):
         stat_names = ["HP", "MP", "LV", "STR", "DEF", "MAG", "MDEF", "AGL", "ACC", "EVA", "LUCK"]
         self.__enemy_name = enemy_name_def
         self.__enemy_id = enemy_id
@@ -10,7 +10,7 @@ class Enemy:
         self.__curr_edited_hex_data = ""
         self.__stat_bank = {}
         self.__oversoul_stat_bank = {}
-        self.__starting_position = starting_position
+        self.__starting_positions = starting_positions
         self.__experience = 0
         self.__oversoul_experience = 0
         self.__dropped_gil = 0
@@ -44,6 +44,22 @@ class Enemy:
     @ap.setter
     def ap(self, value: int):
         self.__ap = value
+
+    @property
+    def stat_hex_positions(self):
+        return self.__stat_hex_positions
+
+    @stat_hex_positions.setter
+    def stat_hex_positions(self, value: list):
+        self.__stat_hex_positions = value
+
+    @property
+    def stat_hex_oversoul_positions(self):
+        return self.__stat_hex_oversoul_positions
+
+    @stat_hex_oversoul_positions.setter
+    def stat_hex_oversoul_positions(self, value: list):
+        self.__stat_hex_oversoul_positions = value
 
     @property
     def oversoul_experience(self):
@@ -154,8 +170,8 @@ class Enemy:
         return self.__oversoul_stat_bank
 
     @property
-    def starting_position(self):
-        return self.__starting_position
+    def starting_positions(self):
+        return self.__starting_positions
 
     @enemy_name.setter
     def enemy_name(self, value: str):
@@ -177,9 +193,9 @@ class Enemy:
     def oversoul_stat_bank(self, value: dict):
         self.__oversoul_stat_bank = value
 
-    @starting_position.setter
-    def starting_position(self, value: dict):
-        self.__starting_position = value
+    @starting_positions.setter
+    def starting_positions(self, value: list):
+        self.__starting_positions = value
 
     def output_HP_MP(self, formatted = False, oversoul = False):
         if oversoul == True:

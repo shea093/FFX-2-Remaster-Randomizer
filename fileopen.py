@@ -121,6 +121,7 @@ def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float,
         og_hex = enemy_object.get_original_hex_stat()
         og_oversoul_hex = enemy_object.get_original_hex_stat(oversoul_bool=True)
         new_enemy_instance = copy.deepcopy(enemy_object)
+        new_enemy_instance.starting_positions = [new_enemy_instance.get_original_hex_stat_position(), new_enemy_instance.get_original_hex_stat_position(oversoul_bool=True)]
         new_enemy_instance.stat_bank["HP"] = round(new_enemy_instance.stat_bank["HP"] * multiplier)
         new_enemy_instance.oversoul_stat_bank["HP"] = round(new_enemy_instance.oversoul_stat_bank["HP"] * oversoul_multiplier)
         new_hex = new_enemy_instance.output_HP_MP(formatted=False)
@@ -134,7 +135,7 @@ def redo_hex(enemy_object: Enemy, multiplier: float, oversoul_multiplier: float,
             print(str(enemy_object)," is bugged.")
         return new_enemy_instance
 
-def overwrite_HP_batch():
+def overwrite_HP_batch(enemies: list[Enemy]):
     new_enemies = []
     count_of_successful_changes = 0
     for enemy in enemies:
@@ -146,7 +147,8 @@ def overwrite_HP_batch():
                 new_enemies.append(redo_hex(enemy, 2.45, 2.45, oversoul_yesno=True))
                 count_of_successful_changes = count_of_successful_changes + 1
 
-    print("Count of successful changes: " + str(count_of_successful_changes))
+
+    return new_enemies
 
 def set_enemy_data(enemy_list: list[Enemy]):
     for enemy in enemy_list:
@@ -172,6 +174,10 @@ def set_enemy_data(enemy_list: list[Enemy]):
             curr_pos = curr_pos + 2
             enemy.stat_bank["LUCK"] = int(enemy.enemy_hex_data[curr_pos:curr_pos + 2], 16)
             curr_pos = curr_pos + 2
+            enemy.stat_hex_positions = [start_pos,start_pos+2,start_pos+2+2,start_pos+2+2+2,start_pos+2+2+2+2,
+                                        start_pos+2+2+2+2+2, start_pos+2+2+2+2+2+2, start_pos+2+2+2+2+2+2+2,
+                                        start_pos+2+2+2+2+2+2+2+2]
+
             exp_start_pos = enemy.get_original_hex_stat_position() + 296
             extra_hex_position0 = exp_start_pos
             experience_value = reverse_four_bytes(enemy.enemy_hex_data[exp_start_pos:exp_start_pos + 8])
@@ -209,10 +215,10 @@ def set_enemy_data(enemy_list: list[Enemy]):
 
             ...
 
-            start_pos = enemy.get_original_hex_stat_position(oversoul_bool=True) + len(
+            start_oversoul_pos = enemy.get_original_hex_stat_position(oversoul_bool=True) + len(
                 enemies[0].output_HP_MP(formatted=False, oversoul=True))
-            enemy.oversoul_stat_bank["LV"] = int(enemy.enemy_hex_data[start_pos:start_pos + 2], 16)
-            curr_pos = start_pos + 2
+            enemy.oversoul_stat_bank["LV"] = int(enemy.enemy_hex_data[start_oversoul_pos:start_oversoul_pos + 2], 16)
+            curr_pos = start_oversoul_pos + 2
             enemy.oversoul_stat_bank["STR"] = int(enemy.enemy_hex_data[curr_pos:curr_pos + 2], 16)
             curr_pos = curr_pos + 2
             enemy.oversoul_stat_bank["DEF"] = int(enemy.enemy_hex_data[curr_pos:curr_pos + 2], 16)
@@ -229,6 +235,11 @@ def set_enemy_data(enemy_list: list[Enemy]):
             curr_pos = curr_pos + 2
             enemy.oversoul_stat_bank["LUCK"] = int(enemy.enemy_hex_data[curr_pos:curr_pos + 2], 16)
             curr_pos = curr_pos + 2
+            enemy.stat_hex_oversoul_positions = [start_oversoul_pos, start_oversoul_pos + 2, start_oversoul_pos + 2 + 2, start_oversoul_pos + 2 + 2 + 2,
+                                        start_oversoul_pos + 2 + 2 + 2 + 2,
+                                        start_oversoul_pos + 2 + 2 + 2 + 2 + 2, start_oversoul_pos + 2 + 2 + 2 + 2 + 2 + 2,
+                                        start_oversoul_pos + 2 + 2 + 2 + 2 + 2 + 2 + 2,
+                                        start_oversoul_pos + 2 + 2 + 2 + 2 + 2 + 2 + 2]
             exp_start_pos = enemy.get_original_hex_stat_position(oversoul_bool=True) + 296
             oversoul_hex_pos = exp_start_pos
             experience_value = reverse_four_bytes(enemy.enemy_hex_data[exp_start_pos:exp_start_pos + 8])
@@ -303,6 +314,80 @@ def batch_strength_defence_overwrite(enemy_list: list[Enemy]):
 
         # Oversoul Experience multiplier
         enemy.oversoul_experience = int(enemy.oversoul_experience * 0.65)
+
+def overwrite_hex_data_str_def_exp(enemy_list: list[Enemy]):
+    return_list = enemy_list
+    for enemy in return_list:
+        if (enemy.starting_positions[0] < 1):
+            pass
+        elif len(enemy.curr_edited_hex_data) < 1:
+            pass
+        else:
+            compare_og = enemy.curr_edited_hex_data
+            first_chunk = enemy.curr_edited_hex_data[0:enemy.stat_hex_positions[1]]     #Index 1 because we don't want to edit LV (yet)
+            stat_list = [convert_gamevariable_to_reversed_hex(enemy.stat_bank["STR"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["DEF"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["MAG"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["MDEF"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["AGL"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["ACC"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["EVA"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.stat_bank["LUCK"],bytecount=1)]
+            stat_chunk = "".join(stat_list)
+            next_index = enemy.stat_hex_positions[1] + len(stat_chunk)
+            statend_to_exp_chunk = enemy.curr_edited_hex_data[next_index:enemy.extra_hex_positions[0]]
+            exp_chunk = convert_gamevariable_to_reversed_hex(enemy.experience,bytecount=4)
+            last_index = enemy.extra_hex_positions[0] + len(exp_chunk)
+            last_chunk = enemy.curr_edited_hex_data[last_index:]
+            combined = first_chunk + stat_chunk + statend_to_exp_chunk + exp_chunk + last_chunk
+            len1 = len(combined)
+            len2 = len(compare_og)
+            test = ""
+            if len(combined) != len(compare_og):
+                print(enemy)
+                print(len(combined))
+                print(len(compare_og))
+                raise ValueError
+            else:
+                enemy.curr_edited_hex_data = combined
+
+        ...
+
+        if (enemy.starting_positions[1] < 1):
+            pass
+        elif len(enemy.curr_edited_hex_data) < 1:
+            pass
+        else:
+            compare_og = enemy.curr_edited_hex_data
+            first_chunk = enemy.curr_edited_hex_data[0:enemy.stat_hex_oversoul_positions[1]]     #Index 1 because we don't want to edit LV (yet)
+            stat_list = [convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["STR"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["DEF"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["MAG"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["MDEF"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["AGL"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["ACC"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["EVA"],bytecount=1),
+                          convert_gamevariable_to_reversed_hex(enemy.oversoul_stat_bank["LUCK"],bytecount=1)]
+            stat_chunk = "".join(stat_list)
+            next_index = enemy.stat_hex_oversoul_positions[1] + len(stat_chunk)
+            statend_to_exp_chunk = enemy.curr_edited_hex_data[next_index:enemy.extra_oversoul_positions[0]]
+            exp_chunk = convert_gamevariable_to_reversed_hex(enemy.experience,bytecount=4)
+            last_index = enemy.extra_oversoul_positions[0] + len(exp_chunk)
+            last_chunk = enemy.curr_edited_hex_data[last_index:]
+            combined = first_chunk + stat_chunk + statend_to_exp_chunk + exp_chunk + last_chunk
+            len1 = len(combined)
+            len2 = len(compare_og)
+            test = ""
+            if len(combined) != len(compare_og):
+                print(enemy)
+                print(len(combined))
+                print(len(compare_og))
+                raise ValueError
+            else:
+                enemy.curr_edited_hex_data = combined
+
+
+
 
 
 
@@ -408,45 +493,51 @@ print(enemies[0].get_original_hex_stat_position())
 
 
 
-
+#IMPORTANT: For now please use Set_Enemy_data BEFORE overwrite HP batch!!!
+#Need to fix starting positions as currently set_enemy_data is using the get_og_starting_position function instead of the starting_position variable
 set_enemy_data(enemies)
-overwrite_HP_batch()
+enemies = overwrite_HP_batch(enemies)
 print(enemies[294])
 batch_strength_defence_overwrite(enemies)
 print(enemies[294])
 print(enemies[0].oversoul_experience)
 print(enemies[0].oversoul_stat_bank)
-###################
+print(enemies[0].stat_hex_positions)
+print(enemies[0].stat_hex_oversoul_positions)
+print(enemies[0].extra_hex_positions[0])
+print(enemies[0].extra_oversoul_positions[0])
+print("----")
+overwrite_hex_data_str_def_exp(enemies)
 
 
-
-
-
-
-
-#
 #WRITE ALL THE BIN FILES
-#
-# for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
-#     bin_name = str(directory.name[1:]) + ".bin"
-#     if bin_name not in mon_binlist_generator():
-#         pass
-#     # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
-#     #     print("please")
-#     #     print(new_enemies[index])
-#     else:
-#         id = int(directory.name[2:])
-#         for enemy in new_enemies:
-#             if enemy.enemy_id == id:
-#                 filepath = directory / bin_name
-#                 print("Enemy ID: " + str(enemy.enemy_id))
-#                 print("Bin name: "+ str(bin_name))
-#                 print(enemy.output_HP_MP(formatted=True, oversoul=False))
-#                 binary_converted = binascii.unhexlify(enemy.enemy_hex_data)
-#                 with filepath.open(mode="wb") as f:
-#                     f.write(binary_converted)
-#                 print("Done i think????")
-#
+
+for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
+    bin_name = str(directory.name[1:]) + ".bin"
+    if bin_name not in mon_binlist_generator():
+        pass
+    # elif int(directory.name[2:]) == new_enemies[int(directory.name[2:])].enemy_id:
+    #     print("please")
+    #     print(new_enemies[index])
+    else:
+        bad_ids = [194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,216,236,240,255,257,259,261,265,267,272,281,282,283,287,290,
+                   296,297,298,299,300,301,305,306,307,310,312,314,316,318,334,335,336,337,338,186,187,174,157,139,140,141,142,143,116,117,
+                   118,119,105,86,]
+        id = int(directory.name[2:])
+        if id in bad_ids:
+            pass
+        else:
+            for enemy in enemies:
+                if enemy.enemy_id == id:
+                    filepath = directory / bin_name
+                    print("Enemy ID: " + str(enemy.enemy_id))
+                    print("Bin name: "+ str(bin_name))
+                    print(enemy.output_HP_MP(formatted=True, oversoul=False))
+                    binary_converted = binascii.unhexlify(enemy.curr_edited_hex_data)
+                    with filepath.open(mode="wb") as f:
+                        f.write(binary_converted)
+                    print("Done i think????")
+
 # print(new_enemies[0].output_HP_MP(formatted=False, oversoul=False))
 # print(new_enemies[0].enemy_hex_data.find(new_enemies[0].output_HP_MP(formatted=False, oversoul=False)))
 

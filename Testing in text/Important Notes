@@ -1,6 +1,5 @@
 **TO FIX**
-Gun mage has no sub menu, check Fiend Hunter
-Mix is a generic sub menu instead of a proper action
+Dance menu needs to be changed to Sing, as ability cast time is taking forever and acting as a long "dance"
 
 
 *MON.GET*
@@ -88,7 +87,7 @@ D1 05 CB 00
 46 00 01 00
 00 00 00 00
 05 00 00 00
-00 00 78 00 00 00 00 01 00 00 00 02 3C 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 78 00 00 00 00 01 00 00 00 02 3C 0A 00 00 00 00 00 00 00 00 00 00 00 00 0000 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 10 00 00 00 00 00 00 05 00 01 00 00 00 00 01 1E 00 01 50 00 00
 
 
