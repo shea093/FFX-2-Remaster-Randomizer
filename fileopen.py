@@ -1,6 +1,5 @@
 import binascii
 import re
-import pickle
 import copy
 import item
 from services import *
@@ -275,8 +274,10 @@ def batch_strength_defence_overwrite(enemy_list: list[Enemy]):
 
         if enemy.stat_bank["MDEF"] < 30:
             pass
+        elif enemy.stat_bank["MDEF"] > 100:
+            enemy.stat_bank["MDEF"] = 100
         else:
-            new_mdef = int(enemy.stat_bank["DEF"]*0.58)
+            new_mdef = int(enemy.stat_bank["MDEF"]*0.58)
 
         enemy.stat_bank["DEF"] = new_def
         enemy.stat_bank["MDEF"] = new_mdef
