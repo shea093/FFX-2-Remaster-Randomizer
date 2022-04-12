@@ -6,9 +6,14 @@ class Command:
         self.__og_hex_chunk = ""
         self.__curr_hex_chunk = ""
         self.__ap = 0
+        self.__dmg_info = {}
         self.__job = ""
         self.__mug_flag = False
         self.__repeat_flag = False
+
+        dmg_info_names = ["MP Cost","Target HP/MP","Calc PS","Crit","Hit","Power"]
+        for name in dmg_info_names:
+            self.__dmg_info[name] = 0
 
     @property
     def id(self):
@@ -21,6 +26,14 @@ class Command:
     @repeat_flag.setter
     def repeat_flag(self, value: bool):
         self.__repeat_flag = value
+
+    @property
+    def dmg_info(self):
+        return self.__dmg_info
+
+    @dmg_info.setter
+    def dmg_info(self, value: dict):
+        self.__dmg_info = value
 
     @property
     def ap(self):

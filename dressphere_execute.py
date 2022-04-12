@@ -176,8 +176,10 @@ def initiate_abilities(valid_ability_pooling=False):
 
 
 global_abilities = initiate_abilities()
-print(global_abilities[45].id)
-print(global_abilities[45].og_hex_chunk)
+print(global_abilities[8].name)
+print(global_abilities[8].og_hex_chunk)
+print(global_abilities[31].name)
+print(global_abilities[31].og_hex_chunk)
 
 def set_ability_ap_batch():
     for ability in global_abilities:
@@ -196,9 +198,33 @@ def set_ability_ap_batch():
             else:
                 ability.ap = int(hex_input,16)
 
+def set_dmg_info_batch():
+    for ability in global_abilities:
+        if ability.type == "Command":
+            hex_cut = ability.og_hex_chunk[76:76+12]
+            nth = 2
+            hex_list = [hex_cut[i:i+nth] for i in range(0, len(hex_cut), nth)]
+            #dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
+            ability.dmg_info["MP Cost"] = int(hex_list[0], 16)
+            ability.dmg_info["Target HP/MP"] = int(hex_list[1], 16)
+            ability.dmg_info["Calc PS"] = int(hex_list[2], 16)
+            ability.dmg_info["Crit"] = int(hex_list[3], 16)
+            ability.dmg_info["Hit"] = int(hex_list[4], 16)
+            ability.dmg_info["Power"] = int(hex_list[5], 16)
+            test = ""
+
+def print_dmg_info():
+    for ability in global_abilities:
+        if ability.type == "Command":
+            print(ability.name + "\t " + "TARGET: " + str(ability.dmg_info["Target HP/MP"]) + "\t   " +
+                  "CALC_PS: " + str(ability.dmg_info["Calc PS"]) + "\t   " + "POWER: " +
+                  str(ability.dmg_info["Power"]) + "\t    " + "CRIT: " + str(ability.dmg_info["Crit"]))
+
 
 
 set_ability_ap_batch()
+set_dmg_info_batch()
+
 delete_autoability_indexes = []
 change_ap_indexes = []
 
