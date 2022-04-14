@@ -1,0 +1,495 @@
+tier1_abilities = [
+"Potshot","Cheap Shot","Enchanted Ammo","Target MP","Quarter Pounder","On the Level","Table-turner","Scan",
+"Shell Cracker",
+"Anti Aircraft",
+"Silver Bullet",
+"Flan Eater",
+"Elementillery",
+"Killasaurus",
+"Drake Slayer",
+"Dismantler",
+"Mech Destroyer",
+"Demon Muzzle",
+"Potion",
+"Hi-Potion",
+"Remedy",
+"Dispel Tonic",
+"Phoenix Down",
+"Sentinel",
+"Power Break",
+"Armor Break",
+"Magic Break",
+"Mental Break",
+"Flametongue",
+"Icebrand",
+"Thunder Blade",
+"Liquid Steel",
+"Delay Attack",
+"Mirror of Equity",
+"Magicide",
+"Dismissal",
+"Fingersnap",
+"No Fear",
+"Clean Slate",
+"Drain",
+"Demi",
+"Confuse",
+"Bio",
+"Envenom",
+"Darkness Dance",
+"Samba of Silence",
+"Berserk",
+"Cantus Firmus",
+"Esoteric Melody",
+"Disenchant",
+"Fire",
+"Blizzard",
+"Thunder",
+"Water",
+"Perfect Pitch",
+"Pray",
+"Vigor",
+"Cure",
+"Regen",
+"Reflect",
+"Pilfer Gil",
+"Borrowed Time",
+"Pilfer HP",
+"Pilfer MP",
+"Sticky Fingers",
+"Soul Swipe",
+"Steal Will",
+"Flee",
+"Kogoro Blaze",
+"Kogoro Freeze",
+"Kogoro Shock",
+"Kogoro Strike",
+"Kogoro Cure",
+"Ghiki Gouge",
+"Ghiki Gag",
+"Mugger Ghiki",
+"Pesky Ghiki",
+"Bully Ghiki",
+"Ghiki Meds",
+"Attack Reels",
+"Two Dice",
+"Poison Flurry",
+"Flurry Speed",
+"Luck",
+"Felicity",
+"Moogle Regen",
+"Power Eraser",
+"Armor Eraser",
+"Magic Eraser",
+"Mental Eraser",
+"Speed Eraser",
+"Dark Knife",
+"Silence Knife",
+"Poison Knife",
+"Mug",
+"Nab gil",
+"Haste",
+"Blind",
+"Silence",
+"Sleep",
+"Psycho Bomb",
+"Maser Eye",
+"Spinner",
+"Popper",
+"Twinkler",
+"Fountain",
+"Fire fish",
+"Ice fish",
+"Lightning fish",
+"Water fish",
+"Gravity fish",
+"Holy fish",
+"Silence Mask",
+"Darkness Mask",
+"Poison Mask",
+"Sleep Mask",
+"Esuna",
+"Life",
+"Magic Reels",
+"Scan"
+]
+
+tier2_abilities = [
+"Trigger Happy",
+"Burst Shot",
+"Scattershot",
+"Mega-Potion",
+"Demi Sword",
+"Excalibur",
+"Delay Buster",
+"Hastega",
+"Sparkler",
+"Momentum",
+"Nonpareil",
+"Hayate",
+"Spare Change",
+"Darkness",
+"Charon",
+"Doom",
+"Eject",
+"Unhinge",
+"Intimidate",
+"Sleepy Shuffle",
+"Slowdance",
+"Carnival Cancan",
+"Brakedance",
+"Jitterbug",
+"Fira",
+"Blizzara",
+"Thundara",
+"Watera",
+"Cura",
+"Shell",
+"Protect",
+"Dispel",
+"Item Reels",
+"Random Reels",
+"Four Dice",
+"Master Thief",
+"Doom Kogoro",
+"Kogoro Remedy",
+"Holy Kogoro",
+"Pound!",
+"Ghiki Pep",
+"Ghiki Cheer",
+"Sneaky Ghiki",
+"Swarm, Swarm!",
+"Brain Storm",
+"Time Trip",
+"Express",
+"Magic Guard",
+"Physics Guard",
+"Stop Mask",
+"Petrify Mask",
+"Assault",
+"Cripple",
+"Crackdown",
+"Hurt",
+"Battle Cry",
+"Focus",
+"MP Absorb",
+"Stone Flurry",
+"Death Flurry",
+"Flurry Guard",
+"Flurry Shield",
+"HP Flurry",
+"Recovery Flurry",
+"Carrier Flurry",
+"Maulwings!",
+"Tantalize",
+"Bribe",
+"Sleep Knife",
+"Berserk Knife",
+"Stop Knife",
+"Stone Knife",
+"Arsenic Knife",
+]
+
+
+tier3_abilities[
+"Blue Bullet",
+"Swordplay",
+"Bushido",
+"Arcana",
+"Instinct",
+"Black Magic",
+"White Magic",
+"Scatterburst",
+"Mix",
+"X-Potion",
+"Mega Phoenix",
+"Ether",
+"Elixir",
+"Shin-Zantetsu",
+"Fireworks",
+"Zantetsu",
+"Break",
+"Death",
+"Black Sky",
+"Howl",
+"Mad Rush",
+"MP Mambo",
+"Magical Masque",
+"Dirty Dancing",
+"Matador's Song",
+"Firaga",
+"Blizzaga",
+"Thundaga",
+"Waterga",
+"Curaga",
+"Full-Life",
+"Full-Cure",
+"Moogle Cure",
+"Moogle Wall",
+"Moogle Life",
+"Moogle Curema",
+"Moogle Regenja",
+"Moogle Wallja",
+"Moogle Lifeja",
+"Moogle Jolt",
+"Moogle Beam",
+"Cait Fire",
+"Cait Blizzard",
+"Cait Thunder",
+"Cait Water",
+"PuPu Platter",
+"Quartet Knife",
+"Cactling Gun",
+"Flare",
+"Ultima",
+"Holy",
+"Auto-Life",
+"Absorb MP",
+"Telekinesis",
+"Excellence",
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"First Strike"
+"Initiative"
+"Counterattack"
+"Evade & Counter"
+"Magic Counter"
+"Magic Booster"
+"Chemist"
+"Elementalist"
+"Physicist"
+"Double AP"
+"Triple AP"
+"Break HP Limit"
+"Break MP Limit"
+"Break Damage Limit"
+"Butterfingers"
+"Gillionaire"
+"Double Items"
+"Double EXP"
+"Item Hunter"
+"Piercing Magic"
+"HP Stroll"
+"MP Stroll"
+"HP/MP Stroll"
+"No Encounters"
+"Trigger Happy Lv.2"
+"Trigger Happy Lv.3"
+"Scan Lv.2"
+"Scan Lv.3"
+"Half MP Cost"
+"One MP Cost"
+"Fiend Hunter Lv.2"
+"Items Lv.2"
+"Black Magic Lv.2"
+"Black Magic Lv.3"
+"White Magic Lv.2"
+"White Magic Lv.3"
+"Kogoro Lv.2"
+"Kogoro Lv.3"
+"Ghiki Lv.2"
+"Ghiki Lv.3"
+"Flurry Lv.2"
+"Flurry Lv.3"
+"Firestrike"
+"Fire Ward"
+"Fireproof"
+"Fire Eater"
+"Icestrike"
+"Ice Ward"
+"Iceproof"
+"Ice Eater"
+"Lightningstrike"
+"Lightning Ward"
+"Lightningproof"
+"Lightning Eater"
+"Waterstrike"
+"Water Ward"
+"Waterproof"
+"Water Eater"
+"Gravitystrike"
+"Gravity Ward"
+"Gravityproof"
+"Gravity Eater"
+"Holystrike"
+"Holy Eater"
+"Fire/Ice Strike"
+"Fire/Ice Eater"
+"Lightning/Water Strike"
+"Lightning/Water Eater"
+"Tetrastrike"
+"Tetra Ward"
+"Tetraproof"
+"Tetra Eater"
+"Omnistrike"
+"Deathtouch"
+"Deathproof"
+"Stonetouch"
+"Stoneproof"
+"Sleeptouch"
+"Sleepproof"
+"Silencetouch"
+"Silenceproof"
+"Darktouch"
+"Darkproof"
+"Poisontouch"
+"Poisonproof"
+"Confusetouch"
+"Confuseproof"
+"Berserktouch"
+"Berserkproof"
+"Doomtouch"
+"Doomproof"
+"Curseproof"
+"Pointlessproof"
+"Itchproof"
+"Slowtouch"
+"Slowproof"
+"Stoptouch"
+"Stopproof"
+"Sense Preserver"
+"Health Preserver"
+"Sanity Preserver"
+"Time Preserver"
+"Life Preserver"
+"Ribbon"
+"Ribbon"
+"Super Ribbon"
+"Auto-Shell"
+"Auto-Protect"
+"Auto-Wall"
+"Auto-Reflect"
+"Auto-Regen"
+"Auto-Haste"
+"Critical"
+"Spellspring"
+"Double HP"
+"Triple HP"
+"SOS Shell"
+"SOS Protect"
+"SOS Reflect"
+"SOS Regen"
+"SOS Haste"
+"SOS Spellspring"
+"SOS ????"
+"SOS Critical"
+"Turbo Swordplay"
+"Turbo Bushido"
+"Turbo Arcana"
+"Turbo Instinct"
+"Turbo Black Magic"
+"Turbo White Magic"
+"Strength +5"
+"Defense +5"
+"Magic +5"
+"Magic Defense +5"
+"Strength +10"
+"Magic +10"
+"Defense +10"
+"Magic Defense +10"
+"Strength +15"
+"Magic +15"
+"Defense +15"
+"Magic Defense +15"
+"Strength +20"
+"Magic +20"
+"Defense +20"
+"Magic Defense +20"
+"Accuracy +20"
+"Agility +5"
+"Luck +30"
+"Kijo's Soul"
+"Majo's Soul"
+"Double All"
+"Double HP"
+"Double MP"
+"More Encounters"
+"SOS Wall"
+"Nitro Black Magic"
+"Poison/Sleep Attack"
+"Death/Pointless Def."
+"Ailment Def."
+"Tetra Absorb"
+"Total Limit Break"

@@ -5,6 +5,9 @@ import random
 import binascii
 from command import Command
 from services import *
+from abilty_tiers import tier1_abilities
+from abilty_tiers import tier2_abilities
+from abilty_tiers import tier3_abilities
 
 #Menu
 
@@ -176,10 +179,6 @@ def initiate_abilities(valid_ability_pooling=False):
 
 
 global_abilities = initiate_abilities()
-print(global_abilities[8].name)
-print(global_abilities[8].og_hex_chunk)
-print(global_abilities[31].name)
-print(global_abilities[31].og_hex_chunk)
 
 def set_ability_ap_batch():
     for ability in global_abilities:
@@ -322,6 +321,8 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
         delete_autoabilities.append(global_abilities[int(abilityindex)].name)
 
 
+
+
     convert_to_mug = ["Pilfer Gil","Borrowed Time","Pilfer HP","Pilfer MP","Sticky Fingers","Master Thief","Soul Swipe","Steal Will","Bribe", "Tantalize","Bribe","Silence Mask","Darkness Mask",
                       "Poison Mask", "Sleep Mask", "Stop Mask", "Petrify Mask"]
     #ignored_abilities = []
@@ -334,6 +335,8 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             this_dress_abilities = []
             activated_abilities = [] #To make sure the ability branching always goes to the root
             output_abilities = [dress.abilities[0]]
+            if dress.dress_name == "whitemage" or dress.dress_name == "blackmage":
+                output_abilities = [dresspheres_edited[0].abilities[0]]
             root_abilities = []
             mug_flaggu = False
             repeat_flaggu = False
@@ -526,7 +529,8 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
     # "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3", "trainer02", "trainer03", "mascot02",
     # "mascot03", "psychic", "festivalist01", "festivalist02", "festilvalist03"
 
-    the_0b0b_jobs = ["gunner","alchemist","darkknight", "thief", "trainer01", "gambler", "mascot01", "psychic", "festivalist01"]
+    the_0b0b_jobs = ["gunner","alchemist","darkknight", "thief", "trainer01", "gambler", "mascot01", "psychic", "festivalist01",
+                     "warrior", "samurai", "darkknight", "berserker","blackmage","whitemage"]
     the_0c0c_jobs = ["trainer02", "mascot02", "festivalist02", "gunmage","songstress"]
     the_0d0d_jobs = ["trainer03","mascot03", "festilvalist03"]
     shared_menu_abilities = ["Swordplay","Bushido","Arcana", "Instinct", "Black Magic", "White Magic","Festivities",
@@ -543,6 +547,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
         # hex_cut = ability.og_hex_chunk[268:268 + 4]
         # hex_cut = ability.og_hex_chunk[348:348 + 4]
 
+
         change_flag = False
         if ability_index in change_ap_indexes:
             change_flag = True
@@ -556,7 +561,63 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 ability.curr_hex_chunk = edited_chunk
 
         if ability.job not in jobs_names or ability.job == "" or ability.type == "Auto-Ability" or ability.name in shared_menu_abilities:
+            # 3 swordplay; 4 blm; 5 whm; 6 bushido; 7 arcana, 545 instinct
+            if ability_index == 3:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "1b4b3300" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0450" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
+            if ability_index == 4:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "ce467100" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0950" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
+            if ability_index == 5:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "63374f00" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0a50" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
+            if ability_index == 6:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "48474c00" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0550" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
+            if ability_index == 7:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "313f2b00" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0650" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
+            if ability_index == 545:
+                chunk_edited = ability.og_hex_chunk
+                chunk_length = len(chunk_edited)
+                chunk_edited = "50412900" + chunk_edited[8:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0750" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "110B0B" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                ability.curr_hex_chunk = chunk_edited
             edited_abilities.append(ability)
+
         else:
             if change_flag == False:
                 chunk_edited = ability.og_hex_chunk
@@ -582,7 +643,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
             checku = ability.job
             if ability.mug_flag == True:
                 chunk_edited = chunk_edited[0:attack_motion_start_index] + "03" + chunk_edited[attack_motion_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:effect_animation_start_index] + "0000000001" + chunk_edited[effect_animation_stop_index+2:chunk_length]
+                chunk_edited = chunk_edited[0:effect_animation_start_index] + "3903390322" + chunk_edited[effect_animation_stop_index+2:chunk_length]
             if ability.repeat_flag == True:
                 chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "01" + chunk_edited[sub_menu_action_stop_index:chunk_length]
             if ability.name in dance_abilities:
@@ -600,38 +661,90 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 chunk_edited = chunk_edited[0:sub_menu_start_index] + "0d0d" + chunk_edited[sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
                                                                                                     belongs_to_job_stop_index:chunk_length]
-            if ability.job == "blackmage":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
-            if ability.job == "whitemage":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000202" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
-            if ability.job == "warrior":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
-            if ability.job == "samurai":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
-            if ability.job == "darkknight":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
-            if ability.job == "berserker":
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000A0A" + chunk_edited[
-                                                                               sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
-                                                                                                    belongs_to_job_stop_index:chunk_length]
+            # if ability.job == "blackmage":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
+            # if ability.job == "whitemage":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000202" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
+            # # if ability.job == "warrior":
+            # #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
+            # #                                                                    sub_menu_stop_index:chunk_length]
+            # #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            # #                                                                                         belongs_to_job_stop_index:chunk_length]
+            #
+            #
+            # if ability.job == "warrior":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000B0B" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
+            #
+            #
+            #
+            # if ability.job == "samurai":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
+            # if ability.job == "darkknight":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
+            # if ability.job == "berserker":
+            #     chunk_edited = chunk_edited[0:sub_shared_start_index] + "000A0A" + chunk_edited[
+            #                                                                    sub_menu_stop_index:chunk_length]
+            #     chunk_edited = chunk_edited[0:belongs_to_job_start_index] + job_hex_sliced + "50" + chunk_edited[
+            #                                                                                         belongs_to_job_stop_index:chunk_length]
             if ability.name == "Mix":
                 chunk_edited = chunk_edited[0:16] + "0000000000090505" + chunk_edited[16+16:chunk_length]
+
+            #Swordplay
+            if ability_index >= 101 and ability_index < 113:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                                    belongs_to_job_stop_index:chunk_length]
+
+            # Black Magic
+            if (ability_index >= 165 and ability_index < 177) or ability_index == 369 or ability_index == 368:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
+
+            # White Magic
+            if (ability_index >= 179 and ability_index < 191) or ability_index == 370 or ability_index == 371:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000202" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
+
+            # Instinct
+            if ability_index > 138 and ability_index <= 147:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000A0A" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
+
+            # Bushido
+            if ability_index >= 113 and ability_index < 125:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
+
+            # Arcana
+            if ability_index >= 130 and ability_index < 137:
+                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
+                                                                                   sub_menu_stop_index:chunk_length]
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
 
             if len(chunk_edited) != len(ability.og_hex_chunk):
                 print("Raise Alarum for: "+ability.name)
@@ -650,6 +763,24 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
 
 #Initialization
 dresspheres = initiate_dresspheres_new()
+print(dresspheres[8])
+print(dresspheres[8].hex_chunk)
+print(dresspheres[9])
+print(dresspheres[9].hex_chunk)
+print(dresspheres[7])
+print(dresspheres[7].hex_chunk)
+print(dresspheres[1])
+print(dresspheres[1].hex_chunk)
+print(dresspheres[5])
+print(dresspheres[5].hex_chunk)
+global_abilities[3].og_hex_chunk = global_abilities[31].og_hex_chunk
+global_abilities[4].og_hex_chunk = global_abilities[31].og_hex_chunk
+global_abilities[5].og_hex_chunk = global_abilities[31].og_hex_chunk
+global_abilities[6].og_hex_chunk = global_abilities[31].og_hex_chunk
+global_abilities[7].og_hex_chunk = global_abilities[31].og_hex_chunk
+global_abilities[545].og_hex_chunk = global_abilities[31].og_hex_chunk
+
+
 # print("_---------------------------")
 # print(global_abilities[239].og_hex_chunk)
 # print("_---------------------------")
@@ -676,7 +807,8 @@ dresspheres = initiate_dresspheres_new()
 # print(dresspheres[7].ability_hex_og)
 # print(dresspheres[7].stat_variables)
 
-
+print(global_abilities[107])
+print(global_abilities[107].og_hex_chunk)
 
 valid_abilities_test = initiate_abilities(valid_ability_pooling=True)
 
@@ -717,7 +849,6 @@ job_bin_string = chunks_output[0]
 for chunk in dress_chunks:
     job_bin_string = job_bin_string + chunk
 job_bin_string = job_bin_string + chunks_output[2]
-
 
 
     #                     with filepath.open(mode="wb") as f:

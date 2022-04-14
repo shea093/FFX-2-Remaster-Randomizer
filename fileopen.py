@@ -306,7 +306,7 @@ def batch_strength_defence_overwrite(enemy_list: list[Enemy]):
         if enemy.stat_bank["MDEF"] < 30:
             pass
         else:
-            new_mdef = int(enemy.oversoul_stat_bank["DEF"] * 0.58)
+            new_mdef = int(enemy.oversoul_stat_bank["MDEF"] * 0.58)
 
         enemy.oversoul_stat_bank["DEF"] = new_def
         enemy.oversoul_stat_bank["MDEF"] = new_mdef
@@ -339,9 +339,6 @@ def overwrite_hex_data_str_def_exp(enemy_list: list[Enemy]):
             last_index = enemy.extra_hex_positions[0] + len(exp_chunk)
             last_chunk = enemy.curr_edited_hex_data[last_index:]
             combined = first_chunk + stat_chunk + statend_to_exp_chunk + exp_chunk + last_chunk
-            len1 = len(combined)
-            len2 = len(compare_og)
-            test = ""
             if len(combined) != len(compare_og):
                 print(enemy)
                 print(len(combined))

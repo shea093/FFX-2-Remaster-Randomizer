@@ -1,6 +1,6 @@
 **TO FIX**
-Dance menu needs to be changed to Sing, as ability cast time is taking forever and acting as a long "dance"
-
+Need to default Black Mage and White Mage's first skill to Attack.  White mage is technically safe as it not a part of a shared menu,
+unlike Fire, but giving both Attack would be cool.
 
 *MON.GET*
 The monster files are 8C long
@@ -73,6 +73,9 @@ Attack?
 33 04 00 00 52 00 01 20 00 00 00 00 05 00 00 00 00 00 46 00 00 00 00 01 00 00 00 10 01 32 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 10 00 00 00 00 00 00 01 00 01 01 00 00 00 00 14 00 01 50 00 00
 
+
+WARRIOR TEXT
+FF 00 04 54 2D 30 2E B7
 
 
 MENUS:
@@ -323,3 +326,15 @@ B4 04 64 00
             new Command {ID = 0x301E, Name = "Sinistal Arts"},
             new Command {ID = 0x301F, Name = "Swordplay"},
             new Command {ID = 0x3020, Name = "Bushido"},
+
+5110
+6f00
+5f10
+b000
+3903
+3903
+2200
+0606
+3300
+0000560021600100000005000000000000004600040100000014016404000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d0000000500005401110211000001140004500000
