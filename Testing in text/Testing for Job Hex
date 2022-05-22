@@ -100,3 +100,27 @@ OFFSETS:
 510: 8 shorts (8*4)
 520: 8 shorts (8*4)
 530: 8 shorts (8*4)
+
+
+
+044 = {Command} <Ability ID = 302C, Ability Name = Attack, Type = Command>
+045 = {Command} <Ability ID = 302D, Ability Name = Attack, Type = Command>
+046 = {Command} <Ability ID = 302E, Ability Name = Attack, Type = Command>
+047 = {Command} <Ability ID = 302F, Ability Name = Attack, Type = Command>
+048 = {Command} <Ability ID = 3030, Ability Name = Attack, Type = Command>
+049 = {Command} <Ability ID = 3031, Ability Name = Attack, Type = Command>
+372 = {Command} <Ability ID = 3174, Ability Name = Mug, Type = Command>
+373 = {Command} <Ability ID = 3175, Ability Name = Nab gil, Type = Command>
+165 = {Command} <Ability ID = 30A5, Ability Name = Fire, Type = Command>
+166 = {Command} <Ability ID = 30A6, Ability Name = Blizzard, Type = Command>
+167 = {Command} <Ability ID = 30A7, Ability Name = Thunder, Type = Command>
+168 = {Command} <Ability ID = 30A8, Ability Name = Water, Type = Command>
+169 = {Command} <Ability ID = 30A9, Ability Name = Fira, Type = Command>
+170 = {Command} <Ability ID = 30AA, Ability Name = Blizzara, Type = Command>
+171 = {Command} <Ability ID = 30AB, Ability Name = Thundara, Type = Command>
+172 = {Command} <Ability ID = 30AC, Ability Name = Watera, Type = Command>
+173 = {Command} <Ability ID = 30AD, Ability Name = Firaga, Type = Command>
+174 = {Command} <Ability ID = 30AE, Ability Name = Blizzaga, Type = Command>
+175 = {Command} <Ability ID = 30AF, Ability Name = Thundaga, Type = Command>
+176 = {Command} <Ability ID = 30B0, Ability Name = Waterga, Type = Command>
+<Ability ID = 3050, Ability Name = Cry in the Night, Type = Command> = "CALC_PS 9" SPECIAL MAGIC

@@ -6,8 +6,8 @@ import binascii
 from command import Command
 from services import *
 from abilty_tiers import tier1_abilities
-from abilty_tiers import tier2_abilities
-from abilty_tiers import tier3_abilities
+# from abilty_tiers import tier2_abilities
+# from abilty_tiers import tier3_abilities
 
 #Menu
 
@@ -179,6 +179,7 @@ def initiate_abilities(valid_ability_pooling=False):
 
 
 global_abilities = initiate_abilities()
+test = ""
 
 def set_ability_ap_batch():
     for ability in global_abilities:
@@ -200,7 +201,7 @@ def set_ability_ap_batch():
 def set_dmg_info_batch():
     for ability in global_abilities:
         if ability.type == "Command":
-            hex_cut = ability.og_hex_chunk[76:76+12]
+            hex_cut = ability.og_hex_chunk[76:76+14]
             nth = 2
             hex_list = [hex_cut[i:i+nth] for i in range(0, len(hex_cut), nth)]
             #dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
@@ -210,12 +211,13 @@ def set_dmg_info_batch():
             ability.dmg_info["Crit"] = int(hex_list[3], 16)
             ability.dmg_info["Hit"] = int(hex_list[4], 16)
             ability.dmg_info["Power"] = int(hex_list[5], 16)
+            ability.dmg_info["Number of Attacks"] = int(hex_list[6], 16)
             test = ""
 
-def print_dmg_info():
+def print_dmg_info(type=None):
     for ability in global_abilities:
         if ability.type == "Command":
-            print(ability.name + "\t " + "TARGET: " + str(ability.dmg_info["Target HP/MP"]) + "\t   " +
+            print(str(ability.id) + "; " + ability.name + "\t " + "TARGET: " + str(ability.dmg_info["Target HP/MP"]) + "\t   " +
                   "CALC_PS: " + str(ability.dmg_info["Calc PS"]) + "\t   " + "POWER: " +
                   str(ability.dmg_info["Power"]) + "\t    " + "CRIT: " + str(ability.dmg_info["Crit"]))
 
@@ -223,6 +225,8 @@ def print_dmg_info():
 
 set_ability_ap_batch()
 set_dmg_info_batch()
+test = ""
+
 
 delete_autoability_indexes = []
 change_ap_indexes = []
@@ -242,8 +246,14 @@ def replace_ap_with_file_changes():
                     change_ap_indexes.append(int(ap_check[0]))
                     global_abilities[int(ap_check[0])].ap = int(ap_check[1])
 
-replace_ap_with_file_changes()
+def batch_AP_multiply():
 
+    for ability in global_abilities:
+        if isinstance(ability.ap,int) and ability.ap > 0:
+          ability.ap = round(ability.ap * 1.75)
+
+replace_ap_with_file_changes()
+batch_AP_multiply()
 
 def translate_ability(hex_byte: str):
     hex_byte_reverse = hex_byte[2:4] + hex_byte[0:2]
@@ -321,6 +331,10 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
         delete_autoabilities.append(global_abilities[int(abilityindex)].name)
 
 
+    #Ability tiers
+    tier1_ability_repeats = tier1_abilities.copy()
+    tier2_ability_repeats = tier1_abilities.copy()
+    tier3_ability_repeats = tier1_abilities.copy()
 
 
     convert_to_mug = ["Pilfer Gil","Borrowed Time","Pilfer HP","Pilfer MP","Sticky Fingers","Master Thief","Soul Swipe","Steal Will","Bribe", "Tantalize","Bribe","Silence Mask","Darkness Mask",
@@ -336,7 +350,11 @@ def shuffle_abilities(dresspheres: list[Dressphere], percent_chance_of_branch=50
             activated_abilities = [] #To make sure the ability branching always goes to the root
             output_abilities = [dress.abilities[0]]
             if dress.dress_name == "whitemage" or dress.dress_name == "blackmage":
-                output_abilities = [dresspheres_edited[0].abilities[0]]
+                output_abilities = [dresspheres_edited[1].abilities[0]]
+            #Attempt to make gunner Physical
+            if dress.dress_name == "gunner":
+                output_abilities = [dresspheres_edited[3].abilities[0]]
+
             root_abilities = []
             mug_flaggu = False
             repeat_flaggu = False
@@ -461,15 +479,15 @@ def randomize_stat_pool(stat_pool_values = list):
         else:   # All other stats
             for jndex, stat_hex in enumerate(stat_pool_sublist):
                 var_A = int(stat_hex[0:2], 16)
-                if var_A < 4:
-                    pass
-                else:
-                    var_A = var_A + (random.Random(seed+seed_increment).randint(-1, 1))
-                    seed_increment = seed_increment + 1
-                    if var_A <= 0:
-                        var_A = 1
-                    if var_A > 24:
-                        var_A = 24
+                # if var_A < 4:
+                #     pass
+                # else:
+                #     var_A = var_A + (random.Random(seed+seed_increment).randint(-1, 1))
+                #     seed_increment = seed_increment + 1
+                #     if var_A <= 0:
+                #         var_A = 1
+                #     if var_A > 24:
+                #         var_A = 24
                 var_A = round(var_A)
 
                 var_B = int(stat_hex[2:4], 16)
@@ -477,9 +495,16 @@ def randomize_stat_pool(stat_pool_values = list):
 
                 var_C = int(stat_hex[4:6], 16)+ (random.Random(seed+seed_increment).randint(-30, 30))
                 # + (random.Random(seed+seed_increment).randint(-2, 2))
-                # seed_increment = seed_increment + 1
+                seed_increment = seed_increment + 1
                 if var_C < 1:
                      var_C = 1
+                if index == 6:
+                    if var_C < 25:
+                        var_C = 25
+                    if var_C > 61:
+                        var_C = 61
+                if var_C > 129:
+                    var_C = 129
                 # if var_C > 30 and (index != 5 or index != 6):
                 #      var_C = 55
                 # var_C = round(var_C)
@@ -488,7 +513,7 @@ def randomize_stat_pool(stat_pool_values = list):
                 var_D = int(stat_hex[6:8], 16)
                 #var_D = round(var_D)
 
-                var_E = int(stat_hex[8:10], 16) + (random.Random(seed+seed_increment).randint(-200, 200))
+                var_E = int(stat_hex[8:10], 16) + (random.Random(seed+seed_increment).randint(-20, 255))
                 seed_increment = seed_increment + 15
                 if var_E <= 1:
                     var_E = 1
@@ -644,8 +669,10 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
             if ability.mug_flag == True:
                 chunk_edited = chunk_edited[0:attack_motion_start_index] + "03" + chunk_edited[attack_motion_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:effect_animation_start_index] + "3903390322" + chunk_edited[effect_animation_stop_index+2:chunk_length]
-            if ability.repeat_flag == True:
-                chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "01" + chunk_edited[sub_menu_action_stop_index:chunk_length]
+
+
+            if ability.name == "Ultima" or ability.name == "Holy":
+                chunk_edited = chunk_edited[0:40] + "56000120" + chunk_edited[40+8:chunk_length]
             if ability.name in dance_abilities:
                 chunk_edited = chunk_edited[0:attack_motion_start_index] + "03" + chunk_edited[
                                                                                   attack_motion_stop_index:chunk_length]
@@ -704,6 +731,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
             if ability.name == "Mix":
                 chunk_edited = chunk_edited[0:16] + "0000000000090505" + chunk_edited[16+16:chunk_length]
 
+
             #Swordplay
             if ability_index >= 101 and ability_index < 113:
                 chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
@@ -732,6 +760,7 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
                                                                                      belongs_to_job_stop_index:chunk_length]
 
+
             # Bushido
             if ability_index >= 113 and ability_index < 125:
                 chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
@@ -740,15 +769,28 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
                                                                                      belongs_to_job_stop_index:chunk_length]
 
             # Arcana
-            if ability_index >= 130 and ability_index < 137:
+            if (ability_index >= 129 and ability_index < 137) or (ability_index >= 376 and ability_index <= 378):
                 chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
                                                                                    sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
                                                                                      belongs_to_job_stop_index:chunk_length]
 
+            shared_abi_indexes = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+                                  111, 112, 165, 166, 167, 168, 169, 170, 171, 172, 173,
+                                  174, 175, 176, 369, 368, 179, 180, 181, 182, 183, 184, 185,
+                                  186, 187, 188, 189, 190, 370, 371, 139, 140, 141, 142, 143, 144,
+                                  145, 146, 147, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+                                  123, 124, 129, 130,131,132,133,134,135,136,376,377,378]
+
+            if ability.name == "Spare Change":
+                chunk_edited = ability.og_hex_chunk
+            if ability_index in changed_hit_ids:
+                chunk_edited = chunk_edited[0:40] + "4e002060" + chunk_edited[48:chunk_length]
+            if (ability.repeat_flag == True) and (ability_index not in shared_abi_indexes):
+                chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "010000" + chunk_edited[sub_menu_action_stop_index+4:chunk_length]
+
             if len(chunk_edited) != len(ability.og_hex_chunk):
-                print("Raise Alarum for: "+ability.name)
-                alarum = "bitch"
+                raise ValueError
             ability.curr_hex_chunk = chunk_edited
             edited_abilities.append(ability)
     return edited_abilities
@@ -763,16 +805,16 @@ def change_ability_jobs_to_shuffled(dresspheres: list[Dressphere],ability_list: 
 
 #Initialization
 dresspheres = initiate_dresspheres_new()
-print(dresspheres[8])
-print(dresspheres[8].hex_chunk)
-print(dresspheres[9])
-print(dresspheres[9].hex_chunk)
-print(dresspheres[7])
-print(dresspheres[7].hex_chunk)
-print(dresspheres[1])
-print(dresspheres[1].hex_chunk)
-print(dresspheres[5])
-print(dresspheres[5].hex_chunk)
+# print(dresspheres[8])
+# print(dresspheres[8].hex_chunk)
+# print(dresspheres[9])
+# print(dresspheres[9].hex_chunk)
+# print(dresspheres[7])
+# print(dresspheres[7].hex_chunk)
+# print(dresspheres[1])
+# print(dresspheres[1].hex_chunk)
+# print(dresspheres[5])
+# print(dresspheres[5].hex_chunk)
 global_abilities[3].og_hex_chunk = global_abilities[31].og_hex_chunk
 global_abilities[4].og_hex_chunk = global_abilities[31].og_hex_chunk
 global_abilities[5].og_hex_chunk = global_abilities[31].og_hex_chunk
@@ -807,8 +849,8 @@ global_abilities[545].og_hex_chunk = global_abilities[31].og_hex_chunk
 # print(dresspheres[7].ability_hex_og)
 # print(dresspheres[7].stat_variables)
 
-print(global_abilities[107])
-print(global_abilities[107].og_hex_chunk)
+# print(global_abilities[107])
+# print(global_abilities[107].og_hex_chunk)
 
 valid_abilities_test = initiate_abilities(valid_ability_pooling=True)
 
@@ -854,6 +896,116 @@ job_bin_string = job_bin_string + chunks_output[2]
     #                     with filepath.open(mode="wb") as f:
     #                         f.write(binary_converted)
 #TEST JOBBIN REPLACE
+
+#
+#
+
+changed_ids = []
+changed_hit_ids = []
+
+def change_potencies(ability_list: list[Command]):
+    #Change Attack potency from 16 to 10
+    for i in range(44,50):
+        ability_list[i].dmg_info["Power"] = 10
+        changed_ids.append(i)
+    #Make sure thief attacks are less
+    ability_list[46].dmg_info["Power"] = 5
+    #Trigger Happy Nerf
+    ability_list[50].dmg_info["Hit"] = 90
+    ability_list[50].dmg_info["Power"] = 1
+    changed_hit_ids.append(50)
+    changed_ids.append(50)
+    #Nerfs to Cait abilities
+    for i in range(251,255):
+        ability_list[i].dmg_info["Hit"] = 45
+        ability_list[i].dmg_info["Power"] = 15
+        ability_list[i].dmg_info["Crit"] = 25
+        changed_ids.append(i)
+        changed_hit_ids.append(i)
+    #Nerfs to knife abilities
+    for i in range(267,269):
+        ability_list[i].dmg_info["Hit"] = 45
+        changed_ids.append(i)
+        changed_hit_ids.append(i)
+    #Nerf to Stop Knife
+    ability_list[266].dmg_info["Hit"] = 65
+    changed_ids.append(266)
+    changed_hit_ids.append(266)
+    #Nerf to Quartet Knife
+    ability_list[269].dmg_info["MP Cost"] = 35
+    changed_ids.append(269)
+    #Multiple Hit Cactling Gun
+    ability_list[270].dmg_info["Power"] = 23
+    ability_list[270].dmg_info["Number of Attacks"] = 4
+    changed_ids.append(270)
+    #Increase to MP cost of Yuna Mascot skills
+    for i in range(241,249):
+        if ability_list[270].dmg_info["MP Cost"] > 0:
+            ability_list[i].dmg_info["MP Cost"] = ability_list[i].dmg_info["MP Cost"] * 2
+            changed_ids.append(i)
+
+
+    #Nerf magic attack potency. This would be good if not using randomizer
+    # ability_list[44].dmg_info["MP Cost"] = 1
+    # ability_list[44].dmg_info["Power"] = 5
+    #Mug and Nab gil
+    for i in range(372,374):
+        ability_list[i].dmg_info["Power"] = 10
+        changed_ids.append(i)
+    #Burst Shot
+    ability_list[57].dmg_info["Power"] = 12
+    changed_ids.append(57)
+    #Scattershot/Burst
+    ability_list[59].dmg_info["Power"] = 12
+    changed_ids.append(59)
+    ability_list[60].dmg_info["Power"] = 12
+    changed_ids.append(60)
+    #Cheapshot
+    ability_list[52].dmg_info["Power"] = 8
+    changed_ids.append(52)
+    #Sparkler
+    ability_list[117].dmg_info["Power"] = 12
+    changed_ids.append(117)
+    #Fireworks
+    ability_list[118].dmg_info["Power"] = 12
+    changed_ids.append(118)
+    #Change ranged attack to Magic-Based
+    ability_list[44].dmg_info["Calc PS"] = 9
+    #Attempt to make Bio do damage
+    ability_list[133].dmg_info["Calc PS"] = 9
+    ability_list[133].dmg_info["Power"] = 11
+    ability_list[133].dmg_info["Target HP/MP"] = 1
+    changed_ids.append(133)
+    #Blind/Silence/Sleep Do Damage
+    for i in range(376, 379):
+        ability_list[i].dmg_info["Power"] = 11
+        ability_list[i].dmg_info["Calc PS"] = 9
+        ability_list[i].dmg_info["Target HP/MP"] = 1
+        changed_ids.append(i)
+    #Darkness nerf
+    ability_list[127].dmg_info["Power"] = 15
+    changed_ids.append(127)
+
+    tier1magic_ids = [165,166,167,168]
+    tier2magic_ids = [169,170,171,172]
+    tier3magic_ids = [173,174,175,176]
+    #Change Black Magic Potencies AND to "Special Magic" (based on Physical formula but affected by Magic Defence)
+    for i in tier1magic_ids:
+        ability_list[i].dmg_info["Calc PS"] = 9
+        ability_list[i].dmg_info["Power"] = 15
+        changed_ids.append(i)
+    for i in tier2magic_ids:
+        ability_list[i].dmg_info["Calc PS"] = 9
+        ability_list[i].dmg_info["Power"] = 24
+        changed_ids.append(i)
+    for i in tier3magic_ids:
+        ability_list[i].dmg_info["Calc PS"] = 9
+        ability_list[i].dmg_info["Power"] = 32
+        changed_ids.append(i)
+
+change_potencies(global_abilities)
+
+
 
 
 
@@ -912,8 +1064,48 @@ job_bin_string = job_bin_string + chunks_output[2]
 global_abilities = change_ability_jobs_to_shuffled(dresspheres,global_abilities)
 
 
+#
+# FOR POTENCY HEX CHUNK CHANGER
+#
+#
+#
 
-#MAKE STRING FOR COMMAND.BIN
+    # hex_cut = ability.og_hex_chunk[76:76 + 12]
+    # nth = 2
+    # hex_list = [hex_cut[i:i + nth] for i in range(0, len(hex_cut), nth)]
+    # # dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
+    # ability.dmg_info["MP Cost"] = int(hex_list[0], 16)
+    # ability.dmg_info["Target HP/MP"] = int(hex_list[1], 16)
+    # ability.dmg_info["Calc PS"] = int(hex_list[2], 16)
+    # ability.dmg_info["Crit"] = int(hex_list[3], 16)
+    # ability.dmg_info["Hit"] = int(hex_list[4], 16)
+    # ability.dmg_info["Power"] = int(hex_list[5], 16)
+def write_potencies():
+    for i in changed_ids:
+        edited_chunk = global_abilities[i].curr_hex_chunk
+        if len(edited_chunk) < 1:
+            edited_chunk = global_abilities[i].og_hex_chunk
+        chunk_length = int(len(edited_chunk))
+        initial_pos = 76
+        edited_chunk = (edited_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["MP Cost"],bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Target HP/MP"], bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Calc PS"],bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Crit"],bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Hit"],bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Power"],bytecount=1)
+        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],bytecount=1)
+                        + edited_chunk[initial_pos+14:chunk_length])
+        if len(edited_chunk) != chunk_length:
+            og = chunk_length
+            nw = len(edited_chunk)
+            raise ValueError
+        else:
+            global_abilities[i].curr_hex_chunk = edited_chunk
+
+write_potencies()
+print_dmg_info()
+
+    #MAKE STRING FOR COMMAND.BIN
 commands_shuffle_chunks = get_big_chunks(get_all_segments=True,segmentType="command")
 command_string_to_output = commands_shuffle_chunks[0]
 for cmd_search in global_abilities:
@@ -973,6 +1165,8 @@ aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
 # print(dresspheres[26].stat_formula(type="ACC",tableprint=True))
 # print("****")
 
+test = ""
+
 def execute_randomizer():
     binary_converted_jobbin = binascii.unhexlify(job_bin_string)
     binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
@@ -1005,3 +1199,15 @@ def execute_randomizer():
 # print_str= print_str + big_chunky[2]
 # print(print_str)
 # print(len(print_str))
+
+# total = 248
+# job_number = len(jobs_names) - 9
+# job_ability_each = 11
+# print("Job number: " + str(job_number))
+# print("Job ability each: " + str(job_ability_each))
+# print("tier1: " + str(len(tier1_abilities)) + "   %: " + str(len(tier1_abilities)/248) + "   No.: "
+#       + str((len(tier1_abilities)/248)*job_ability_each))
+# print("tier2: " + str(len(tier2_abilities)) + "   %: " + str(len(tier2_abilities)/248) + "   No.: "
+#       + str((len(tier2_abilities)/248)*job_ability_each))
+# print("tier3: " + str(len(tier3_abilities)) + "   %: " + str(len(tier3_abilities)/248) + "   No.: "
+#       + str((len(tier3_abilities)/248)*job_ability_each))

@@ -64,21 +64,36 @@ def parse_chunk(chunk: str):
 def pool_stats(dresspheres: list[Dressphere]):
     stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
     stat_pool = [[] for i in range(10)]
+    special_dresspheres = ["super_yuna1","super-yuna2", "super-yuna3",
+                           "super_rikku1","super-rikku2", "super-rikku3",
+                           "super_paine1","super-paine2", "super-paine3",]
     for dress in dresspheres:
-        for index, stat_name in enumerate(stat_names):
-            put_into_pool = dress.stat_variables[stat_name]
-            stat_pool[index].append(put_into_pool)
+        if dress.dress_name in special_dresspheres:
+            test = ""
+            pass
+        else:
+            for index, stat_name in enumerate(stat_names):
+                put_into_pool = dress.stat_variables[stat_name]
+                stat_pool[index].append(put_into_pool)
     return stat_pool
 
 def replace_stats(dresspheres: list[Dressphere], stat_pool_values: list[list]):
     randomized_output = dresspheres.copy()
     stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+    special_dresspheres = ["super_yuna1", "super-yuna2", "super-yuna3",
+                           "super_rikku1", "super-rikku2", "super-rikku3",
+                           "super_paine1", "super-paine2", "super-paine3", ]
     stat_pool = stat_pool_values
+    county = -1
     for index, dress in enumerate(randomized_output):
-        for jndex, stat_name in enumerate(stat_names):
-            put_into_pool = stat_pool[jndex][index]
-            dress.stat_variables[stat_name] = put_into_pool
-            pass
+        county = county + 1
+        if dress.dress_name in special_dresspheres:
+            county = county - 1
+        else:
+            for jndex, stat_name in enumerate(stat_names):
+                put_into_pool = stat_pool[jndex][county]
+                dress.stat_variables[stat_name] = put_into_pool
+                pass
     return randomized_output
 
 def reverse_four_bytes(byte_reverse: str):
