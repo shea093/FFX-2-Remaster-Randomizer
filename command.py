@@ -8,6 +8,11 @@ class Command:
         self.__ap = 0
         self.__dmg_info = {}
         self.__job = ""
+        self.__name_start_index = 0
+        self.__help_start_index = 0
+        self.__name_og_length = len(name_value)
+        self.__help_og_length = 0
+        self.unknown_text_variable = 0
         self.__mug_flag = False
         self.__repeat_flag = False
 
@@ -18,6 +23,22 @@ class Command:
     @property
     def id(self):
         return self.__id
+
+    @property
+    def name_start_index(self):
+        return self.__name_start_index
+
+    @name_start_index.setter
+    def name_start_index (self, value: int):
+        self.__name_start_index = value
+
+    @property
+    def help_start_index(self):
+        return self.__help_start_index
+
+    @help_start_index.setter
+    def help_start_index(self, value: int):
+        self.__help_start_index = value
 
     @property
     def repeat_flag(self):

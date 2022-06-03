@@ -92,3 +92,36 @@ def initiate_dresspheres_legacy():
                 dressphere.abilities.append(ability_tuple)
         dressphere.ability_hex_og = ability_hex_og_string
     return dresspheres
+
+
+def decode_chunk(chunk_val_list: list[str]):
+    encode_dict = {
+        '30': '0', '31': '1', '32': '2', '33': '3', '34': '4', '35': '5', '36': '6', '37': '7', '38': '8',
+        '39': '9', '20': ' ', '21': '!', '9D': '.', '23': '#', '24': '$', '25': '%',
+        '26': '&', '99': '™', '28': '(', '29': ')', '2A': '*', '2B': '+', '2C': ',',
+        '2D': '-', '2E': '.', '2F': '/', '3A': ':', '3B': ';', '3C': '<', '3D': '=', '3E': '>', '3F': '?',
+        '41': 'A', '42': 'B', '43': 'C', '44': 'D', '45': 'E', '46': 'F', '47': 'G', '48': 'H', '49': 'I',
+        '4A': 'J', '4B': 'K', '4C': 'L', '4D': 'M', '4E': 'N', '4F': 'O', '50': 'P', '51': 'Q', '52': 'R',
+        '53': 'S', '54': 'T', '55': 'U', '56': 'V', '57': 'W', '58': 'X', '59': 'Y', '5A': 'Z', '5B': '[',
+        '5C': '/', '5D': ']', '5E': '^', '5F': '_', 'E2': 'â', '80': '€', '98': '˜', '61': 'a', '62': 'b',
+        '63': 'c', '64': 'd', '65': 'e', '66': 'f', '67': 'g', '68': 'h', '69': 'i', '6A': 'j', '6B': 'k',
+        '6C': 'l', '6D': 'm', '6E': 'n', '6F': 'o', '70': 'p', '71': 'q', '72': 'r', '73': 's', '74': 't',
+        '75': 'u', '76': 'v', '77': 'w', '78': 'x', '79': 'y', '7A': 'z', '7B': '{', '7C': '|', '7D': '}',
+    }
+
+    output_str = ""
+    for val in chunk_val_list:
+        output_str = output_str + encode_dict[val]
+
+    return output_str
+
+
+ending_chunk_test  = commands_shuffle_chunks[-1]
+b = bytearray()
+b.extend(map(ord, ending_chunk_test))
+endingchunklist = []
+for byt in b:
+    endingchunklist.append(hex(byt)[2:])
+c = decode_chunk(endingchunklist)
+print(c)
+testy = ""

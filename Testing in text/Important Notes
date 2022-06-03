@@ -5,6 +5,13 @@ unlike Fire, but giving both Attack would be cool.
 *MON.GET*
 The monster files are 8C long
 Start right after the 646464 etc in the beginning of the hex file
+*BIG FIND*
+Offset 10 -> 04: "8C" which is the length. In job.bin this same offset position is "E4" which is 228
+Offset 10 -> 00 01: "21 00" for job.bin (33 job allocations). "71 01" for mon_get.bin (369 monster allocations).
+
+0123456789 !”#$%&’()*+,-./:;<=>?ABCDEFGHI
+
+
 
 
 *CALC_PS VALUES*
@@ -437,3 +444,14 @@ Cheap Shot
 0000 #Chant cost
 0801
 01000010011e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000001000066000200000000011e0001500000
+
+
+mon_get.bin---------------------
+
+HP Sallet: 2b b7 67
+STR Sallet: 13 04 0f
+STR Bicocette: 14 04 10
+
+
+
+--------------------------------

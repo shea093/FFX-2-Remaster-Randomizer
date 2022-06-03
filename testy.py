@@ -1,11 +1,59 @@
 from tabulate import tabulate
 import random
 import binascii
+import services
 
-a = list(range(1,4))
-print(a)
+a = services.convert_gamevariable_to_reversed_hex(43,bytecount=1)
+b = services.convert_gamevariable_to_reversed_hex(183,bytecount=1)
+c = services.convert_gamevariable_to_reversed_hex(103,bytecount=1)
+print(a,b,c)
 
+str1 = '30 31 32 33 34 35 36 37 38 39 20 21 E2 80 9D 23 24 25 26 E2 80 99 28 29 2A 2B 2C 2D 2E 2F 3A 3B 3C 3D 3E 3F 41 42 43 44 45 46 47 48 49 4A 4B 4C 4D 4E 4F 50 51 52 53 54 55 56 57 58 59 5A 5B 5C 5D 5E 5F E2 80 98 61 62 63 64 65 66 67 68 69 6A 6B 6C 6D 6E 6F 70 71 72 73 74 75 76 77 78 79 7A 7B 7C 7D'
+str2 = str1.split()
+str3 = '0123456789 !”#$%&’()*+,-./:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_‘abcdefghijklmnopqrstuvwxyz{|}~·【】♪♥ “”— ¡↑↓←→¨«º '
+str4 = []
+for char in str3:
+    str4.append(char)
+print(str2)
+print(str4)
+print(len(str2),len(str4))
+dict_str = ""
 
+for index, h in enumerate(str2):
+    dict_str = dict_str + "'" + str(hex(index+48)[2:])+ "' : '" + str(str4[index])  + "', "
+
+dict_test = {
+    '30' : '0', '31' : '1', '32' : '2', '33' : '3', '34' : '4', '35' : '5', '36' : '6', '37' : '7', '38' : '8',
+    '39' : '9', '20' : ' ', '21' : '!', '9D' : '.', '23' : '#', '24' : '$', '25' : '%',
+    '26' : '&', '99' : '™', '28' : '(', '29' : ')', '2A' : '*', '2B' : '+', '2C' : ',',
+    '2D' : '-', '2E' : '.', '2F' : '/', '3A' : ':', '3B' : ';', '3C' : '<', '3D' : '=', '3E' : '>', '3F' : '?',
+    '41' : 'A', '42' : 'B', '43' : 'C', '44' : 'D', '45' : 'E', '46' : 'F', '47' : 'G', '48' : 'H', '49' : 'I',
+    '4A' : 'J', '4B' : 'K', '4C' : 'L', '4D' : 'M', '4E' : 'N', '4F' : 'O', '50' : 'P', '51' : 'Q', '52' : 'R',
+    '53' : 'S', '54' : 'T', '55' : 'U', '56' : 'V', '57' : 'W', '58' : 'X', '59' : 'Y', '5A' : 'Z', '5B' : '[',
+    '5C' : '/', '5D' : ']', '5E' : '^', '5F' : '_', 'E2' : 'â', '80' : '€', '98' : '˜', '61' : 'a', '62' : 'b',
+    '63' : 'c', '64' : 'd', '65' : 'e', '66' : 'f', '67' : 'g', '68' : 'h', '69' : 'i', '6A' : 'j', '6B' : 'k',
+    '6C' : 'l', '6D' : 'm', '6E' : 'n', '6F' : 'o', '70' : 'p', '71' : 'q', '72' : 'r', '73' : 's', '74' : 't',
+    '75' : 'u', '76' : 'v', '77' : 'w', '78' : 'x', '79' : 'y', '7A' : 'z', '7B' : '{', '7C' : '|', '7D' : '}',
+}
+
+print(dict_str)
+
+maxy = 255
+c = "64 82 74 3A 70 7D 3A 78 83 74 7C 48"
+c_list = []
+for char in c:
+    if char == " ":
+        appendy = c[0:2]
+        c_list.append(appendy)
+        c = c[3:]
+c_list.append(c)
+print(c_list)
+hex_nums = ['64', '82', '74', '3A', '70', '7D', '3A', '78', '83', '74', '7C', '48']
+final_num = 0
+for hex_num in hex_nums:
+    final_num = final_num + int(hex_num,16)
+print(hex(final_num))
+print(final_num)
 
 
 # print(float("0." + str(1)))

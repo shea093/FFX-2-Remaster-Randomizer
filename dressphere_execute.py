@@ -14,6 +14,7 @@ job_bin_path = "Test Files/job.bin"
 cmd_bin_path = "Test Files/command.bin"
 auto_bin_path = "Test Files/a_ability.bin"
 seed_path = "Test Files/seed.txt"
+monmagic_bin_path = "Test Files/monmagic.bin"
 output_jobbin_path = "Output Files/job.bin"
 output_cmdbin_path = "Output Files/command.bin"
 output_aabin_path = "Output Files/a_ability.bin"
@@ -61,6 +62,10 @@ def auto_bin_to_hex():
     hex_data = read_hex(auto_bin)
     return hex_data
 
+def monmagic_bin_to_hex():
+    monmagic_bin = pathlib.Path(monmagic_bin_path)
+    hex_data = read_hex(monmagic_bin)
+    return hex_data
 
 def get_big_chunks(get_all_segments=False, segment_type="job"):
     chunks = []
@@ -79,6 +84,10 @@ def get_big_chunks(get_all_segments=False, segment_type="job"):
         hex_file = auto_bin_to_hex()
         initial_position = 64
         next_position = 64 + 352
+    elif segment_type == "mon-magic":
+        hex_file = monmagic_bin_to_hex()
+        initial_position = 64
+        next_position = 64 + 272
     start_chunk = hex_file[initial_position:next_position]
     chunks.append(start_chunk)
     ending_chunk = ""
@@ -103,12 +112,22 @@ def get_big_chunks(get_all_segments=False, segment_type="job"):
             chunks.append(hex_file[initial_position:next_position])
             if i == 160 and get_all_segments is True:
                 ending_chunk = hex_file[next_position:len(hex_file)]
+    elif segment_type == "mon-magic":
+        for i in range(0, 567):
+            initial_position = next_position
+            next_position = next_position + 272
+            chunks.append(hex_file[initial_position:next_position])
+            if i == 566 and get_all_segments is True:
+                ending_chunk = hex_file[next_position:len(hex_file)]
     if get_all_segments is True:
         beginning_chunk = hex_file[0:520]
         if segment_type == "command":
             beginning_chunk = hex_file[0:64]
             return [beginning_chunk, chunks, ending_chunk]
         if segment_type == "auto-ability":
+            beginning_chunk = hex_file[0:64]
+            return [beginning_chunk, chunks, ending_chunk]
+        if segment_type == "mon-magic":
             beginning_chunk = hex_file[0:64]
             return [beginning_chunk, chunks, ending_chunk]
         return [beginning_chunk, chunks, ending_chunk]
@@ -137,6 +156,21 @@ def cut_command_names(valid_abilities=False):
     return command_ids
 
 
+def cut_monmagic_names(valid_abilities=False):
+    monmagic_ids = []
+    filename = "Test Files/monmagic.txt"
+    if valid_abilities is True:
+        pass
+    with open(filename, "r") as f:
+        for line in f.readlines():
+            this_id = line[32:36]
+            name = line[46:len(line)]
+            name = name[:name.find("\"")]
+            tupl = (this_id, name)
+            monmagic_ids.append(tupl)
+    return monmagic_ids
+
+
 def cut_autoability_names():
     autoability_ids = []
     with open("Test Files/auto_abilities.txt", "r") as f:
@@ -151,13 +185,22 @@ def cut_autoability_names():
 
 command_global_chunks = get_big_chunks(segment_type="command")
 auto_global_chunks = get_big_chunks(segment_type="auto-ability")
+monmagic_global_chunks = get_big_chunks(segment_type="mon-magic")
 
 
 # Initiates the list of abilities
 # valid_ability_pooling is an argument for shuffle_abilities()
 # that returns only abilities that are intended to be shuffled
-def initiate_abilities(valid_ability_pooling=False):
+def initiate_abilities(valid_ability_pooling=False, monster_magic=False):
     abilities = []
+    if monster_magic is True:
+        monmagic_tuples = cut_monmagic_names()
+        for chunkindex, command in enumerate(monmagic_tuples):
+            cmd = Command(id_value=command[0], name_value=command[1], type_value="Mon-Magic")
+            cmd.og_hex_chunk = monmagic_global_chunks[chunkindex]
+            abilities.append(cmd)
+        if valid_ability_pooling is False:
+            return abilities
     if valid_ability_pooling is True:
         valid_ability_tuples = cut_command_names(valid_abilities=True)
         for ability in valid_ability_tuples:
@@ -183,6 +226,7 @@ def initiate_abilities(valid_ability_pooling=False):
 
 
 global_abilities = initiate_abilities()
+mon_magic_abilities = initiate_abilities(monster_magic=True)
 test = ""
 
 
@@ -204,6 +248,7 @@ def set_ability_ap_batch():
                 ability.ap = int(hex_input, 16)
 
 
+#Updated to also add the Name/Help index positions
 def set_dmg_info_batch():
     for ability in global_abilities:
         if ability.type == "Command":
@@ -218,6 +263,22 @@ def set_dmg_info_batch():
             ability.dmg_info["Hit"] = int(hex_list[4], 16)
             ability.dmg_info["Power"] = int(hex_list[5], 16)
             ability.dmg_info["Number of Attacks"] = int(hex_list[6], 16)
+        #Start indexes for name / help text
+        ability.name_start_index = int(reverse_two_bytes(ability.og_hex_chunk[0:4]),16)
+        ability.unknown_text_variable = int(reverse_two_bytes(ability.og_hex_chunk[4:8]),16)
+        ability.help_start_index = int(reverse_two_bytes(ability.og_hex_chunk[8:12]),16)
+    for monmagic in mon_magic_abilities:
+            hex_cut = monmagic.og_hex_chunk[76:76 + 14]
+            nth = 2
+            hex_list = [hex_cut[i:i + nth] for i in range(0, len(hex_cut), nth)]
+            # dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
+            monmagic.dmg_info["MP Cost"] = int(hex_list[0], 16)
+            monmagic.dmg_info["Target HP/MP"] = int(hex_list[1], 16)
+            monmagic.dmg_info["Calc PS"] = int(hex_list[2], 16)
+            monmagic.dmg_info["Crit"] = int(hex_list[3], 16)
+            monmagic.dmg_info["Hit"] = int(hex_list[4], 16)
+            monmagic.dmg_info["Power"] = int(hex_list[5], 16)
+            monmagic.dmg_info["Number of Attacks"] = int(hex_list[6], 16)
 
 
 def print_dmg_info():
@@ -231,6 +292,7 @@ def print_dmg_info():
 
 set_ability_ap_batch()
 set_dmg_info_batch()
+test = ""
 
 delete_autoability_indexes = []
 change_ap_indexes = []
@@ -901,9 +963,7 @@ def change_potencies(ability_list: list[Command]):
     # Make sure thief attacks are less
     ability_list[46].dmg_info["Power"] = 5
     # Trigger Happy Nerf
-    ability_list[50].dmg_info["Hit"] = 90
     ability_list[50].dmg_info["Power"] = 1
-    changed_hit_ids.append(50)
     changed_ids.append(50)
     # Nerfs to Cait abilities
     for i in range(251, 255):
@@ -1146,6 +1206,32 @@ aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
 # print("****")
 
 test = ""
+
+def decode_chunk(chunk_val_list: list[str]):
+    encode_dict = {
+        '0': '◘', '30' : '0', '31' : '1', '32' : '2', '33' : '3', '34' : '4', '35' : '5', '36' : '6', '37' : '7', '38' : '8', '39' : '9', '3a' : ' ', '3b' : '!', '3c' : '”', '3d' : '#', '3e' : '$', '3f' : '%', '40' : '&', '41' : '’', '42' : '(', '43' : ')', '44' : '*', '45' : '+', '46' : ',', '47' : '-', '48' : '.', '49' : '/', '4a' : ':', '4b' : ';', '4c' : '<', '4d' : '=', '4e' : '>', '4f' : '?', '50' : 'A', '51' : 'B', '52' : 'C', '53' : 'D', '54' : 'E', '55' : 'F', '56' : 'G', '57' : 'H', '58' : 'I', '59' : 'J', '5a' : 'K', '5b' : 'L', '5c' : 'M', '5d' : 'N', '5e' : 'O', '5f' : 'P', '60' : 'Q', '61' : 'R', '62' : 'S', '63' : 'T', '64' : 'U', '65' : 'V', '66' : 'W', '67' : 'X', '68' : 'Y', '69' : 'Z', '6a' : '[', '6b' : '/', '6c' : ']', '6d' : '^', '6e' : '_', '6f' : '‘', '70' : 'a', '71' : 'b', '72' : 'c', '73' : 'd', '74' : 'e', '75' : 'f', '76' : 'g', '77' : 'h', '78' : 'i', '79' : 'j', '7a' : 'k', '7b' : 'l', '7c' : 'm', '7d' : 'n', '7e' : 'o', '7f' : 'p', '80' : 'q', '81' : 'r', '82' : 's', '83' : 't', '84' : 'u', '85' : 'v', '86' : 'w', '87' : 'x', '88' : 'y', '89' : 'z', '8a' : '{', '8b' : '|', '8c' : '}', '8d' : '~', '8e' : '·', '8f' : '【', '90' : '】', '91' : '♪', '92' : '♥',
+    }
+
+
+    output_str = ""
+    for ind, val in enumerate(chunk_val_list):
+        try:
+            output_str = output_str + encode_dict[val]
+        except KeyError:
+            output_str = output_str + "•"
+
+    return output_str
+
+
+ending_chunk_test  = commands_shuffle_chunks[-1]
+b = bytearray.fromhex(ending_chunk_test)
+endingchunklist = []
+for byt in b:
+    endingchunklist.append(hex(byt)[2:])
+c = decode_chunk(endingchunklist)
+print(c)
+testy = ""
+
 
 
 def execute_randomizer():
