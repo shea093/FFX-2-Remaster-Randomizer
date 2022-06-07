@@ -15,9 +15,11 @@ cmd_bin_path = "Test Files/command.bin"
 auto_bin_path = "Test Files/a_ability.bin"
 seed_path = "Test Files/seed.txt"
 monmagic_bin_path = "Test Files/monmagic.bin"
+monget_bin_path = "Test Files/mon_get.bin"
 output_jobbin_path = "Output Files/job.bin"
 output_cmdbin_path = "Output Files/command.bin"
 output_aabin_path = "Output Files/a_ability.bin"
+output_monget_path = "Output Files/mon_get.bin"
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
@@ -29,7 +31,7 @@ jobs_names = [
 
 # previous seed: 111876967976853241
 # 659
-
+# MAIN SEED 790723
 
 def read_seed():
     this_seed = 0
@@ -67,6 +69,11 @@ def monmagic_bin_to_hex():
     hex_data = read_hex(monmagic_bin)
     return hex_data
 
+def monget_bin_to_hex():
+    monget_bin = pathlib.Path(monget_bin_path)
+    hex_data = read_hex(monget_bin)
+    return hex_data
+
 def get_big_chunks(get_all_segments=False, segment_type="job"):
     chunks = []
     hex_file = ""
@@ -88,6 +95,10 @@ def get_big_chunks(get_all_segments=False, segment_type="job"):
         hex_file = monmagic_bin_to_hex()
         initial_position = 64
         next_position = 64 + 272
+    elif segment_type == "mon-get":
+        hex_file = monget_bin_to_hex()
+        initial_position = 64
+        next_position = 64 + 280
     start_chunk = hex_file[initial_position:next_position]
     chunks.append(start_chunk)
     ending_chunk = ""
@@ -119,6 +130,13 @@ def get_big_chunks(get_all_segments=False, segment_type="job"):
             chunks.append(hex_file[initial_position:next_position])
             if i == 566 and get_all_segments is True:
                 ending_chunk = hex_file[next_position:len(hex_file)]
+    elif segment_type == "mon-get":
+        for i in range(0, 369):
+            initial_position = next_position
+            next_position = next_position + 280
+            chunks.append(hex_file[initial_position:next_position])
+            # if i == 369 and get_all_segments is True:
+            #     ending_chunk = hex_file[next_position:len(hex_file)]
     if get_all_segments is True:
         beginning_chunk = hex_file[0:520]
         if segment_type == "command":
@@ -130,6 +148,9 @@ def get_big_chunks(get_all_segments=False, segment_type="job"):
         if segment_type == "mon-magic":
             beginning_chunk = hex_file[0:64]
             return [beginning_chunk, chunks, ending_chunk]
+        if segment_type == "mon-get":
+            beginning_chunk = hex_file[0:344]
+            return [beginning_chunk, chunks]
         return [beginning_chunk, chunks, ending_chunk]
     else:
         return chunks
@@ -228,6 +249,25 @@ def initiate_abilities(valid_ability_pooling=False, monster_magic=False):
 global_abilities = initiate_abilities()
 mon_magic_abilities = initiate_abilities(monster_magic=True)
 test = ""
+
+cmd_name_help_list = []
+with open("Test Files/commandtext", 'r', encoding = "utf_8") as cmdtext:
+    cmdtext_str = cmdtext.readline()
+    cmd_name_help_list = cmdtext_str.split("◘")
+    cmd_name_help_list = cmd_name_help_list[0:-1]
+
+cmd_names = cmd_name_help_list[::2]
+cmd_helps = cmd_name_help_list[1::2]
+test = ""
+
+for index, abi in enumerate(global_abilities):
+    if abi.type == "Command":
+        abi.name = cmd_names[index]
+        abi.name_og_length = len(cmd_names[index])
+        abi.help_text = cmd_helps[index]
+test = ""
+
+
 
 
 def set_ability_ap_batch():
@@ -413,8 +453,8 @@ def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_bran
             if this_dress.dress_name == "whitemage" or this_dress.dress_name == "blackmage":
                 output_abilities = [dresspheres_edited[1].abilities[0]]
             # Attempt to make gunner Physical
-            if this_dress.dress_name == "gunner":
-                output_abilities = [dresspheres_edited[3].abilities[0]]
+            # if this_dress.dress_name == "gunner":
+            #     output_abilities = [dresspheres_edited[3].abilities[0]]
 
             root_abilities = []
             mug_flaggu = False
@@ -858,6 +898,132 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
     return edited_abilities
 
 
+def initiate_monsters() -> list[Dressphere]:
+    mon_names = []
+    these_monsters = []
+    with open("HPMP.txt",'r') as HP_MP_File:
+        for line in HP_MP_File.readlines():
+            split_line = line.split(sep=",")
+            mon_names.append(split_line[0])
+    chunks = get_big_chunks(segment_type="mon-get")[1:]
+    test = ""
+    for index, chunk in enumerate(chunks):
+        new_monster = Dressphere(mon_names[index],index+6001)
+        new_monster.big_chunk = chunk
+        formulae = parse_chunk(chunk,mon=True)
+        stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
+        #ability_initial_position = 0
+        stat_hex_og_string = ""
+        for jndex, stat in enumerate(stat_names):
+            stat_hex_og_string = stat_hex_og_string + formulae[jndex + 1]
+            new_monster.stat_variables[stat] = formulae[jndex + 1]
+            #ability_initial_position = index + 1
+        new_monster.stat_hex_og = stat_hex_og_string
+        these_monsters.append(new_monster)
+        test =""
+    return these_monsters
+
+
+global_monsters = initiate_monsters()
+test =""
+
+# # LV * A/10 + (LV / B) + C - (LV^2) / 16 / D / E
+# global_monsters[0].stat_formula(type="STR",tableprint=True)
+# global_monsters[0].stat_variables["STR"] = '09050d0C01'
+# global_monsters[0].stat_formula(type="STR",tableprint=True)
+# # global_monsters[0 ].stat_formula(type="AGL",tableprint=True)
+# # global_monsters[15].stat_formula(type="AGL",tableprint=True)
+# # global_monsters[21].stat_formula(type="AGL",tableprint=True)
+# # global_monsters[21].stat_formula(type="EVA",tableprint=True)
+# #'2ba65a' HP
+# #'15900a' MP
+# #'02160cc804' EVA
+# #'021030c804' AGL
+# # global_monsters[8].stat_formula(type="EVA",tableprint=True)
+# # global_monsters[8].stat_variables["EVA"] = "011601c804"
+# # global_monsters[8].stat_formula(type="EVA",tableprint=True)
+# #'2ba65a' coyote
+# #'bed2b5' omega
+# #LV * A + C - (LV^2 / (b/10))
+# # (LV * (A/10)) + C - (LV^2 / B) MP
+# global_monsters[8].stat_formula(type="MP",tableprint=True)
+# global_monsters[8].stat_variables["MP"] = "259032"
+# global_monsters[8].stat_formula(type="MP",tableprint=True)
+
+
+def randomize_monsters():
+    start_monster_seed_feed = (seed * seed) + 2056
+    start_monster_main_seed = random.Random(start_monster_seed_feed).randint(1,9999999)
+    start_monster_increment = random.Random(start_monster_seed_feed).randint(5,20)
+
+    for monster in global_monsters:
+        main_stat_names = ["STR", "DEF", "MAG", "MDEF"]
+        for stat_name in main_stat_names:
+            all_main_stat = "09050F0C01"
+            main_var_B = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(1,5))
+            start_monster_main_seed += start_monster_increment
+            main_var_C = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(1,16))
+            start_monster_main_seed += start_monster_increment
+            randomized_main_stat = all_main_stat[0:2] + main_var_B + main_var_C + all_main_stat[6:]
+            monster.stat_variables[stat_name] = randomized_main_stat
+        #Evasion randomization
+        evasion_stat = "011601c804"
+        eva_var_c = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(1,15))
+        start_monster_main_seed += start_monster_increment
+        randomized_eva_stat = evasion_stat[0:4] + eva_var_c + evasion_stat[6:]
+        monster.stat_variables["EVA"] = randomized_eva_stat
+        #Agility randomization
+        agility_stat = "000c35c804"
+        agi_var_c = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(40, 50))
+        start_monster_main_seed += start_monster_increment
+        randomized_agi_stat = agility_stat[0:4] + agi_var_c + agility_stat[6:]
+        monster.stat_variables["AGL"] = randomized_agi_stat
+        #HP randomization
+        hp_stat = "2ba65a"
+        hp_var_a = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(18, 40))
+        start_monster_main_seed += start_monster_increment
+        randomized_HP_stat = hp_var_a + hp_stat[2:]
+        monster.stat_variables["HP"] = randomized_HP_stat
+        #ACC randomization
+        acc_stat = "001476c804"
+        acc_var_c = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(80, 118))
+        start_monster_main_seed += start_monster_increment
+        randomized_acc_stat = acc_stat[0:4] + acc_var_c + acc_stat[6:]
+        monster.stat_variables["ACC"] = randomized_acc_stat
+        #MP randomization
+        mp_stat = "2ba65a"
+        mp_var_a = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(21, 37))
+        start_monster_main_seed += start_monster_increment
+        mp_var_c = convert_gamevariable_to_reversed_hex(random.Random(start_monster_main_seed).randint(1, 32))
+        start_monster_main_seed += start_monster_increment
+        randomized_MP_stat = mp_var_a + mp_stat[2:4] + mp_var_c
+        monster.stat_variables["MP"] = randomized_MP_stat
+
+        #Change big chunk
+        monster.big_chunk = monster.big_chunk.replace(monster.stat_hex_og, monster.stat_hex)
+        monster.big_chunk = "01" + monster.big_chunk[2:]
+        if len(monster.big_chunk) != 280:
+            raise ValueError
+
+test = ""
+randomize_monsters()
+test = ""
+
+
+
+
+
+
+
+
+#0 Sallet
+#15 Flan Azul
+#42 Zu
+#150 Omega
+#328 Shinra
+#68 Black Elemental
+#21 Gecko
+
 # Initialization
 dresspheres = initiate_dresspheres_new()
 # print(dresspheres[8])
@@ -1148,7 +1314,7 @@ def write_potencies():
 
 
 write_potencies()
-print_dmg_info()
+# print_dmg_info()
 
 # MAKE STRING FOR COMMAND.BIN
 commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
@@ -1218,6 +1384,8 @@ def decode_chunk(chunk_val_list: list[str]):
         try:
             output_str = output_str + encode_dict[val]
         except KeyError:
+            #print (encode_dict[chunk_val_list[ind-5]]+encode_dict[chunk_val_list[ind-4]]+encode_dict[chunk_val_list[ind-3]]+encode_dict[chunk_val_list[ind-2]]+encode_dict[chunk_val_list[ind-1]]+"'"+val+"'"+encode_dict[chunk_val_list[ind+1]]+encode_dict[chunk_val_list[ind+2]]+encode_dict[chunk_val_list[ind+3]]+encode_dict[chunk_val_list[ind+4]]+encode_dict[chunk_val_list[ind+5]]+encode_dict[chunk_val_list[ind+6]])
+            #a = input("Press a key to continue")
             output_str = output_str + "•"
 
     return output_str
@@ -1229,8 +1397,16 @@ endingchunklist = []
 for byt in b:
     endingchunklist.append(hex(byt)[2:])
 c = decode_chunk(endingchunklist)
-print(c)
+# print(c)
 testy = ""
+
+
+#mon-get string
+
+mon_get_string = get_big_chunks(get_all_segments=True,segment_type="mon-get")[0]
+for monster in global_monsters:
+    mon_get_string = mon_get_string + monster.big_chunk
+
 
 
 
@@ -1238,12 +1414,15 @@ def execute_randomizer():
     binary_converted_jobbin = binascii.unhexlify(job_bin_string)
     binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
     binary_converted_aabin = binascii.unhexlify(aa_string_to_output)
+    binary_converted_mgetbin = binascii.unhexlify(mon_get_string)
     with open(output_jobbin_path, 'wb') as f:
         f.write(binary_converted_jobbin)
     with open(output_cmdbin_path, 'wb') as f:
         f.write(binary_converted_cmdbin)
     with open(output_aabin_path, 'wb') as f:
         f.write(binary_converted_aabin)
+    with open(output_monget_path, 'wb') as f:
+        f.write(binary_converted_mgetbin)
     print("Files written successfully!")
 
 # for index, ability in enumerate(global_abilities):

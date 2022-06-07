@@ -8,10 +8,13 @@ class Command:
         self.__ap = 0
         self.__dmg_info = {}
         self.__job = ""
+        self.__help_text = ""
         self.__name_start_index = 0
         self.__help_start_index = 0
-        self.__name_og_length = len(name_value)
+        self.name_og_length = len(name_value)
+        self.__name_new_length = 0
         self.__help_og_length = 0
+        self.__help_new_length = 0
         self.unknown_text_variable = 0
         self.__mug_flag = False
         self.__repeat_flag = False
@@ -23,6 +26,23 @@ class Command:
     @property
     def id(self):
         return self.__id
+
+    @property
+    def help_text(self):
+        return self.__help_text
+
+    @help_text.setter
+    def help_text(self, value: str):
+        self.__help_text = value
+        self.__help_new_length = len(value)
+
+    @property
+    def help_og_length(self):
+        return self.__help_og_length
+
+    @help_og_length.setter
+    def help_og_length(self, value: int):
+        self.__help_og_length = value
 
     @property
     def name_start_index(self):
@@ -99,6 +119,11 @@ class Command:
     @property
     def name(self):
         return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        self.__name = value
+        self.__name_new_length = len(value)
 
     @property
     def type(self):

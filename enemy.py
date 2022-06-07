@@ -16,6 +16,8 @@ class Enemy:
         self.__oversoul_experience = 0
         self.__dropped_gil = 0
         self.__stolen_gil = 0
+        self.mongetchunk = ""
+        self.lastchunk = ""
         self.__ap = 0
         self.__item_drop_rate = 0
         self.__steal_rate = 0

@@ -5,6 +5,7 @@ import item
 from services import *
 from enemy import Enemy
 from pathlib import Path
+from dressphere_execute import global_monsters
 
 file_iterations = 369
 item_list = item.initialize_items()
@@ -101,6 +102,7 @@ def test_enemy_maker(hexes, max=369):
             enemy_info = cut_line_HPMP(line)
             enemy = Enemy(enemy_info[0],id,hexes[id-1])
             enemy.og_hex_data = hexes[id-1]
+            enemy.mongetchunk = global_monsters[id-1].big_chunk
             enemy.stat_bank["HP"] = int(enemy_info[1])
             enemy.stat_bank["MP"] = int(enemy_info[2])
             enemy.oversoul_stat_bank["HP"] = int(enemy_info[3])

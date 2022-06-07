@@ -162,6 +162,7 @@ class Dressphere:
                 part1 = level * a_frac
                 part2 = (level / variables["B"]) + variables["C"]
                 part3 = level ** 2
+
                 formula_result = part1 + part2 - part3 / 16 / variables["D"] / variables["E"]
                 formula_result = "{:.2f}".format(formula_result)
                 raw_objects.append(formula_result)

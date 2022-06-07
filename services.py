@@ -39,8 +39,8 @@ def find_chunk(id_input: int, hex_file_data: str, problematic_id=0):
                position:position + 232]  # Returns everything up until after Abilities (including abilities)
 
 
-def parse_chunk(chunk: str):
-    if chunk == "Index position not found." or len(chunk) != 232:
+def parse_chunk(chunk: str, mon = False):
+    if chunk == "Index position not found." or (len(chunk) != 232 and mon is False):
         return "Error"
     else:
         seperated_chunks = []
@@ -57,9 +57,10 @@ def parse_chunk(chunk: str):
             else:
                 seperated_chunks.append(chunk[initial_position:initial_position + stat_length])
                 initial_position = initial_position + stat_length
-        for i in range(1, 33):
-            seperated_chunks.append(chunk[initial_position:initial_position + ability_length])
-            initial_position = initial_position + ability_length
+        if mon is False:
+            for i in range(1, 33):
+                seperated_chunks.append(chunk[initial_position:initial_position + ability_length])
+                initial_position = initial_position + ability_length
         return seperated_chunks
 
 
