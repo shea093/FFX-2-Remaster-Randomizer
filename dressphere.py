@@ -23,6 +23,7 @@ class Dressphere:
         self.__ability_table = {}
         self.__hex_chunk = "" #Legacy
         self.__big_chunk = ""
+        self.og_big_chunk = ""
         self.__abilities = []
         self.__ability_hex = ""
         self.__ability_hex_og = ""

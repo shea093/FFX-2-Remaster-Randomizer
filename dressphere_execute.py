@@ -6,6 +6,19 @@ from services import *
 
 # from abilty_tiers import tier1_abilities
 
+def read_seed():
+    this_seed = 0
+    with open(seed_path, 'r') as seed_file:
+        try:
+            this_seed = int(seed_file.read())
+        except:
+            print("Error reading seed.txt file, please make sure it contains a valid integer.")
+            exit()
+    return this_seed
+
+
+seed = read_seed()
+
 # from abilty_tiers import tier2_abilities
 # from abilty_tiers import tier3_abilities
 
@@ -33,18 +46,6 @@ jobs_names = [
 # 659
 # MAIN SEED 790723
 
-def read_seed():
-    this_seed = 0
-    with open(seed_path, 'r') as seed_file:
-        try:
-            this_seed = int(seed_file.read())
-        except:
-            print("Error reading seed.txt file, please make sure it contains a valid integer.")
-            exit()
-    return this_seed
-
-
-seed = read_seed()
 
 
 def job_bin_to_hex():
@@ -910,6 +911,7 @@ def initiate_monsters() -> list[Dressphere]:
     for index, chunk in enumerate(chunks):
         new_monster = Dressphere(mon_names[index],index+6001)
         new_monster.big_chunk = chunk
+        new_monster.og_big_chunk = chunk
         formulae = parse_chunk(chunk,mon=True)
         stat_names = ["HP", "MP", "STR", "DEF", "MAG", "MDEF", "AGL", "EVA", "ACC", "LUCK"]
         #ability_initial_position = 0

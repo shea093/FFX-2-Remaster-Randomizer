@@ -103,6 +103,7 @@ def test_enemy_maker(hexes, max=369):
             enemy = Enemy(enemy_info[0],id,hexes[id-1])
             enemy.og_hex_data = hexes[id-1]
             enemy.mongetchunk = global_monsters[id-1].big_chunk
+            enemy.lastchunk = enemy.og_hex_data[-352:]
             enemy.stat_bank["HP"] = int(enemy_info[1])
             enemy.stat_bank["MP"] = int(enemy_info[2])
             enemy.oversoul_stat_bank["HP"] = int(enemy_info[3])
@@ -478,6 +479,17 @@ def overwrite_HP_batch(enemies: list[Enemy]):
 
     return new_enemies
 
+def overwrite_monget_randomized(enemylist: list[Enemy]):
+    output_list = enemylist
+    for index, enemy in enumerate(output_list):
+        comp = enemy.lastchunk
+        enemy.lastchunk = enemy.lastchunk.replace(global_monsters[index].og_big_chunk,global_monsters[index].big_chunk)
+        if comp == enemy.lastchunk:
+            raise ValueError
+        enemy.curr_edited_hex_data = enemy.curr_edited_hex_data[0:-abs(len(enemy.lastchunk))] + enemy.lastchunk
+    return output_list
+
+
 # def test_write_randomizer(new_enemies_list):
 #     new_enemies = new_enemies_list
 #     for index, directory in enumerate(get_subdirectories("VBF_RANDO_TEST")):
@@ -526,6 +538,7 @@ batch_strength_defence_overwrite(enemies)
 print("----------")
 print("----")
 overwrite_hex_data_str_def_exp(enemies)
+overwrite_monget_randomized(enemies)
 
 
 #WRITE ALL THE BIN FILES
