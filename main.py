@@ -1,5 +1,5 @@
 import TkinterTemplate
-import dressphere_execute
+import dressphere_randomize
 import menu
 
 def main():

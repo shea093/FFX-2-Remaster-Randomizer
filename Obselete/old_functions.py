@@ -1,7 +1,7 @@
 import random
 
 from dressphere import Dressphere
-from dressphere_execute import get_big_chunks, dresspheres, seed, job_bin_to_hex, jobs_names
+from dressphere_randomize import get_big_chunks, dresspheres, seed, job_bin_to_hex, jobs_names
 from services import find_chunk, parse_chunk
 
 

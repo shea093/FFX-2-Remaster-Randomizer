@@ -1,10 +1,10 @@
 import pathlib
-import dressphere_execute
+import dressphere_randomize
 import TkinterTemplate
 import importlib
 import sys
 import os
-import fileopen
+import monster_edit
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -100,27 +100,27 @@ def menu():
         main_menu()
 
     def option1():
-        importlib.reload(dressphere_execute)
-        dressphere_execute.execute_randomizer(reset_bins=False)
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.execute_randomizer(reset_bins=False)
         main_menu()
 
     def option5():
-        importlib.reload(dressphere_execute)
+        importlib.reload(dressphere_randomize)
         importlib.reload(TkinterTemplate)
         TkinterTemplate.initialize()
         main_menu()
 
     def option2():
-        importlib.reload(dressphere_execute)
-        importlib.reload(fileopen)
-        fileopen.write_bins_new(reset_bins=False)
+        importlib.reload(dressphere_randomize)
+        importlib.reload(monster_edit)
+        monster_edit.write_bins_new(reset_bins=False)
         main_menu()
 
     def option6():
-        importlib.reload(fileopen)
-        importlib.reload(dressphere_execute)
-        dressphere_execute.execute_randomizer(reset_bins=True)
-        fileopen.write_bins_new(reset_bins=True)
+        importlib.reload(monster_edit)
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.execute_randomizer(reset_bins=True)
+        monster_edit.write_bins_new(reset_bins=True)
         main_menu()
 
     def main_menu():
