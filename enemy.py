@@ -8,6 +8,7 @@ class Enemy:
         self.__enemy_id = enemy_id
         self.__enemy_hex_data = enemy_hex_data_def
         self.og_hex_data = ""
+        self.very_og_hex_data = ""
         self.__curr_edited_hex_data = ""
         self.__stat_bank = {}
         self.__oversoul_stat_bank = {}

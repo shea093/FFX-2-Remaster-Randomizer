@@ -1,5 +1,21 @@
-item_txt_path = "Test Files/items.txt"
-acc_txt_path = "Test Files/accessories.txt"
+import os
+import sys
+import pathlib
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+        test = ""
+
+    return os.path.join(base_path, relative_path)
+
+item_txt_path = resource_path(pathlib.PureWindowsPath("Test Files/items.txt"))
+acc_txt_path = resource_path(pathlib.PureWindowsPath("Test Files/accessories.txt"))
+
 
 class Item:
     def __init__(self, id_value: str, name_value: str, type_value: str):

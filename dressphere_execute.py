@@ -43,19 +43,7 @@ seed = read_seed()
 # from abilty_tiers import tier2_abilities
 # from abilty_tiers import tier3_abilities
 
-os_prefix = os.getcwd()
-directory_name = str(seed)
-directory_path = os.path.join(os_prefix,directory_name)
-try:
-    os.mkdir(directory_path)
-except FileExistsError:
-    pass
-test = ""
-output_jobbin_path = pathlib.PureWindowsPath(directory_path+ "\job.bin")
-test = ""
-output_cmdbin_path = pathlib.PureWindowsPath(directory_path+"/command.bin")
-output_aabin_path = pathlib.PureWindowsPath(directory_path+ "/a_ability.bin")
-output_monget_path = pathlib.PureWindowsPath(directory_path+ "/mon_get.bin")
+
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
@@ -1438,6 +1426,21 @@ for monster in global_monsters:
 
 
 def execute_randomizer():
+    os_prefix = os.getcwd()
+    directory_name = str(seed)
+    directory_path = os_prefix + "/" + directory_name + "/ffx_ps2/ffx2/master/new_uspc/battle/kernel"
+    try:
+        os.makedirs(directory_path)
+    except FileExistsError:
+        pass
+    test = ""
+    output_jobbin_path = pathlib.PureWindowsPath(directory_path + "\job.bin")
+    test = ""
+    output_cmdbin_path = pathlib.PureWindowsPath(directory_path + "/command.bin")
+    output_aabin_path = pathlib.PureWindowsPath(directory_path + "/a_ability.bin")
+    output_monget_path = pathlib.PureWindowsPath(directory_path + "/mon_get.bin")
+
+
     binary_converted_jobbin = binascii.unhexlify(job_bin_string)
     binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
     binary_converted_aabin = binascii.unhexlify(aa_string_to_output)

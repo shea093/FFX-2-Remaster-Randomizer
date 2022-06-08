@@ -4,6 +4,7 @@ import TkinterTemplate
 import importlib
 import sys
 import os
+import fileopen
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -50,11 +51,14 @@ def menu():
     line_breaker = "-----------------------"
 
     menu_options = {
-        1: 'Execute randomizer',
+        1: 'Execute Dressphere Stat&Ability Randomizer',
         2: 'Set Seed',
         3: 'Print current seed',
-        4: 'Launch dressphere viewer',
-        5: 'Exit'
+        4: 'Launch Dressphere Spoiler tool',
+        5: 'Execute Hard Mode + Monster Stat Randomizer',
+        6: 'Get default files (Reset)',
+        7: 'Exit'
+
     }
 
     def print_menu():
@@ -106,6 +110,17 @@ def menu():
         TkinterTemplate.initialize()
         main_menu()
 
+    def option5():
+        importlib.reload(dressphere_execute)
+        importlib.reload(fileopen)
+        fileopen.write_bins_new(reset_bins=False)
+        main_menu()
+
+    def option6():
+        importlib.reload(fileopen)
+        fileopen.write_bins_new(reset_bins=True)
+        main_menu()
+
     def main_menu():
         seed = read_seed()
         while(menu_flag == True):
@@ -114,7 +129,7 @@ def menu():
             option = ''
             try:
                 option = int(input('Enter your choice: '))
-                if option < 0 or option > 5:
+                if option < 0 or option > 6:
                     raise ValueError
             except:
                 print('Wrong input. Please enter a number ...')
@@ -128,6 +143,10 @@ def menu():
             elif option == 4:
                 option4()
             elif option == 5:
+                option5()
+            elif option == 6:
+                option6()
+            elif option == 7:
                 print(line_breaker)
                 print('Thanks for trying out the FFX-2 Randomizer!')
                 sys.exit()

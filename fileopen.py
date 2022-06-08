@@ -2,13 +2,32 @@ import binascii
 import re
 import copy
 import item
+import os
+import sys
 from services import *
 from enemy import Enemy
 from pathlib import Path
+import pathlib
 from dressphere_execute import global_monsters
+from dressphere_execute import seed as this_seed
 
 file_iterations = 369
 item_list = item.initialize_items()
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+        test = ""
+
+    return os.path.join(base_path, relative_path)
+
+default_monfiles_path = resource_path(pathlib.PureWindowsPath("MONBINS"))
+test = ""
+
 
 # Read a binary file and convert it into hex data
 def read_hex(path):
@@ -19,7 +38,7 @@ def read_hex(path):
 
 # Get the directories with the monster files
 def get_subdirectories(path):
-    vbf_str = path
+    vbf_str = resource_path(path)
     vbf_dir = Path(vbf_str)  # VBF Directory
     vbf_subdirs = []   # Subdirectory list initialized
 
@@ -45,37 +64,48 @@ def mon_binlist_generator():
 
 
 # Get list of hex strings from the files
-def traverse_files():
-    mon_filenames = mon_binlist_generator()
-    mon_directories = get_subdirectories("VBF_X2")
+def traverse_files(legacy=False):
     mon_hex_files = []
-    for directory in mon_directories:
-        for file in directory.iterdir():
-            if file.is_file() and file.name in mon_filenames:
-                mon_hex_files.append((read_hex(file)))
+    mon_filenames = mon_binlist_generator()
+    if legacy is True:
+        mon_directories = get_subdirectories("VBF_X2")
+        for directory in mon_directories:
+            for file in directory.iterdir():
+                if file.is_file() and file.name in mon_filenames:
+                    mon_hex_files.append((read_hex(file)))
+        test = ""
+    else:
+        for filename in mon_filenames:
+            mon_bin_filepath = pathlib.PureWindowsPath(default_monfiles_path + "/" + filename)
+            this_filepath = Path(mon_bin_filepath)
+            mon_hex_files.append(read_hex(this_filepath))
+            test = ""
     return mon_hex_files
 
 
+creaturenames_path = resource_path(pathlib.PureWindowsPath("Test Files/english_creature_names.txt"))
+newcreaturenames_path = resource_path(pathlib.PureWindowsPath("Test Files/new_english_creature_names.txt"))
+
 def cut_creature_values():
     creature_names = []
-    with open("Obselete/creaturevalues.txt", "r") as f:
+    with open(creaturenames_path, "r") as f:
         for line in f.readlines():
             match = re.search('"[^"]+"', line)
             match = match.group()
             match = match[1:-1]
             creature_names.append(match)
-    with open("Obselete/new_creature_values.txt", "w") as f:
+    with open(newcreaturenames_path, "w") as f:
         for line in creature_names:
             f.write(line + "\n")
 
 def cut_creature_english_names():
     creature_names = []
-    with open("Obselete/english_creature_names.txt", "r") as f:
+    with open(creaturenames_path, "r") as f:
         for line in f.readlines():
             pre_slice = line[5:27]
             pre_slice = re.sub(r"\s+", "", pre_slice, flags=re.UNICODE)
             creature_names.append(pre_slice)
-    with open("Obselete/new_english_creature_names.txt", "w") as f:
+    with open(newcreaturenames_path, "w") as f:
         for line in creature_names:
             f.write(line + "\n")
 
@@ -95,13 +125,15 @@ def cut_line_HPMP(line: str):
 
 def test_enemy_maker(hexes, max=369):
     enemies = []
-    with open("HPMP.txt", "r") as f:
+    HPMP_path = resource_path(pathlib.PureWindowsPath("HPMP.txt"))
+    with open(HPMP_path, "r") as f:
         id = 0
         for line in f.readlines():
             id = id + 1
             enemy_info = cut_line_HPMP(line)
             enemy = Enemy(enemy_info[0],id,hexes[id-1])
             enemy.og_hex_data = hexes[id-1]
+            enemy.very_og_hex_data = hexes[id-1]
             enemy.mongetchunk = global_monsters[id-1].big_chunk
             enemy.lastchunk = enemy.og_hex_data[-352:]
             enemy.stat_bank["HP"] = int(enemy_info[1])
@@ -405,19 +437,19 @@ def overwrite_hex_data_str_def_exp(enemy_list: list[Enemy]):
 
 
 # Tests
-print(cut_line_HPMP("etc"))
+# print(cut_line_HPMP("etc"))
 cut_creature_english_names()
-print(get_subdirectories("VBF_X2"))
-print(mon_binlist_generator())
+# print(get_subdirectories("VBF_X2"))
+# print(mon_binlist_generator())
 hex_test = traverse_files()
-print(type(hex_test[0]))
+# print(type(hex_test[0]))
 enemies = test_enemy_maker(hex_test, max=file_iterations)
-print(enemies)
+# print(enemies)
 
 
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
 errors = 0
 normal_errors = 0
 oversoul_errors = 0
@@ -435,11 +467,11 @@ for index, enemy in enumerate(enemies):
         normal_error_ids.append(enemy.enemy_id)
         errors = errors + 1
         normal_errors = normal_errors + 1
-        print(enemy)
-        print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=False))
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
+        # print(enemy)
+        # print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=False))
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
 
 for index, enemy in enumerate(enemies):
     hp_mp_hex = enemy.output_HP_MP(formatted=False, oversoul=True)
@@ -448,20 +480,20 @@ for index, enemy in enumerate(enemies):
         oversoul_error_ids.append(enemy.enemy_id)
         errors = errors + 1
         oversoul_errors = oversoul_errors + 1
-        print(enemy)
-        print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=True))
+        # print(enemy)
+        # print(f"{index + 1:03}" + ".    " + enemy.output_HP_MP(formatted=True, oversoul=True))
 
 
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
-print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
-print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
-
-
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
-print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("Non-oversoul Errors: ", normal_errors, "/",file_iterations)
+# print("Oversoul Errors: ", oversoul_errors, "/",file_iterations)
+#
+#
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
+# print("%%%%%%%%%%%%%%%%%%")
 
 def overwrite_HP_batch(enemies: list[Enemy]):
     new_enemies = []
@@ -516,10 +548,6 @@ def overwrite_monget_randomized(enemylist: list[Enemy]):
 
 # print(Path.cwd())
 # print(get_subdirectories("VBF_X2_NEW"))
-print(enemies[0])
-print(enemies[0].stat_bank)
-print(enemies[0].output_HP_MP(formatted=False))
-print(enemies[0].get_original_hex_stat_position())
 
 
 
@@ -533,16 +561,14 @@ set_enemy_data(enemies)
 test = ""
 enemies = overwrite_HP_batch(enemies)
 test = ""
-print(enemies[294])
 batch_strength_defence_overwrite(enemies)
-print("----------")
-print("----")
+
 overwrite_hex_data_str_def_exp(enemies)
 overwrite_monget_randomized(enemies)
 
 
 #WRITE ALL THE BIN FILES
-def write_bins():
+def write_bins(reset_bins=False):
     for index, directory in enumerate(get_subdirectories("VBF_X2_NEW")):
         bin_name = str(directory.name[1:]) + ".bin"
         if bin_name not in mon_binlist_generator():
@@ -551,43 +577,131 @@ def write_bins():
         #     print("please")
         #     print(new_enemies[index])
         else:
-            bad_ids = [194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,216,236,240,255,257,259,261,262,264,265,267,272,281,282,283,287,290,
-                       296,297,298,299,300,301,305,306,307,310,312,314,316,318,334,335,336,337,338,186,187,174,157,139,140,141,142,143,116,117,
-                       118,119,105,86,]
-            id = int(directory.name[2:])
-            for enemy in enemies:
-                if enemy.enemy_id == id:
+            if reset_bins is True:
+                id = int(directory.name[2:])
+                resetbin_path = resource_path(pathlib.PureWindowsPath("MONBINS"))
+                for enemy in enemies:
+                    test = ""
+                    if enemy.enemy_id == id:
+
+                        os_prefix = os.getcwd()
+                        os_prefix = os_prefix + "/reset/ffx_ps2/ffx2/master/jppc/battle/mon/"
+                        directory_path = os.path.join(os_prefix, directory.name)
+                        test = ""
+                        try:
+                            os.makedirs(directory_path)
+                            test = ""
+                        except FileExistsError:
+                            pass
+
+                        filepath = pathlib.PureWindowsPath(directory_path+ "/"+bin_name)
+                        binary_converted = binascii.unhexlify(enemy.og_hex_data)
+                        with open(filepath, mode="wb") as f:
+                            f.write(binary_converted)
+                        test = ""
+            else:
+                bad_ids = [194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,216,236,240,255,257,259,261,262,264,265,267,272,281,282,283,287,290,
+                           296,297,298,299,300,301,305,306,307,310,312,314,316,318,334,335,336,337,338,186,187,174,157,139,140,141,142,143,116,117,
+                           118,119,105,86,]
+                id = int(directory.name[2:])
+                for enemy in enemies:
+                    if enemy.enemy_id == id:
+                        if enemy.enemy_id in bad_ids:
+                            filepath = directory / bin_name
+                            # print("----------------")
+                            # print("Errored")
+                            binary_converted = binascii.unhexlify(enemy.og_hex_data)
+                            with filepath.open(mode="wb") as f:
+                                f.write(binary_converted)
+                            # print("----------------")
+
+                        elif enemy.enemy_id not in normal_error_ids:
+                            filepath = directory / bin_name
+                            # print("Enemy ID: " + str(enemy.enemy_id))
+                            # print("Bin name: "+ str(bin_name))
+                            # print(enemy.output_HP_MP(formatted=True, oversoul=False))
+                            binary_converted = binascii.unhexlify(enemy.curr_edited_hex_data)
+                            compare = binascii.unhexlify(enemy.og_hex_data)
+                            if len(compare) != len (binary_converted):
+                                raise ValueError
+                            with filepath.open(mode="wb") as f:
+                                f.write(binary_converted)
+                            # print("Done i think????")
+                        else:
+                            filepath = directory / bin_name
+                            # print("----------------")
+                            # print("Errored")
+                            binary_converted = binascii.unhexlify(enemy.og_hex_data)
+                            with filepath.open(mode="wb") as f:
+                                f.write(binary_converted)
+                            # print("----------------")
+    print("Monster files have been successfully written.")
+    input("Press any key to continue...")
+
+def write_bins_new(reset_bins=False):
+    for index, bin_name in enumerate(mon_binlist_generator()):
+        bin_folder_name = "_" + bin_name[0:-4]
+        test = ""
+        root_directory_name = str(this_seed)
+        test = ""
+        if reset_bins is True:
+            root_directory_name = "reset"
+        id = int(bin_name[1:-4])
+        filepath = ""
+        for enemy in enemies:
+            if enemy.enemy_id == id:
+                os_prefix = os.getcwd()
+                os_prefix = os_prefix + "/" + root_directory_name + "/ffx_ps2/ffx2/master/jppc/battle/mon/"
+                directory_path = os.path.join(os_prefix, bin_folder_name)
+                test = ""
+                try:
+                    os.makedirs(directory_path)
+                    test = ""
+                except FileExistsError:
+                    pass
+                filepath = pathlib.PureWindowsPath(directory_path + "/" + bin_name)
+                if reset_bins is True:
+                        binary_converted = binascii.unhexlify(enemy.very_og_hex_data)
+                        with open(filepath, mode="wb") as f:
+                            f.write(binary_converted)
+                        test = ""
+                else:
+                    bad_ids = [194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,216,236,240,255,257,259,261,262,264,265,267,272,281,282,283,287,290,
+                               296,297,298,299,300,301,305,306,307,310,312,314,316,318,334,335,336,337,338,186,187,174,157,139,140,141,142,143,116,117,
+                               118,119,105,86,]
                     if enemy.enemy_id in bad_ids:
-                        filepath = directory / bin_name
-                        print("----------------")
-                        print("Errored")
+                        filepath = Path(filepath)
+                        # print("----------------")
+                        # print("Errored")
                         binary_converted = binascii.unhexlify(enemy.og_hex_data)
                         with filepath.open(mode="wb") as f:
                             f.write(binary_converted)
-                        print("----------------")
+                        # print("----------------")
 
                     elif enemy.enemy_id not in normal_error_ids:
-                        filepath = directory / bin_name
-                        print("Enemy ID: " + str(enemy.enemy_id))
-                        print("Bin name: "+ str(bin_name))
-                        print(enemy.output_HP_MP(formatted=True, oversoul=False))
+                        filepath = Path(filepath)
+                        # print("Enemy ID: " + str(enemy.enemy_id))
+                        # print("Bin name: "+ str(bin_name))
+                        # print(enemy.output_HP_MP(formatted=True, oversoul=False))
                         binary_converted = binascii.unhexlify(enemy.curr_edited_hex_data)
                         compare = binascii.unhexlify(enemy.og_hex_data)
                         if len(compare) != len (binary_converted):
                             raise ValueError
                         with filepath.open(mode="wb") as f:
                             f.write(binary_converted)
-                        print("Done i think????")
+                        test =""
+                        # print("Done i think????")
                     else:
-                        filepath = directory / bin_name
-                        print("----------------")
-                        print("Errored")
+                        filepath = Path(filepath)
+                        # print("----------------")
+                        # print("Errored")
                         binary_converted = binascii.unhexlify(enemy.og_hex_data)
                         with filepath.open(mode="wb") as f:
                             f.write(binary_converted)
-                        print("----------------")
+                        # print("----------------")
+    print("Monster files have been successfully written.")
+    input("Press any key to continue...")
 
-write_bins()
 
 # print(new_enemies[0].output_HP_MP(formatted=False, oversoul=False))
 # print(new_enemies[0].enemy_hex_data.find(new_enemies[0].output_HP_MP(formatted=False, oversoul=False)))
