@@ -2,6 +2,18 @@ import pathlib
 import dressphere_execute
 import TkinterTemplate
 import importlib
+import sys
+import os
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class color:
    PURPLE = '\033[95m'
@@ -15,7 +27,8 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-seed_path = "Test Files/seed.txt"
+seed_path = resource_path(pathlib.PureWindowsPath("Test Files\seed.txt"))
+test = ""
 
 def read_seed():
     with open(seed_path, 'r') as seed_file:

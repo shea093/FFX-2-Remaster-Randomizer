@@ -1,0 +1,716 @@
+0.	 ID: 3000		Item		AP: 0
+1.	 ID: 3001		Escape		AP: 0
+2.	 ID: 3002		Dresspheres		AP: 0
+3.	 ID: 3003		(UNUSED)		AP: 0
+4.	 ID: 3004		(UNUSED)		AP: 0
+5.	 ID: 3005		(UNUSED)		AP: 0
+6.	 ID: 3006		(UNUSED)		AP: 0
+7.	 ID: 3007		(UNUSED)		AP: 0
+8.	 ID: 3008		Gunplay		AP: 0
+9.	 ID: 3009		Stash		AP: 0
+10.	 ID: 300A		Blue Bullet		AP: 0
+11.	 ID: 300B		Fiend Hunter		AP: 0
+12.	 ID: 300C		Dance		AP: 0
+13.	 ID: 300D		Sing		AP: 0
+14.	 ID: 300E		Kupo!		AP: 0
+15.	 ID: 300F		Wildcat		AP: 0
+16.	 ID: 3010		Cutlery		AP: 0
+17.	 ID: 3011		Flimflam		AP: 0
+18.	 ID: 3012		Gamble		AP: 0
+19.	 ID: 3013		Kogoro		AP: 0
+20.	 ID: 3014		Ghiki		AP: 0
+21.	 ID: 3015		Flurry		AP: 0
+22.	 ID: 3016		Fallalery		AP: 0
+23.	 ID: 3017		Left Pistil		AP: 0
+24.	 ID: 3018		Right Pistil		AP: 0
+25.	 ID: 3019		Machinations		AP: 0
+26.	 ID: 301A		Smash		AP: 0
+27.	 ID: 301B		Crush		AP: 0
+28.	 ID: 301C		Throttle		AP: 0
+29.	 ID: 301D		Dextral Arts		AP: 0
+30.	 ID: 301E		Sinistal Arts		AP: 0
+31.	 ID: 301F		Swordplay		AP: 80
+32.	 ID: 3020		Bushido		AP: 80
+33.	 ID: 3021		Arcana		AP: 80
+34.	 ID: 3022		Instinct		AP: 80
+35.	 ID: 3023		Black Magic		AP: 80
+36.	 ID: 3024		White Magic		AP: 80
+37.	 ID: 3025		Auto-Life		AP: 0
+38.	 ID: 3026		Doom		AP: 0
+39.	 ID: 3027		Energy Ray		AP: 0
+40.	 ID: 3028		Energy Blast		AP: 0
+41.	 ID: 3029		Hellfire		AP: 0
+42.	 ID: 302A		Mjollnir		AP: 0
+43.	 ID: 302B		Mega-Flare		AP: 0
+44.	 ID: 302C		Attack		AP: 20
+45.	 ID: 302D		Attack		AP: 20
+46.	 ID: 302E		Attack		AP: 20
+47.	 ID: 302F		Attack		AP: 20
+48.	 ID: 3030		Attack		AP: 20
+49.	 ID: 3031		Attack		AP: 20
+50.	 ID: 3032		Trigger Happy		AP: 30
+51.	 ID: 3033		Potshot		AP: 20
+52.	 ID: 3034		Cheap Shot		AP: 30
+53.	 ID: 3035		Enchanted Ammo		AP: 30
+54.	 ID: 3036		Target MP		AP: 30
+55.	 ID: 3037		Quarter Pounder		AP: 40
+56.	 ID: 3038		On the Level		AP: 40
+57.	 ID: 3039		Burst Shot		AP: 60
+58.	 ID: 303A		Table-turner		AP: 60
+59.	 ID: 303B		Scattershot		AP: 80
+60.	 ID: 303C		Scatterburst		AP: 120
+61.	 ID: 303D		Scan		AP: 20
+62.	 ID: 303E		Shell Cracker		AP: 20
+63.	 ID: 303F		Anti Aircraft		AP: 20
+64.	 ID: 3040		Silver Bullet		AP: 20
+65.	 ID: 3041		Flan Eater		AP: 20
+66.	 ID: 3042		Elementillery		AP: 20
+67.	 ID: 3043		Killasaurus		AP: 20
+68.	 ID: 3044		Drake Slayer		AP: 20
+69.	 ID: 3045		Dismantler		AP: 20
+70.	 ID: 3046		Mech Destroyer		AP: 20
+71.	 ID: 3047		Demon Muzzle		AP: 20
+72.	 ID: 3048		Fire Breath		AP: 1
+73.	 ID: 3049		Seed Cannon		AP: 1
+74.	 ID: 304A		Stone Breath		AP: 1
+75.	 ID: 304B		Absorb		AP: 1
+76.	 ID: 304C		White Wind		AP: 1
+77.	 ID: 304D		Bad Breath		AP: 1
+78.	 ID: 304E		Mighty Guard		AP: 1
+79.	 ID: 304F		Supernova		AP: 1
+80.	 ID: 3050		Cry in the Night		AP: 1
+81.	 ID: 3051		Drill Shot		AP: 1
+82.	 ID: 3052		Mortar		AP: 1
+83.	 ID: 3053		Annihilator		AP: 1
+84.	 ID: 3054		Heaven's Cataract		AP: 1
+85.	 ID: 3055		1000 Needles		AP: 1
+86.	 ID: 3056		Storm Cannon		AP: 1
+87.	 ID: 3057		Blaster		AP: 1
+88.	 ID: 3058		Mix		AP: 40
+89.	 ID: 3059		Potion		AP: 10
+90.	 ID: 305A		Hi-Potion		AP: 40
+91.	 ID: 305B		Mega-Potion		AP: 120
+92.	 ID: 305C		X-Potion		AP: 160
+93.	 ID: 305D		Remedy		AP: 20
+94.	 ID: 305E		Dispel Tonic		AP: 20
+95.	 ID: 305F		Phoenix Down		AP: 30
+96.	 ID: 3060		Mega Phoenix		AP: 200
+97.	 ID: 3061		Ether		AP: 400
+98.	 ID: 3062		Elixir		AP: 999
+99.	 ID: 3063		Assault		AP: 100
+100.	 ID: 3064		Sentinel		AP: 20
+101.	 ID: 3065		Power Break		AP: 30
+102.	 ID: 3066		Armor Break		AP: 30
+103.	 ID: 3067		Magic Break		AP: 30
+104.	 ID: 3068		Mental Break		AP: 30
+105.	 ID: 3069		Flametongue		AP: 20
+106.	 ID: 306A		Icebrand		AP: 20
+107.	 ID: 306B		Thunder Blade		AP: 20
+108.	 ID: 306C		Liquid Steel		AP: 20
+109.	 ID: 306D		Demi Sword		AP: 60
+110.	 ID: 306E		Excalibur		AP: 120
+111.	 ID: 306F		Delay Attack		AP: 100
+112.	 ID: 3070		Delay Buster		AP: 120
+113.	 ID: 3071		Mirror of Equity		AP: 30
+114.	 ID: 3072		Magicide		AP: 30
+115.	 ID: 3073		Dismissal		AP: 30
+116.	 ID: 3074		Fingersnap		AP: 40
+117.	 ID: 3075		Sparkler		AP: 40
+118.	 ID: 3076		Fireworks		AP: 60
+119.	 ID: 3077		Momentum		AP: 60
+120.	 ID: 3078		Shin-Zantetsu		AP: 100
+121.	 ID: 3079		Nonpareil		AP: 20
+122.	 ID: 307A		No Fear		AP: 30
+123.	 ID: 307B		Clean Slate		AP: 40
+124.	 ID: 307C		Hayate		AP: 60
+125.	 ID: 307D		Spare Change		AP: 20
+126.	 ID: 307E		Zantetsu		AP: 140
+127.	 ID: 307F		Darkness		AP: 30
+128.	 ID: 3080		Charon		AP: 20
+129.	 ID: 3081		Drain		AP: 20
+130.	 ID: 3082		Demi		AP: 20
+131.	 ID: 3083		Confuse		AP: 30
+132.	 ID: 3084		Break		AP: 40
+133.	 ID: 3085		Bio		AP: 30
+134.	 ID: 3086		Doom		AP: 20
+135.	 ID: 3087		Death		AP: 50
+136.	 ID: 3088		Black Sky		AP: 100
+137.	 ID: 3089		Berserk		AP: 30
+138.	 ID: 308A		Howl		AP: 80
+139.	 ID: 308B		Cripple		AP: 20
+140.	 ID: 308C		Mad Rush		AP: 30
+141.	 ID: 308D		Crackdown		AP: 30
+142.	 ID: 308E		Eject		AP: 40
+143.	 ID: 308F		Unhinge		AP: 40
+144.	 ID: 3090		Intimidate		AP: 50
+145.	 ID: 3091		Envenom		AP: 30
+146.	 ID: 3092		Hurt		AP: 60
+147.	 ID: 3093		Darkness Dance		AP: 20
+148.	 ID: 3094		Samba of Silence		AP: 20
+149.	 ID: 3095		MP Mambo		AP: 20
+150.	 ID: 3096		Magical Masque		AP: 20
+151.	 ID: 3097		Sleepy Shuffle		AP: 80
+152.	 ID: 3098		Carnival Cancan		AP: 80
+153.	 ID: 3099		Slowdance		AP: 60
+154.	 ID: 309A		Brakedance		AP: 120
+155.	 ID: 309B		Jitterbug		AP: 120
+156.	 ID: 309C		Dirty Dancing		AP: 160
+157.	 ID: 309D		Battle Cry		AP: 10
+158.	 ID: 309E		Cantus Firmus		AP: 10
+159.	 ID: 309F		Esoteric Melody		AP: 10
+160.	 ID: 30A0		Disenchant		AP: 10
+161.	 ID: 30A1		Perfect Pitch		AP: 10
+162.	 ID: 30A2		Matador's Song		AP: 10
+163.	 ID: 30A3		Focus		AP: 10
+164.	 ID: 30A4		MP Absorb		AP: 10
+165.	 ID: 30A5		Fire		AP: 20
+166.	 ID: 30A6		Blizzard		AP: 20
+167.	 ID: 30A7		Thunder		AP: 20
+168.	 ID: 30A8		Water		AP: 20
+169.	 ID: 30A9		Fira		AP: 40
+170.	 ID: 30AA		Blizzara		AP: 40
+171.	 ID: 30AB		Thundara		AP: 40
+172.	 ID: 30AC		Watera		AP: 40
+173.	 ID: 30AD		Firaga		AP: 100
+174.	 ID: 30AE		Blizzaga		AP: 100
+175.	 ID: 30AF		Thundaga		AP: 100
+176.	 ID: 30B0		Waterga		AP: 100
+177.	 ID: 30B1		Pray		AP: 10
+178.	 ID: 30B2		Vigor		AP: 20
+179.	 ID: 30B3		Cure		AP: 20
+180.	 ID: 30B4		Cura		AP: 40
+181.	 ID: 30B5		Curaga		AP: 80
+182.	 ID: 30B6		Regen		AP: 80
+183.	 ID: 30B7		Esuna		AP: 20
+184.	 ID: 30B8		Dispel		AP: 30
+185.	 ID: 30B9		Life		AP: 30
+186.	 ID: 30BA		Full-Life		AP: 160
+187.	 ID: 30BB		Shell		AP: 30
+188.	 ID: 30BC		Protect		AP: 30
+189.	 ID: 30BD		Reflect		AP: 30
+190.	 ID: 30BE		Full-Cure		AP: 80
+191.	 ID: 30BF		Steal		AP: 20
+192.	 ID: 30C0		Pilfer Gil		AP: 30
+193.	 ID: 30C1		Borrowed Time		AP: 100
+194.	 ID: 30C2		Pilfer HP		AP: 60
+195.	 ID: 30C3		Pilfer MP		AP: 60
+196.	 ID: 30C4		Sticky Fingers		AP: 120
+197.	 ID: 30C5		Master Thief		AP: 140
+198.	 ID: 30C6		Soul Swipe		AP: 160
+199.	 ID: 30C7		Steal Will		AP: 160
+200.	 ID: 30C8		Flee		AP: 10
+201.	 ID: 30C9		Kogoro Blaze		AP: 40
+202.	 ID: 30CA		Kogoro Freeze		AP: 40
+203.	 ID: 30CB		Kogoro Shock		AP: 40
+204.	 ID: 30CC		Kogoro Deluge		AP: 40
+205.	 ID: 30CD		Kogoro Strike		AP: 80
+206.	 ID: 30CE		Doom Kogoro		AP: 80
+207.	 ID: 30CF		Kogoro Cure		AP: 30
+208.	 ID: 30D0		Kogoro Remedy		AP: 40
+209.	 ID: 30D1		Holy Kogoro		AP: 30
+210.	 ID: 30D2		Pound!		AP: 100
+211.	 ID: 30D3		Ghiki Gouge		AP: 40
+212.	 ID: 30D4		Ghiki Gag		AP: 80
+213.	 ID: 30D5		Mugger Ghiki		AP: 40
+214.	 ID: 30D6		Pesky Ghiki		AP: 100
+215.	 ID: 30D7		Bully Ghiki		AP: 100
+216.	 ID: 30D8		Ghiki Meds		AP: 30
+217.	 ID: 30D9		Ghiki Pep		AP: 40
+218.	 ID: 30DA		Ghiki Cheer		AP: 80
+219.	 ID: 30DB		Sneaky Ghiki		AP: 30
+220.	 ID: 30DC		Swarm, Swarm!		AP: 100
+221.	 ID: 30DD		Poison Flurry		AP: 40
+222.	 ID: 30DE		Stone Flurry		AP: 60
+223.	 ID: 30DF		Death Flurry		AP: 60
+224.	 ID: 30E0		Flurry Guard		AP: 60
+225.	 ID: 30E1		Flurry Speed		AP: 60
+226.	 ID: 30E2		Flurry Shield		AP: 60
+227.	 ID: 30E3		HP Flurry		AP: 30
+228.	 ID: 30E4		Recovery Flurry		AP: 40
+229.	 ID: 30E5		Carrier Flurry		AP: 40
+230.	 ID: 30E6		Maulwings!		AP: 100
+231.	 ID: 30E7		Attack Reels		AP: 60
+232.	 ID: 30E8		Magic Reels		AP: 70
+233.	 ID: 30E9		Item Reels		AP: 80
+234.	 ID: 30EA		Random Reels		AP: 120
+235.	 ID: 30EB		Two Dice		AP: 20
+236.	 ID: 30EC		Four Dice		AP: 100
+237.	 ID: 30ED		Luck		AP: 30
+238.	 ID: 30EE		Felicity		AP: 40
+239.	 ID: 30EF		Tantalize		AP: 60
+240.	 ID: 30F0		Bribe		AP: 40
+241.	 ID: 30F1		Moogle Cure		AP: 10
+242.	 ID: 30F2		Moogle Regen		AP: 10
+243.	 ID: 30F3		Moogle Wall		AP: 10
+244.	 ID: 30F4		Moogle Life		AP: 10
+245.	 ID: 30F5		Moogle Curema		AP: 40
+246.	 ID: 30F6		Moogle Regenja		AP: 40
+247.	 ID: 30F7		Moogle Wallja		AP: 40
+248.	 ID: 30F8		Moogle Lifeja		AP: 40
+249.	 ID: 30F9		Moogle Jolt		AP: 40
+250.	 ID: 30FA		Moogle Beam		AP: 80
+251.	 ID: 30FB		Cait Fire		AP: 10
+252.	 ID: 30FC		Cait Blizzard		AP: 10
+253.	 ID: 30FD		Cait Thunder		AP: 10
+254.	 ID: 30FE		Cait Water		AP: 10
+255.	 ID: 30FF		Power Eraser		AP: 40
+256.	 ID: 3100		Armor Eraser		AP: 40
+257.	 ID: 3101		Magic Eraser		AP: 40
+258.	 ID: 3102		Mental Eraser		AP: 40
+259.	 ID: 3103		Speed Eraser		AP: 40
+260.	 ID: 3104		PuPu Platter		AP: 80
+261.	 ID: 3105		Sleep Knife		AP: 10
+262.	 ID: 3106		Dark Knife		AP: 10
+263.	 ID: 3107		Silence Knife		AP: 10
+264.	 ID: 3108		Poison Knife		AP: 10
+265.	 ID: 3109		Berserk Knife		AP: 10
+266.	 ID: 310A		Stop Knife		AP: 20
+267.	 ID: 310B		Stone Knife		AP: 20
+268.	 ID: 310C		Arsenic Knife		AP: 20
+269.	 ID: 310D		Quartet Knife		AP: 30
+270.	 ID: 310E		Cactling Gun		AP: 80
+271.	 ID: 310F		Heat Whirl		AP: 10
+272.	 ID: 3110		Ice Whirl		AP: 10
+273.	 ID: 3111		Electric Whirl		AP: 10
+274.	 ID: 3112		Aqua Whirl		AP: 10
+275.	 ID: 3113		Shield		AP: 20
+276.	 ID: 3114		Barrier		AP: 20
+277.	 ID: 3115		Libra		AP: 4
+278.	 ID: 3116		Flare Whirl		AP: 24
+279.	 ID: 3117		All-Life		AP: 8
+280.	 ID: 3118		Great Whirl		AP: 30
+281.	 ID: 3119		White Pollen		AP: 10
+282.	 ID: 311A		White Honey		AP: 10
+283.	 ID: 311B		Hard Leaves		AP: 10
+284.	 ID: 311C		Tough Nuts		AP: 10
+285.	 ID: 311D		Mirror Petals		AP: 10
+286.	 ID: 311E		Floral Rush		AP: 20
+287.	 ID: 311F		Floral Bomb		AP: 10
+288.	 ID: 3120		Fallal Bomb		AP: 10
+289.	 ID: 3121		Floral Magisol		AP: 10
+290.	 ID: 3122		Fallal Magisol		AP: 10
+291.	 ID: 3123		Right Stigma		AP: 20
+292.	 ID: 3124		Dream Pollen		AP: 10
+293.	 ID: 3125		Mad Seeds		AP: 10
+294.	 ID: 3126		Sticky Honey		AP: 10
+295.	 ID: 3127		Halfdeath Petals		AP: 10
+296.	 ID: 3128		Poison Leaves		AP: 10
+297.	 ID: 3129		Death Petals		AP: 10
+298.	 ID: 312A		Ash Floralysis		AP: 10
+299.	 ID: 312B		Panic Floralysis		AP: 10
+300.	 ID: 312C		Congealed Honey		AP: 20
+301.	 ID: 312D		Silent White		AP: 20
+302.	 ID: 312E		Left Stigma		AP: 20
+303.	 ID: 312F		Attack		AP: 10
+304.	 ID: 3130		Death Missile		AP: 10
+305.	 ID: 3131		Bio Missile		AP: 10
+306.	 ID: 3132		Break Missile		AP: 10
+307.	 ID: 3133		Berserk Missile		AP: 10
+308.	 ID: 3134		Stop Missile		AP: 10
+309.	 ID: 3135		Confuse Missile		AP: 10
+310.	 ID: 3136		Shockwave		AP: 20
+311.	 ID: 3137		Shockstorm		AP: 20
+312.	 ID: 3138		Revival		AP: 10
+313.	 ID: 3139		Vajra		AP: 30
+314.	 ID: 313A		Homing Ray		AP: 10
+315.	 ID: 313B		HP Repair		AP: 10
+316.	 ID: 313C		MP Repair		AP: 10
+317.	 ID: 313D		Howitzer		AP: 10
+318.	 ID: 313E		Sleep Shell		AP: 10
+319.	 ID: 313F		Slow Shell		AP: 10
+320.	 ID: 3140		Anti-Power Shell		AP: 10
+321.	 ID: 3141		Anti-Armor Shell		AP: 10
+322.	 ID: 3142		Scan		AP: 10
+323.	 ID: 3113		Shellter		AP: 20
+324.	 ID: 3144		Protector		AP: 20
+325.	 ID: 3145		Homing Ray		AP: 10
+326.	 ID: 3146		HP Repair		AP: 10
+327.	 ID: 3147		MP Repair		AP: 10
+328.	 ID: 3148		Howitzer		AP: 10
+329.	 ID: 3149		Blind Shell		AP: 10
+330.	 ID: 314A		Silence Shell		AP: 10
+331.	 ID: 314B		Anti-Magic Shell		AP: 10
+332.	 ID: 314C		Anti-Mental Shell		AP: 10
+333.	 ID: 314D		Booster		AP: 20
+334.	 ID: 314E		Offense		AP: 20
+335.	 ID: 314F		Defense		AP: 20
+336.	 ID: 3150		Aestus		AP: 10
+337.	 ID: 3151		Winterkill		AP: 10
+338.	 ID: 3152		Levin		AP: 10
+339.	 ID: 3153		Whelmen		AP: 10
+340.	 ID: 3154		Wisenen		AP: 10
+341.	 ID: 3155		Fiers		AP: 20
+342.	 ID: 3156		Deeth		AP: 20
+343.	 ID: 3157		Assoil		AP: 20
+344.	 ID: 3158		Fright		AP: 20
+345.	 ID: 3159		Sword Dance		AP: 30
+346.	 ID: 315A		Venom Wing		AP: 10
+347.	 ID: 315B		Blind Wing		AP: 10
+348.	 ID: 315C		Mute Wing		AP: 10
+349.	 ID: 315D		Rock Wing		AP: 10
+350.	 ID: 315E		Lazy Wing		AP: 10
+351.	 ID: 315F		Violent Wing		AP: 10
+352.	 ID: 3160		Still Wing		AP: 10
+353.	 ID: 3161		Crazy Wing		AP: 10
+354.	 ID: 3162		Stamina		AP: 10
+355.	 ID: 3163		Mettle		AP: 10
+356.	 ID: 3164		Reboot		AP: 10
+357.	 ID: 3165		Steel Feather		AP: 10
+358.	 ID: 3166		Diamond Feather		AP: 10
+359.	 ID: 3167		Pumice Feather		AP: 10
+360.	 ID: 3168		Ma'at's Feather		AP: 10
+361.	 ID: 3169		White Feather		AP: 10
+362.	 ID: 316A		Buckle Feather		AP: 10
+363.	 ID: 316B		Cloudy Feather		AP: 10
+364.	 ID: 316C		Pointed Feather		AP: 10
+365.	 ID: 316D		Stamina		AP: 10
+366.	 ID: 316E		Mettle		AP: 10
+367.	 ID: 316F		Reboot		AP: 10
+368.	 ID: 3170		Flare		AP: 100
+369.	 ID: 3171		Ultima		AP: 100
+370.	 ID: 3172		Holy		AP: 100
+371.	 ID: 3173		Auto-Life		AP: 100
+372.	 ID: 3174		Mug		AP: 100
+373.	 ID: 3175		Nab gil		AP: 100
+374.	 ID: 3176		Haste		AP: 100
+375.	 ID: 3177		Hastega		AP: 100
+376.	 ID: 3178		Blind		AP: 100
+377.	 ID: 3179		Silence		AP: 100
+378.	 ID: 317A		Sleep		AP: 100
+379.	 ID: 317B		Absorb MP		AP: 100
+380.	 ID: 317C		Absorb MP		AP: 0
+381.	 ID: 317D		(Nichts)		AP: 0
+382.	 ID: 317E		(Nichts)		AP: 0
+383.	 ID: 317F		(Nichts)		AP: 0
+384.	 ID: 3180		(Nichts)		AP: 0
+385.	 ID: 3181		Time Trip End		AP: 40
+386.	 ID: 3182		Final Damage		AP: 0
+387.	 ID: 3183		Pineapple		AP: 0
+388.	 ID: 3184		Potato Masher		AP: 0
+389.	 ID: 3185		Cluster Bomb		AP: 0
+390.	 ID: 3186		Sunburst		AP: 0
+391.	 ID: 3187		Blaster Mine		AP: 0
+392.	 ID: 3188		Hazardous Shell		AP: 0
+393.	 ID: 3189		Heat Blaster		AP: 0
+394.	 ID: 318A		Firestorm 		AP: 0
+395.	 ID: 318B		Burning Soul		AP: 0
+396.	 ID: 318C		Brimstone		AP: 0
+397.	 ID: 318D		Abaddon Flame		AP: 0
+398.	 ID: 318E		Snow Flurry		AP: 0
+399.	 ID: 318F		Icefall		AP: 0
+400.	 ID: 3190		Winter Storm		AP: 0
+401.	 ID: 3191		Black Ice		AP: 0
+402.	 ID: 3192		Krysta		AP: 0
+403.	 ID: 3193		Thunderbolt		AP: 0
+404.	 ID: 3194		Rolling Thunder		AP: 0
+405.	 ID: 3195		Lightning Bolt		AP: 0
+406.	 ID: 3196		Electroshock		AP: 0
+407.	 ID: 3197		Thunderblast		AP: 0
+408.	 ID: 3198		Waterfall 		AP: 0
+409.	 ID: 3199		Flash Flood		AP: 0
+410.	 ID: 319A		Tidal Wave		AP: 0
+411.	 ID: 319B		Aqua Toxin		AP: 0
+412.	 ID: 319C		Dark Rain		AP: 0
+413.	 ID: 319D		Nega Burst		AP: 0
+414.	 ID: 319E		Black Hole		AP: 0
+415.	 ID: 319F		Tallboy		AP: 0
+416.	 ID: 31A0		Grand Slam		AP: 0
+417.	 ID: 31A1		Archangel		AP: 0
+418.	 ID: 31A2		White Hole		AP: 0
+419.	 ID: 31A3		Remedy		AP: 0
+420.	 ID: 31A4		Panacea		AP: 0
+421.	 ID: 31A5		Ultra cure		AP: 0
+422.	 ID: 31A6		Mega Phoenix		AP: 0
+423.	 ID: 31A7		Final Phoenix		AP: 0
+424.	 ID: 31A8		Fantasy Phoenix		AP: 0
+425.	 ID: 31A9		Hi-Potion		AP: 0
+426.	 ID: 31AA		Mega-Potion		AP: 0
+427.	 ID: 31AB		Ultra-Potion		AP: 0
+428.	 ID: 31AC		Final Elixir		AP: 0
+429.	 ID: 31AD		Meteor Strike		AP: 0
+430.	 ID: 31AE		Chocobo Wing		AP: 0
+431.	 ID: 31AF		Soul Spring		AP: 0
+432.	 ID: 31B0		Soul Sea		AP: 0
+433.	 ID: 31B1		Wall		AP: 0
+434.	 ID: 31B2		Hi-Wall		AP: 0
+435.	 ID: 31B3		Final wall		AP: 0
+436.	 ID: 31B4		Mega vitality		AP: 0
+437.	 ID: 31B5		Mega Cocktail		AP: 0
+438.	 ID: 31B6		Mega Mana		AP: 0
+439.	 ID: 31B7		Hero Drink		AP: 0
+440.	 ID: 31B8		Miracle Drink		AP: 0
+441.	 ID: 31B9		Shin-Zantetsu		AP: 0
+442.	 ID: 31BA		Excalibur		AP: 0
+443.	 ID: 31BB		Cripple		AP: 0
+444.	 ID: 31BC		Delay Buster		AP: 0
+445.	 ID: 31BD		Intimidate		AP: 0
+446.	 ID: 31BE		Fireworks		AP: 0
+447.	 ID: 31BF		Clean Slate		AP: 0
+448.	 ID: 31C0		Power Break		AP: 0
+449.	 ID: 31C1		Eject		AP: 0
+450.	 ID: 31C2		Magicide		AP: 0
+451.	 ID: 31C3		Armor Break		AP: 0
+452.	 ID: 31C4		Ultima		AP: 0
+453.	 ID: 31C5		Black Sky		AP: 0
+454.	 ID: 31C6		Flare		AP: 0
+455.	 ID: 31C7		Firaga		AP: 0
+456.	 ID: 31C8		Auto-Life		AP: 0
+457.	 ID: 31C9		Demi		AP: 0
+458.	 ID: 31CA		Bio		AP: 0
+459.	 ID: 31CB		Thundara		AP: 0
+460.	 ID: 31CC		Esuna		AP: 0
+461.	 ID: 31CD		Break		AP: 0
+462.	 ID: 31CE		Cura		AP: 0
+463.	 ID: 31CF		Megalixir+		AP: 0
+464.	 ID: 31D0		Mighty Guard+		AP: 0
+465.	 ID: 31D1		Supremen Gem		AP: 0
+466.	 ID: 31D2		Blessed Gem		AP: 0
+467.	 ID: 31D3		Megalixir		AP: 0
+468.	 ID: 31D4		Mighty Guard		AP: 0
+469.	 ID: 31D5		Mega-Ether		AP: 0
+470.	 ID: 31D6		L-Bomb		AP: 0
+471.	 ID: 31D7		Ether		AP: 0
+472.	 ID: 31D8		Lunar Curtain+		AP: 0
+473.	 ID: 31D9		Light Curtain+		AP: 0
+474.	 ID: 31DA		CONGRATS!		AP: 0
+475.	 ID: 31DB		Mega-Potion		AP: 0
+476.	 ID: 31DC		Blizzaga		AP: 0
+477.	 ID: 31DD		Cry in the Night		AP: 0
+478.	 ID: 31DE		Dark Matter		AP: 0
+479.	 ID: 31DF		Quartet Knife		AP: 0
+480.	 ID: 31E0		Mental Break		AP: 0
+481.	 ID: 31E1		Cure		AP: 0
+482.	 ID: 31E2		Primo Grenade		AP: 0
+483.	 ID: 31E3		Hi-Potion		AP: 0
+484.	 ID: 31E4		Potion		AP: 0
+485.	 ID: 31E5		Dud		AP: 0
+486.	 ID: 31E6		Psycho Bomb		AP: 20
+487.	 ID: 31E7		Telekinesis		AP: 30
+488.	 ID: 31E8		Maser Eye		AP: 30
+489.	 ID: 31E9		Brain Storm		AP: 30
+490.	 ID: 31EA		Time Trip		AP: 100
+491.	 ID: 31EB		Express		AP: 40
+492.	 ID: 31EC		Magic Guard		AP: 80
+493.	 ID: 31ED		Physics Guard		AP: 80
+494.	 ID: 31EE		Teleport		AP: 30
+495.	 ID: 31EF		Excellence		AP: 120
+496.	 ID: 31F0		Psionics		AP: 0
+497.	 ID: 31F1		Festivities		AP: 0
+498.	 ID: 31F2		Festivities		AP: 0
+499.	 ID: 31F3		Festivities		AP: 0
+500.	 ID: 31F4		Spinner		AP: 30
+501.	 ID: 31F5		Spinner		AP: 30
+502.	 ID: 31F6		Spinner		AP: 30
+503.	 ID: 31F7		Popper		AP: 30
+504.	 ID: 31F8		Popper		AP: 30
+505.	 ID: 31F9		Popper		AP: 30
+506.	 ID: 31FA		Twinkler		AP: 30
+507.	 ID: 31FB		Twinkler		AP: 30
+508.	 ID: 31FC		Twinkler		AP: 30
+509.	 ID: 31FD		Fountain		AP: 40
+510.	 ID: 31FE		Fountain		AP: 40
+511.	 ID: 31FF		Fountain		AP: 40
+512.	 ID: 3200		Fire Sandals		AP: 30
+513.	 ID: 3201		Ice Sandals		AP: 30
+514.	 ID: 3202		Lightning Sandals		AP: 30
+515.	 ID: 3203		Water Sandals		AP: 30
+516.	 ID: 3204		Flare Sandals		AP: 60
+517.	 ID: 3205		Ultima Sandals		AP: 100
+518.	 ID: 3206		Fire fish		AP: 30
+519.	 ID: 3207		Ice fish		AP: 30
+520.	 ID: 3208		Lightning fish		AP: 30
+521.	 ID: 3209		Water fish		AP: 30
+522.	 ID: 320A		Gravity fish		AP: 60
+523.	 ID: 320B		Holy fish		AP: 100
+524.	 ID: 320C		Silence Mask		AP: 30
+525.	 ID: 320D		Darkness Mask		AP: 30
+526.	 ID: 320E		Poison Mask		AP: 30
+527.	 ID: 320F		Sleep Mask		AP: 30
+528.	 ID: 3210		Stop Mask		AP: 60
+529.	 ID: 3211		Petrify Mask		AP: 80
+530.	 ID: 3212		Fire		AP: 0
+531.	 ID: 3213		Fira		AP: 0
+532.	 ID: 3214		Firaga		AP: 0
+533.	 ID: 3215		Firaga 2		AP: 0
+534.	 ID: 3216		Blizzard		AP: 0
+535.	 ID: 3217		Blizzara		AP: 0
+536.	 ID: 3218		Blizzaga		AP: 0
+537.	 ID: 3219		Blizzaga 2		AP: 0
+538.	 ID: 321A		Thunder		AP: 0
+539.	 ID: 321B		Thundara		AP: 0
+540.	 ID: 321C		Thundaga		AP: 0
+541.	 ID: 321D		Thundaga 2		AP: 0
+542.	 ID: 321E		Water		AP: 0
+543.	 ID: 321F		Watera		AP: 0
+544.	 ID: 3220		Waterga		AP: 0
+545.	 ID: 3221		Waterga 2		AP: 0
+546.	 ID: 3222		Sleep		AP: 0
+547.	 ID: 3223		Berserk		AP: 0
+548.	 ID: 3224		Break		AP: 0
+549.	 ID: 3225		Flare		AP: 0
+550.	 ID: 3226		Silence		AP: 0
+551.	 ID: 3227		Blind		AP: 0
+552.	 ID: 3228		Death		AP: 0
+553.	 ID: 3229		Ultima		AP: 0
+554.	 ID: 8000		First Strike		AP: 40
+555.	 ID: 8001		Initiative		AP: 60
+556.	 ID: 8002		Counterattack		AP: 180
+557.	 ID: 8003		Evade & Counter		AP: 400
+558.	 ID: 8004		Magic Counter		AP: 300
+559.	 ID: 8005		Magic Booster		AP: 20
+560.	 ID: 8006		Chemist		AP: 40
+561.	 ID: 8007		Elementalist		AP: 80
+562.	 ID: 8008		Physicist		AP: 100
+563.	 ID: 8009		Double AP		AP: 20
+564.	 ID: 800A		Triple AP		AP: 20
+565.	 ID: 800B		Break HP Limit		AP: 20
+566.	 ID: 800C		Break MP Limit		AP: 20
+567.	 ID: 800D		Break Damage Limit		AP: 20
+568.	 ID: 800E		Butterfingers		AP: 20
+569.	 ID: 800F		Gillionaire		AP: 100
+570.	 ID: 8010		Double Items		AP: 100
+571.	 ID: 8011		Double EXP		AP: 80
+572.	 ID: 8012		Item Hunter		AP: 60
+573.	 ID: 8013		Piercing Magic		AP: 30
+574.	 ID: 8014		HP Stroll		AP: 20
+575.	 ID: 8015		MP Stroll		AP: 20
+576.	 ID: 8016		HP/MP Stroll		AP: 20
+577.	 ID: 8017		No Encounters		AP: 20
+578.	 ID: 8018		Trigger Happy Lv.2		AP: 80
+579.	 ID: 8019		Trigger Happy Lv.3		AP: 150
+580.	 ID: 801A		Scan Lv.2		AP: 20
+581.	 ID: 801B		Scan Lv.3		AP: 100
+582.	 ID: 801C		Half MP Cost		AP: 200
+583.	 ID: 801D		One MP Cost		AP: 20
+584.	 ID: 801E		Fiend Hunter Lv.2		AP: 30
+585.	 ID: 801F		Items Lv.2		AP: 30
+586.	 ID: 8020		Black Magic Lv.2		AP: 40
+587.	 ID: 8021		Black Magic Lv.3		AP: 60
+588.	 ID: 8022		White Magic Lv.2		AP: 40
+589.	 ID: 8023		White Magic Lv.3		AP: 60
+590.	 ID: 8024		Kogoro Lv.2		AP: 80
+591.	 ID: 8025		Kogoro Lv.3		AP: 100
+592.	 ID: 8026		Ghiki Lv.2		AP: 80
+593.	 ID: 8027		Ghiki Lv.3		AP: 100
+594.	 ID: 8028		Flurry Lv.2		AP: 80
+595.	 ID: 8029		Flurry Lv.3		AP: 100
+596.	 ID: 802A		Firestrike		AP: 20
+597.	 ID: 802B		Fire Ward		AP: 20
+598.	 ID: 802C		Fireproof		AP: 20
+599.	 ID: 802D		Fire Eater		AP: 40
+600.	 ID: 802E		Icestrike		AP: 20
+601.	 ID: 802F		Ice Ward		AP: 20
+602.	 ID: 8030		Iceproof		AP: 20
+603.	 ID: 8031		Ice Eater		AP: 40
+604.	 ID: 8032		Lightningstrike		AP: 20
+605.	 ID: 8033		Lightning Ward		AP: 20
+606.	 ID: 8034		Lightningproof		AP: 20
+607.	 ID: 8035		Lightning Eater		AP: 40
+608.	 ID: 8036		Waterstrike		AP: 20
+609.	 ID: 8037		Water Ward		AP: 20
+610.	 ID: 8038		Waterproof		AP: 20
+611.	 ID: 8039		Water Eater		AP: 40
+612.	 ID: 803A		Gravitystrike		AP: 20
+613.	 ID: 803B		Gravity Ward		AP: 20
+614.	 ID: 803C		Gravityproof		AP: 20
+615.	 ID: 803D		Gravity Eater		AP: 60
+616.	 ID: 803E		Holystrike		AP: 20
+617.	 ID: 803F		Holy Eater		AP: 20
+618.	 ID: 8040		Fire/Ice Strike		AP: 20
+619.	 ID: 8041		Fire/Ice Eater		AP: 20
+620.	 ID: 8042		Lightning/Water Strike		AP: 20
+621.	 ID: 8043		Lightning/Water Eater		AP: 20
+622.	 ID: 8044		Tetrastrike		AP: 20
+623.	 ID: 8045		Tetra Ward		AP: 20
+624.	 ID: 8046		Tetraproof		AP: 20
+625.	 ID: 8047		Tetra Eater		AP: 20
+626.	 ID: 8048		Omnistrike		AP: 20
+627.	 ID: 8049		Deathtouch		AP: 20
+628.	 ID: 804A		Deathproof		AP: 40
+629.	 ID: 804B		Stonetouch		AP: 20
+630.	 ID: 804C		Stoneproof		AP: 30
+631.	 ID: 804D		Sleeptouch		AP: 20
+632.	 ID: 804E		Sleepproof		AP: 30
+633.	 ID: 804F		Silencetouch		AP: 20
+634.	 ID: 8050		Silenceproof		AP: 30
+635.	 ID: 8051		Darktouch		AP: 20
+636.	 ID: 8052		Darkproof		AP: 30
+637.	 ID: 8053		Poisontouch		AP: 20
+638.	 ID: 8054		Poisonproof		AP: 30
+639.	 ID: 8055		Confusetouch		AP: 20
+640.	 ID: 8056		Confuseproof		AP: 30
+641.	 ID: 8057		Berserktouch		AP: 20
+642.	 ID: 8058		Berserkproof		AP: 20
+643.	 ID: 8059		Doomtouch		AP: 20
+644.	 ID: 805A		Doomproof		AP: 20
+645.	 ID: 805B		Curseproof		AP: 30
+646.	 ID: 805C		Pointlessproof		AP: 20
+647.	 ID: 805D		Itchproof		AP: 20
+648.	 ID: 805E		Slowtouch		AP: 20
+649.	 ID: 805F		Slowproof		AP: 20
+650.	 ID: 8060		Stoptouch		AP: 20
+651.	 ID: 8061		Stopproof		AP: 40
+652.	 ID: 8062		Sense Preserver		AP: 20
+653.	 ID: 8063		Health Preserver		AP: 20
+654.	 ID: 8064		Sanity Preserver		AP: 20
+655.	 ID: 8065		Time Preserver		AP: 20
+656.	 ID: 8066		Life Preserver		AP: 20
+657.	 ID: 8067		Ribbon		AP: 999
+658.	 ID: 8068		Ribbon		AP: 30
+659.	 ID: 8069		Super Ribbon		AP: 20
+660.	 ID: 806A		Auto-Shell		AP: 80
+661.	 ID: 806B		Auto-Protect		AP: 80
+662.	 ID: 806C		Auto-Wall		AP: 20
+663.	 ID: 806D		Auto-Reflect		AP: 20
+664.	 ID: 806E		Auto-Regen		AP: 80
+665.	 ID: 806F		Auto-Haste		AP: 20
+666.	 ID: 8070		Critical		AP: 160
+667.	 ID: 8071		Spellspring		AP: 20
+668.	 ID: 8072		Double HP		AP: 20
+669.	 ID: 8073		Triple HP		AP: 30
+670.	 ID: 8074		SOS Shell		AP: 20
+671.	 ID: 8075		SOS Protect		AP: 20
+672.	 ID: 8076		SOS Reflect		AP: 20
+673.	 ID: 8077		SOS Regen		AP: 30
+674.	 ID: 8078		SOS Haste		AP: 50
+675.	 ID: 8079		SOS Spellspring		AP: 30
+676.	 ID: 807A		SOS ????		AP: 20
+677.	 ID: 807B		SOS Critical		AP: 80
+678.	 ID: 807C		Turbo Swordplay		AP: 0
+679.	 ID: 807D		Turbo Bushido		AP: 0
+680.	 ID: 807E		Turbo Arcana		AP: 0
+681.	 ID: 807F		Turbo Instinct		AP: 0
+682.	 ID: 8080		Turbo Black Magic		AP: 0
+683.	 ID: 8081		Turbo White Magic		AP: 0
+684.	 ID: 8082		Strength +5		AP: 0
+685.	 ID: 8083		Defense +5		AP: 0
+686.	 ID: 8084		Magic +5		AP: 0
+687.	 ID: 8085		Magic Defense +5		AP: 0
+688.	 ID: 8086		Strength +10		AP: 0
+689.	 ID: 8087		Magic +10		AP: 0
+690.	 ID: 8088		Defense +10		AP: 0
+691.	 ID: 8089		Magic Defense +10		AP: 0
+692.	 ID: 808A		Strength +15		AP: 0
+693.	 ID: 808B		Magic +15		AP: 0
+694.	 ID: 808C		Defense +15		AP: 0
+695.	 ID: 808D		Magic Defense +15		AP: 0
+696.	 ID: 808E		Strength +20		AP: 0
+697.	 ID: 808F		Magic +20		AP: 0
+698.	 ID: 8090		Defense +20		AP: 0
+699.	 ID: 8091		Magic Defense +20		AP: 0
+700.	 ID: 8092		Accuracy +20		AP: 0
+701.	 ID: 8093		Agility +5		AP: 0
+702.	 ID: 8094		Luck +30		AP: 0
+703.	 ID: 8095		Kijo's Soul		AP: 0
+704.	 ID: 8096		Majo's Soul		AP: 0
+705.	 ID: 8097		Double All		AP: 20
+706.	 ID: 8098		Double HP		AP: 20
+707.	 ID: 8099		Double MP		AP: 20
+708.	 ID: 809A		More Encounters		AP: 20
+709.	 ID: 809B		SOS Wall		AP: 100
+710.	 ID: 809C		Nitro Black Magic		AP: 0
+711.	 ID: 809D		Poison/Sleep Attack		AP: 20
+712.	 ID: 809E		Death/Pointless Def.		AP: 20
+713.	 ID: 809F		Ailment Def.		AP: 30
+714.	 ID: 80A0		Tetra Absorb		AP: 20
+715.	 ID: 80A1		Total Limit Break		AP: 20

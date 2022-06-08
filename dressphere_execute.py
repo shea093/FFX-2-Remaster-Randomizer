@@ -3,8 +3,29 @@ import random
 import binascii
 from command import Command
 from services import *
+import sys
+import os
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+        test = ""
+
+    return os.path.join(base_path, relative_path)
 
 # from abilty_tiers import tier1_abilities
+# INPUT VARIABLES
+job_bin_path = resource_path(pathlib.PureWindowsPath("Test Files\job.bin"))
+cmd_bin_path = resource_path(pathlib.PureWindowsPath("Test Files\command.bin"))
+auto_bin_path = resource_path(pathlib.PureWindowsPath("Test Files/a_ability.bin"))
+seed_path = resource_path(pathlib.PureWindowsPath("Test Files/seed.txt"))
+monmagic_bin_path = resource_path(pathlib.PureWindowsPath("Test Files/monmagic.bin"))
+monget_bin_path = resource_path(pathlib.PureWindowsPath("Test Files/mon_get.bin"))
+
 
 def read_seed():
     this_seed = 0
@@ -22,13 +43,7 @@ seed = read_seed()
 # from abilty_tiers import tier2_abilities
 # from abilty_tiers import tier3_abilities
 
-# INPUT VARIABLES
-job_bin_path = "Test Files/job.bin"
-cmd_bin_path = "Test Files/command.bin"
-auto_bin_path = "Test Files/a_ability.bin"
-seed_path = "Test Files/seed.txt"
-monmagic_bin_path = "Test Files/monmagic.bin"
-monget_bin_path = "Test Files/mon_get.bin"
+
 output_jobbin_path = "Output Files/job.bin"
 output_cmdbin_path = "Output Files/command.bin"
 output_aabin_path = "Output Files/a_ability.bin"
@@ -165,9 +180,9 @@ def test_randomize_big_chunks(seed_value: int):
 
 def cut_command_names(valid_abilities=False):
     command_ids = []
-    filename = "Test Files/commands.txt"
+    filename = resource_path("Test Files/commands.txt")
     if valid_abilities is True:
-        filename = "Test Files/valid_commands.txt"
+        filename = resource_path("Test Files/valid_commands.txt")
     with open(filename, "r") as f:
         for line in f.readlines():
             this_id = line[32:36]
@@ -180,7 +195,7 @@ def cut_command_names(valid_abilities=False):
 
 def cut_monmagic_names(valid_abilities=False):
     monmagic_ids = []
-    filename = "Test Files/monmagic.txt"
+    filename = resource_path("Test Files/monmagic.txt")
     if valid_abilities is True:
         pass
     with open(filename, "r") as f:
@@ -195,7 +210,7 @@ def cut_monmagic_names(valid_abilities=False):
 
 def cut_autoability_names():
     autoability_ids = []
-    with open("Test Files/auto_abilities.txt", "r") as f:
+    with open(resource_path("Test Files/auto_abilities.txt"), "r") as f:
         for line in f.readlines():
             this_id = line[36:40]
             name = line[50:len(line)]
@@ -340,7 +355,7 @@ change_ap_indexes = []
 
 
 def replace_ap_with_file_changes():
-    with open("Test Files/ap_changes.txt", mode="r") as f:
+    with open(resource_path("Test Files/ap_changes.txt"), mode="r") as f:
         for line in f.readlines():
             line_edited = line.strip()
             if len(line_edited) <= 4:
@@ -902,7 +917,7 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
 def initiate_monsters() -> list[Dressphere]:
     mon_names = []
     these_monsters = []
-    with open("HPMP.txt",'r') as HP_MP_File:
+    with open(resource_path("HPMP.txt"),'r') as HP_MP_File:
         for line in HP_MP_File.readlines():
             split_line = line.split(sep=",")
             mon_names.append(split_line[0])
@@ -1186,8 +1201,10 @@ def change_potencies(ability_list: list[Command]):
     # Fireworks
     ability_list[118].dmg_info["Power"] = 12
     changed_ids.append(118)
+
     # Change ranged attack to Magic-Based
-    ability_list[44].dmg_info["Calc PS"] = 9
+    # ability_list[44].dmg_info["Calc PS"] = 9
+
     # Attempt to make Bio do damage
     ability_list[133].dmg_info["Calc PS"] = 9
     ability_list[133].dmg_info["Power"] = 11
@@ -1195,7 +1212,7 @@ def change_potencies(ability_list: list[Command]):
     changed_ids.append(133)
     # Blind/Silence/Sleep Do Damage
     for i in range(376, 379):
-        ability_list[i].dmg_info["Power"] = 11
+        ability_list[i].dmg_info["Power"] = 12
         ability_list[i].dmg_info["Calc PS"] = 9
         ability_list[i].dmg_info["Target HP/MP"] = 1
         changed_ids.append(i)
