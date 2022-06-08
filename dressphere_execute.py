@@ -43,11 +43,19 @@ seed = read_seed()
 # from abilty_tiers import tier2_abilities
 # from abilty_tiers import tier3_abilities
 
-
-output_jobbin_path = "Output Files/job.bin"
-output_cmdbin_path = "Output Files/command.bin"
-output_aabin_path = "Output Files/a_ability.bin"
-output_monget_path = "Output Files/mon_get.bin"
+os_prefix = os.getcwd()
+directory_name = str(seed)
+directory_path = os.path.join(os_prefix,directory_name)
+try:
+    os.mkdir(directory_path)
+except FileExistsError:
+    pass
+test = ""
+output_jobbin_path = pathlib.PureWindowsPath(directory_path+ "\job.bin")
+test = ""
+output_cmdbin_path = pathlib.PureWindowsPath(directory_path+"/command.bin")
+output_aabin_path = pathlib.PureWindowsPath(directory_path+ "/a_ability.bin")
+output_monget_path = pathlib.PureWindowsPath(directory_path+ "/mon_get.bin")
 jobs_names = [
     "gunner", "gunmage", "alchemist", "warrior", "samurai", "darkknight", "berserker", "songstress", "blackmage",
     "whitemage", "thief", "trainer01", "gambler", "mascot01", "super_yuna1", "super-yuna2", "super-yuna3",
@@ -267,7 +275,7 @@ mon_magic_abilities = initiate_abilities(monster_magic=True)
 test = ""
 
 cmd_name_help_list = []
-with open("Test Files/commandtext", 'r', encoding = "utf_8") as cmdtext:
+with open(resource_path("Test Files/commandtext"), 'r', encoding = "utf_8") as cmdtext:
     cmdtext_str = cmdtext.readline()
     cmd_name_help_list = cmdtext_str.split("◘")
     cmd_name_help_list = cmd_name_help_list[0:-1]

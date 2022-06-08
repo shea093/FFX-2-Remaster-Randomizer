@@ -47,21 +47,23 @@ def menu():
 
     menu_flag = True
 
-    line_breaker = "-------------------"
+    line_breaker = "-----------------------"
 
     menu_options = {
-        1: 'Set Seed',
-        2: 'Print current seed',
-        3: 'Execute randomizer',
+        1: 'Execute randomizer',
+        2: 'Set Seed',
+        3: 'Print current seed',
         4: 'Launch dressphere viewer',
         5: 'Exit'
     }
 
     def print_menu():
+        print(line_breaker)
         for key in menu_options.keys():
             print (key, '--', menu_options[key] )
+        print(line_breaker)
 
-    def option1():
+    def option2():
         submenu_flag = True
         while(submenu_flag == True):
             submenu_2_flag = False
@@ -85,14 +87,15 @@ def menu():
 
 
 
-    def option2():
+    def option3():
         seed = read_seed()
         print(line_breaker)
-        print("The current seed is: " + str(seed))
+        print("** The current seed is: " + str(seed) + " **")
         print(line_breaker)
+        input("Press any key to continue.")
         main_menu()
 
-    def option3():
+    def option1():
         importlib.reload(dressphere_execute)
         dressphere_execute.execute_randomizer()
         main_menu()
@@ -111,6 +114,8 @@ def menu():
             option = ''
             try:
                 option = int(input('Enter your choice: '))
+                if option < 0 or option > 5:
+                    raise ValueError
             except:
                 print('Wrong input. Please enter a number ...')
             #Check what choice was entered and act accordingly
@@ -123,8 +128,9 @@ def menu():
             elif option == 4:
                 option4()
             elif option == 5:
+                print(line_breaker)
                 print('Thanks for trying out the FFX-2 Randomizer!')
-                exit()
+                sys.exit()
         else:
             print('Invalid option. Please enter a number between 1 and 4.')
 
