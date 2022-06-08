@@ -1425,9 +1425,11 @@ for monster in global_monsters:
 
 
 
-def execute_randomizer():
+def execute_randomizer(reset_bins=False):
     os_prefix = os.getcwd()
     directory_name = str(seed)
+    if reset_bins is True:
+        directory_name = "reset"
     directory_path = os_prefix + "/" + directory_name + "/ffx_ps2/ffx2/master/new_uspc/battle/kernel"
     try:
         os.makedirs(directory_path)
@@ -1440,11 +1442,18 @@ def execute_randomizer():
     output_aabin_path = pathlib.PureWindowsPath(directory_path + "/a_ability.bin")
     output_monget_path = pathlib.PureWindowsPath(directory_path + "/mon_get.bin")
 
+    if reset_bins is True:
+        binary_converted_jobbin = binascii.unhexlify(job_bin_to_hex())
+        binary_converted_cmdbin = binascii.unhexlify(cmd_bin_to_hex())
+        binary_converted_aabin = binascii.unhexlify(auto_bin_to_hex())
+        binary_converted_mgetbin = binascii.unhexlify(monget_bin_to_hex())
+    else:
+        binary_converted_jobbin = binascii.unhexlify(job_bin_string)
+        binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
+        binary_converted_aabin = binascii.unhexlify(aa_string_to_output)
+        binary_converted_mgetbin = binascii.unhexlify(mon_get_string)
 
-    binary_converted_jobbin = binascii.unhexlify(job_bin_string)
-    binary_converted_cmdbin = binascii.unhexlify(command_string_to_output)
-    binary_converted_aabin = binascii.unhexlify(aa_string_to_output)
-    binary_converted_mgetbin = binascii.unhexlify(mon_get_string)
+
     with open(output_jobbin_path, 'wb') as f:
         f.write(binary_converted_jobbin)
     with open(output_cmdbin_path, 'wb') as f:

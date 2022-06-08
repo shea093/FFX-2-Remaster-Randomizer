@@ -52,10 +52,10 @@ def menu():
 
     menu_options = {
         1: 'Execute Dressphere Stat&Ability Randomizer',
-        2: 'Set Seed',
-        3: 'Print current seed',
-        4: 'Launch Dressphere Spoiler tool',
-        5: 'Execute Hard Mode + Monster Stat Randomizer',
+        2: 'Execute Hard Mode + Monster Stat Randomizer',
+        3: 'Set Seed',
+        4: 'Print current seed',
+        5: 'Launch Dressphere Spoiler tool',
         6: 'Get default files (Reset)',
         7: 'Exit'
 
@@ -67,7 +67,7 @@ def menu():
             print (key, '--', menu_options[key] )
         print(line_breaker)
 
-    def option2():
+    def option3():
         submenu_flag = True
         while(submenu_flag == True):
             submenu_2_flag = False
@@ -91,7 +91,7 @@ def menu():
 
 
 
-    def option3():
+    def option4():
         seed = read_seed()
         print(line_breaker)
         print("** The current seed is: " + str(seed) + " **")
@@ -101,16 +101,16 @@ def menu():
 
     def option1():
         importlib.reload(dressphere_execute)
-        dressphere_execute.execute_randomizer()
+        dressphere_execute.execute_randomizer(reset_bins=False)
         main_menu()
 
-    def option4():
+    def option5():
         importlib.reload(dressphere_execute)
         importlib.reload(TkinterTemplate)
         TkinterTemplate.initialize()
         main_menu()
 
-    def option5():
+    def option2():
         importlib.reload(dressphere_execute)
         importlib.reload(fileopen)
         fileopen.write_bins_new(reset_bins=False)
@@ -118,6 +118,8 @@ def menu():
 
     def option6():
         importlib.reload(fileopen)
+        importlib.reload(dressphere_execute)
+        dressphere_execute.execute_randomizer(reset_bins=True)
         fileopen.write_bins_new(reset_bins=True)
         main_menu()
 
