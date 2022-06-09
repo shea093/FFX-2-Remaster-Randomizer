@@ -3,6 +3,7 @@
 - You need [VBFBrowser](https://www.nexusmods.com/finalfantasy12/mods/3) to inject the files.
 
 ### Warning
+Installation isn't particularly user-friendly, and I recommend that you backup your "FFX2_Data.vbf" file if you aren't confident. (Unfortunately this file is very big)
 This will overwrite values in your game that will be present even if you reload your old saved games. I highly recommend only using this for a fresh New Game save. 
 
 ## Randomization features
