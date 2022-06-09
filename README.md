@@ -38,14 +38,14 @@ I highly recommend using this to prevent the game from being too easy, as gettin
 2. Pick one of the executable options of your choosing (1, 2, or 3)
 3. A folder with the seed name should be made with a "ffx_ps2" folder inside of it
 4. Open VBFBrowser. As far as I'm aware, this is the only way to inject the files right now. Download here https://www.nexusmods.com/finalfantasy12/mods/3
+
+5. Press the "Open" button on the top left and navigate to where the ***FFX2_Data.vbf*** file is, and open it. It should be in the **<steamprogramfolder>\steamapps\common\FINAL FANTASY FFX&FFX-2 HD Remaster\data** directory. 
 ![image](https://user-images.githubusercontent.com/66511873/172754711-b0e1c734-7645-4fb8-9189-1b5dbda96944.png)
-5. Press the "Open" button on the top left and navigate to where the ***FFX2_Data.vbf*** file is, and open it.
-It should be in the **<steamprogramfolder>\steamapps\common\FINAL FANTASY FFX&FFX-2 HD Remaster\data** directory. 
-![image](https://user-images.githubusercontent.com/66511873/172755083-0ffceadf-c7c4-419f-aaae-f9d7f7a99de7.png)
 6. Collapse the tree view on the Left Pane (click the "+" icon) and then click on "ffx_ps2" so it turns blue. The window should now look like this:
+![image](https://user-images.githubusercontent.com/66511873/172755083-0ffceadf-c7c4-419f-aaae-f9d7f7a99de7.png)
 7. Click the "Inject" button at the bottom of the Left Pane. When you get a prompt for "Are you injecting a whole folder?", click ***Yes***.
-![image](https://user-images.githubusercontent.com/66511873/172756531-45411596-c592-49ca-9cd7-aa25931cfc8c.png)
 8. Navigate to where your seed output folder is, and click on the "ffx_ps2" folder so it turns blue. Do NOT click on the seed number folder, as you want to match the folder name shown in the VBF Browser view ("ffx_ps2")
+![image](https://user-images.githubusercontent.com/66511873/172756531-45411596-c592-49ca-9cd7-aa25931cfc8c.png)
 9. Press OK and wait until you see a "Done." dialogue box. 
   
 You can click "Log" on the bottom-right of the program to see if it actually patched anything. It should should look something like this:
