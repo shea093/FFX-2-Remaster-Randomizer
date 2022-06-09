@@ -12,12 +12,14 @@ Note: Please don't try running it manually with Python yet as there are in-game 
 - **Battle menus will be weird.** Dresspheres that have "sharable" abilties from accessories/garment grids (e.g Swordplay, Instinct, White Magic, etc) will have a new seperate menu for new randomized abilities that are locked to that job. For example, White Mage has a new menu called "Congealed Honey" which will have the abilities learned by it inside there. "White Magic" will have the same usual abilities such as Cure, Esuna, etc. This was done because these menus would "merge" if you wore an accessory/garment grid with a shared ability, and would have two menus with the exact same abilities in each one. This looked even worse than the hack-y solution I came up with.
 - Non-songstress users that use a Dance ability will stand still. The skills will still work, but the animations were unfortunately locked to the original dressphere. 
 
-## Randomization features
+## Current Randomization features
 - Dressphere abilities
 - Dressphere "Ability Trees" (abilities that unlock other abilities are randomized)
 - Dressphere stat growths
 #### Dressphere "Spoiler" Tool 
 Can be used to view abilities + their required abilities in their respective "learning trees". This is currently in a very early state and doesn't have much functionality other than that.
+
+*Randomization of treasure chest spawns, accessory stat/abilities, and creature capture feeding are all currently a work in progress.*
 
 ## Edited abilities to prevent randomization being overpowered
 - Nerfs to normal attacks (0.6x)
