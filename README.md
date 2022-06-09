@@ -10,6 +10,7 @@ Note: Please don't try running it manually with Python yet as there are in-game 
 - This will overwrite values in your game that will be present even if you reload your old saved games. I highly recommend only using this for a fresh New Game save. 
 - Some animations bugged out when used on another dressphere they weren't supposed to, so they were edited with generic animations.
 - **Battle menus will be weird.** Dresspheres that have "sharable" abilties from accessories/garment grids (e.g Swordplay, Instinct, White Magic, etc) will have a new seperate menu for new randomized abilities that are locked to that job. For example, White Mage has a new menu called "Congealed Honey" which will have the abilities learned by it inside there. "White Magic" will have the same usual abilities such as Cure, Esuna, etc. This was done because these menus would "merge" if you wore an accessory/garment grid with a shared ability, and would have two menus with the exact same abilities in each one. This looked even worse than the hack-y solution I came up with.
+- Non-songstress users that use a Dance ability will stand still. The skills will still work, but because the animations were unfortunately locked to the original dressphere. 
 
 ## Randomization features
 - Dressphere abilities
