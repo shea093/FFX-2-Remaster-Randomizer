@@ -1,4 +1,4 @@
-import TkinterTemplate
+import spoiler_tool
 import dressphere_randomize
 import menu
 

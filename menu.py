@@ -1,6 +1,6 @@
 import pathlib
 import dressphere_randomize
-import TkinterTemplate
+import spoiler_tool
 import importlib
 import sys
 import os
@@ -51,13 +51,14 @@ def menu():
     line_breaker = "-----------------------"
 
     menu_options = {
-        1: 'Execute Dressphere Stat&Ability Randomizer',
-        2: 'Execute Hard Mode + Monster Stat Randomizer',
-        3: 'Set Seed',
-        4: 'Print current seed',
-        5: 'Launch Dressphere Spoiler tool',
-        6: 'Get default files (Reset)',
-        7: 'Exit'
+        1: 'Execute Randomizer and Hard Mode (Recommended)',
+        2: 'Execute only Dressphere Stat&Ability Randomizer',
+        3: 'Execute only Hard Mode',
+        4: 'Set Seed',
+        5: 'Print current seed',
+        6: 'Launch Dressphere Spoiler tool',
+        7: 'Get default files (Reset)',
+        8: 'Exit'
 
     }
 
@@ -67,7 +68,7 @@ def menu():
             print (key, '--', menu_options[key] )
         print(line_breaker)
 
-    def option3():
+    def option4():
         submenu_flag = True
         while(submenu_flag == True):
             submenu_2_flag = False
@@ -91,7 +92,7 @@ def menu():
 
 
 
-    def option4():
+    def option5():
         seed = read_seed()
         print(line_breaker)
         print("** The current seed is: " + str(seed) + " **")
@@ -102,21 +103,29 @@ def menu():
     def option1():
         importlib.reload(dressphere_randomize)
         dressphere_randomize.execute_randomizer(reset_bins=False)
-        main_menu()
-
-    def option5():
-        importlib.reload(dressphere_randomize)
-        importlib.reload(TkinterTemplate)
-        TkinterTemplate.initialize()
-        main_menu()
-
-    def option2():
         importlib.reload(dressphere_randomize)
         importlib.reload(monster_edit)
         monster_edit.write_bins_new(reset_bins=False)
         main_menu()
 
+    def option2():
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.execute_randomizer(reset_bins=False)
+        main_menu()
+
     def option6():
+        importlib.reload(dressphere_randomize)
+        importlib.reload(spoiler_tool)
+        spoiler_tool.initialize()
+        main_menu()
+
+    def option3():
+        importlib.reload(dressphere_randomize)
+        importlib.reload(monster_edit)
+        monster_edit.write_bins_new(reset_bins=False)
+        main_menu()
+
+    def option7():
         importlib.reload(monster_edit)
         importlib.reload(dressphere_randomize)
         dressphere_randomize.execute_randomizer(reset_bins=True)
@@ -130,8 +139,8 @@ def menu():
             print_menu()
             option = ''
             try:
-                option = int(input('Enter your choice: '))
-                if option < 0 or option > 6:
+                option = int(input('Type a number then press Enter: '))
+                if option < 0 or option > 8:
                     raise ValueError
             except:
                 print('Wrong input. Please enter a number ...')
@@ -149,6 +158,8 @@ def menu():
             elif option == 6:
                 option6()
             elif option == 7:
+                option7()
+            elif option == 8:
                 print(line_breaker)
                 print('Thanks for trying out the FFX-2 Randomizer!')
                 sys.exit()
