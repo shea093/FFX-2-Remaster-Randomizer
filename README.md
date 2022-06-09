@@ -5,9 +5,11 @@ Note: Please don't try running it manually with Python yet as there are in-game 
 - You need [VBFBrowser](https://www.nexusmods.com/finalfantasy12/mods/3) to inject the files.
 
 
-### Warning
+### Warnings
 - Installation isn't particularly user-friendly, and I recommend that you backup your "FFX2_Data.vbf" file if you aren't confident. (Unfortunately this file is very big)
 - This will overwrite values in your game that will be present even if you reload your old saved games. I highly recommend only using this for a fresh New Game save. 
+- Some animations bugged out when used on another dressphere they weren't supposed to, so they were edited with generic animations.
+- Battle menus will be weird. Dresspheres that have "sharable" abilties from accessories/garment grids (e.g Swordplay, Instinct, White Magic, etc) will have a new seperate menu for new randomized abilities that are locked to that job. For example, White Mage has a new menu called "Congealed Honey" which will have the abilities learned by it inside there. "White Magic" will have the same usual abilities such as Cure, Esuna, etc. This was done because these menus would "merge" if you wore an accessory/garment grid with a shared ability.
 
 ## Randomization features
 - Dressphere abilities
