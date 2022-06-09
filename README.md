@@ -50,4 +50,5 @@ It should be in the **<steamprogramfolder>\steamapps\common\FINAL FANTASY FFX&FF
 You can click "Log" on the bottom-right of the program to see if it actually patched anything. It should should look something like this:
   ![image](https://user-images.githubusercontent.com/66511873/172756681-b3febc1d-f6a8-4f82-a766-13fd03b08626.png)
 
+## Resetting game back to the default state
 If you want to delete the modded binaries from your game and restore the defaults, then follow these same instructions but choose the "Get default files (Reset)" option. The default files will be in a folder called "reset", and you can inject the ffx_ps2 folder from it.
