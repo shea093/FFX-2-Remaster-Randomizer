@@ -1,6 +1,9 @@
+Note: Please don't try running it manually with Python yet as there are in-game files that need to be placed in specific folders for it to work (and I cannot push those because of copyright). At some point I may release instructions for where files need to go, but at the moment just use the executable release.
+
 ## Pre-requisites
 - Dressphere randomization currently only works when playing the game on ***English***. Hard Mode works on all languages.
 - You need [VBFBrowser](https://www.nexusmods.com/finalfantasy12/mods/3) to inject the files.
+
 
 ### Warning
 - Installation isn't particularly user-friendly, and I recommend that you backup your "FFX2_Data.vbf" file if you aren't confident. (Unfortunately this file is very big)
