@@ -16,10 +16,13 @@ Note: Please don't try running it manually with Python yet as there are in-game 
 - Dressphere abilities
 - Dressphere "Ability Trees" (abilities that unlock other abilities are randomized)
 - Dressphere stat growths
+
+*Randomization of treasure chest spawns, accessory stat/abilities, and creature capture feeding are all currently a work in progress.*
+
 #### Dressphere "Spoiler" Tool 
 Can be used to view abilities + their required abilities in their respective "learning trees". This is currently in a very early state and doesn't have much functionality other than that.
 
-*Randomization of treasure chest spawns, accessory stat/abilities, and creature capture feeding are all currently a work in progress.*
+
 
 ## Edited abilities to prevent randomization being overpowered
 - Nerfs to normal attacks (0.6x)
