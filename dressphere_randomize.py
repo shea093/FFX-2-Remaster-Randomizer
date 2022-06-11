@@ -276,8 +276,14 @@ for index, abi in enumerate(global_abilities):
     if abi.type == "Command":
         abi.name = cmd_names[index]
         abi.name_og_length = len(cmd_names[index])
+        abi.help_og_length = len(cmd_helps[index])
         abi.help_text = cmd_helps[index]
-test = ""
+        name_start_index_hex = reverse_two_bytes(abi.og_hex_chunk[0:4])
+        help_start_index_hex = reverse_two_bytes(abi.og_hex_chunk[8:12])
+        abi.name_start_index = int(name_start_index_hex, 16)
+        abi.help_start_index = int(help_start_index_hex, 16)
+        abi.new_help_text = cmd_helps[index]
+        abi.new_name_text = cmd_names[index]
 
 
 
@@ -1473,34 +1479,81 @@ aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
 # print(dresspheres[26].stat_formula(type="ACC",tableprint=True))
 # print("****")
 
-test = ""
 
-def decode_chunk(chunk_val_list: list[str]):
-    encode_dict = {
-        '0': '◘', '30' : '0', '31' : '1', '32' : '2', '33' : '3', '34' : '4', '35' : '5', '36' : '6', '37' : '7', '38' : '8', '39' : '9', '3a' : ' ', '3b' : '!', '3c' : '”', '3d' : '#', '3e' : '$', '3f' : '%', '40' : '&', '41' : '’', '42' : '(', '43' : ')', '44' : '*', '45' : '+', '46' : ',', '47' : '-', '48' : '.', '49' : '/', '4a' : ':', '4b' : ';', '4c' : '<', '4d' : '=', '4e' : '>', '4f' : '?', '50' : 'A', '51' : 'B', '52' : 'C', '53' : 'D', '54' : 'E', '55' : 'F', '56' : 'G', '57' : 'H', '58' : 'I', '59' : 'J', '5a' : 'K', '5b' : 'L', '5c' : 'M', '5d' : 'N', '5e' : 'O', '5f' : 'P', '60' : 'Q', '61' : 'R', '62' : 'S', '63' : 'T', '64' : 'U', '65' : 'V', '66' : 'W', '67' : 'X', '68' : 'Y', '69' : 'Z', '6a' : '[', '6b' : '/', '6c' : ']', '6d' : '^', '6e' : '_', '6f' : '‘', '70' : 'a', '71' : 'b', '72' : 'c', '73' : 'd', '74' : 'e', '75' : 'f', '76' : 'g', '77' : 'h', '78' : 'i', '79' : 'j', '7a' : 'k', '7b' : 'l', '7c' : 'm', '7d' : 'n', '7e' : 'o', '7f' : 'p', '80' : 'q', '81' : 'r', '82' : 's', '83' : 't', '84' : 'u', '85' : 'v', '86' : 'w', '87' : 'x', '88' : 'y', '89' : 'z', '8a' : '{', '8b' : '|', '8c' : '}', '8d' : '~', '8e' : '·', '8f' : '【', '90' : '】', '91' : '♪', '92' : '♥',
+
+# Special characters
+# 13 39 = Yuna Pet (Kogoro)          @9
+# 13 3A = Rikku Pet (Ghiki)          @ (Space)
+# 13 3B = Paine Pet (Flurry)         @!
+# 0A 88 = Blue text                  €y (before word to be Blue'd); €’ (after text to end Blue)
+# 96 = Summon ability help text?     ©
+# 0B 33 = R1 button                  ®3
+decode_dict = {
+        '0': '◘', '30': '0', '31': '1', '32': '2', '33': '3', '34': '4', '35': '5', '36': '6', '37': '7', '38': '8',
+        '39': '9', '3a': ' ', '3b': '!', '3c': '”', '3d': '#', '3e': '$', '3f': '%', '40': '&', '41': '’', '42': '(',
+        '43': ')', '44': '*', '45': '+', '46': ',', '47': '-', '48': '.', '49': '/', '4a': ':', '4b': ';', '4c': '<',
+        '4d': '=', '4e': '>', '4f': '?', '50': 'A', '51': 'B', '52': 'C', '53': 'D', '54': 'E', '55': 'F', '56': 'G',
+        '57': 'H', '58': 'I', '59': 'J', '5a': 'K', '5b': 'L', '5c': 'M', '5d': 'N', '5e': 'O', '5f': 'P', '60': 'Q',
+        '61': 'R', '62': 'S', '63': 'T', '64': 'U', '65': 'V', '66': 'W', '67': 'X', '68': 'Y', '69': 'Z', '6a': '[',
+        '6b': '/', '6c': ']', '6d': '^', '6e': '_', '6f': '‘', '70': 'a', '71': 'b', '72': 'c', '73': 'd', '74': 'e',
+        '75': 'f', '76': 'g', '77': 'h', '78': 'i', '79': 'j', '7a': 'k', '7b': 'l', '7c': 'm', '7d': 'n', '7e': 'o',
+        '7f': 'p', '80': 'q', '81': 'r', '82': 's', '83': 't', '84': 'u', '85': 'v', '86': 'w', '87': 'x', '88': 'y',
+        '89': 'z', '8a': '{', '8b': '|', '8c': '}', '8d': '~', '8e': '·', '8f': '【', '90': '】', '91': '♪', '92': '♥',
+        '13': '@', 'a': '€','96': '©','b': '®'
     }
 
+encode_dict = {'◘': '00', '0': '30', '1': '31', '2': '32', '3': '33', '4': '34', '5': '35',
+               '6': '36', '7': '37', '8': '38', '9': '39', ' ': '3a', '!': '3b', '”': '3c',
+               '#': '3d', '$': '3e', '%': '3f', '&': '40', '’': '41', '(': '42', ')': '43',
+               '*': '44', '+': '45', ',': '46', '-': '47', '.': '48', '/': '6b', ':': '4a',
+               ';': '4b', '<': '4c', '=': '4d', '>': '4e', '?': '4f', 'A': '50', 'B': '51',
+               'C': '52', 'D': '53', 'E': '54', 'F': '55', 'G': '56', 'H': '57', 'I': '58',
+               'J': '59', 'K': '5a', 'L': '5b', 'M': '5c', 'N': '5d', 'O': '5e', 'P': '5f',
+               'Q': '60', 'R': '61', 'S': '62', 'T': '63', 'U': '64', 'V': '65', 'W': '66',
+               'X': '67', 'Y': '68', 'Z': '69', '[': '6a', ']': '6c', '^': '6d', '_': '6e',
+               '‘': '6f', 'a': '70', 'b': '71', 'c': '72', 'd': '73', 'e': '74', 'f': '75',
+               'g': '76', 'h': '77', 'i': '78', 'j': '79', 'k': '7a', 'l': '7b', 'm': '7c',
+               'n': '7d', 'o': '7e', 'p': '7f', 'q': '80', 'r': '81', 's': '82', 't': '83',
+               'u': '84', 'v': '85', 'w': '86', 'x': '87', 'y': '88', 'z': '89', '{': '8a',
+               '|': '8b', '}': '8c', '~': '8d', '·': '8e', '【': '8f', '】': '90', '♪': '91',
+               '♥': '92', '@': '13', '€': '0a','©': '96','®': '0b'}
+
+
+def encode_text(text_value: str):
+    encoded_hex_string = ""
+    for character in text_value:
+        encoded_hex_string = encoded_hex_string + encode_dict[character]
+    return encoded_hex_string
+
+
+
+
+
+
+
+
+def decode_chunk(chunk_text_val: str):
+    b = bytearray.fromhex(chunk_text_val)
+    chunk_val_list = []
+    for byt in b:
+        chunk_val_list.append(hex(byt)[2:])
 
     output_str = ""
     for ind, val in enumerate(chunk_val_list):
         try:
-            output_str = output_str + encode_dict[val]
+            output_str = output_str + decode_dict[val]
         except KeyError:
-            #print (encode_dict[chunk_val_list[ind-5]]+encode_dict[chunk_val_list[ind-4]]+encode_dict[chunk_val_list[ind-3]]+encode_dict[chunk_val_list[ind-2]]+encode_dict[chunk_val_list[ind-1]]+"'"+val+"'"+encode_dict[chunk_val_list[ind+1]]+encode_dict[chunk_val_list[ind+2]]+encode_dict[chunk_val_list[ind+3]]+encode_dict[chunk_val_list[ind+4]]+encode_dict[chunk_val_list[ind+5]]+encode_dict[chunk_val_list[ind+6]])
+            #print (decode_dict[chunk_val_list[ind-5]]+decode_dict[chunk_val_list[ind-4]]+decode_dict[chunk_val_list[ind-3]]+decode_dict[chunk_val_list[ind-2]]+decode_dict[chunk_val_list[ind-1]]+"'"+val+"'"+decode_dict[chunk_val_list[ind+1]]+decode_dict[chunk_val_list[ind+2]]+decode_dict[chunk_val_list[ind+3]]+decode_dict[chunk_val_list[ind+4]]+decode_dict[chunk_val_list[ind+5]]+decode_dict[chunk_val_list[ind+6]])
             #a = input("Press a key to continue")
             output_str = output_str + "•"
 
     return output_str
 
-
 ending_chunk_test  = commands_shuffle_chunks[-1]
-b = bytearray.fromhex(ending_chunk_test)
-endingchunklist = []
-for byt in b:
-    endingchunklist.append(hex(byt)[2:])
-c = decode_chunk(endingchunklist)
-# print(c)
-testy = ""
+c = decode_chunk(ending_chunk_test)
+print(c)
+
+
 
 
 #mon-get string
