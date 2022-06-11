@@ -8,6 +8,9 @@ The monster files are 8C long
 Offset 10 -> 04: "8C" which is the length. In job.bin this same offset position is "E4" which is 228
 Offset 10 -> 00 01: "21 00" for job.bin (33 job allocations). "71 01" for mon_get.bin (369 monster allocations).
 
+
+
+
 0123456789 !”#$%&’()*+,-./:;<=>?ABCDEFGHI
 
 
@@ -70,6 +73,17 @@ COMMAND CHUNK = ELIXIR
 00 00 00 00 00 00
  00 0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 09 00 00 51 01 06 06 00 00 00 01 E7 03 03 50 00 00
 
+
+Adding new ability -> Change the very first start index of the text chunk (Pushes every start index forward)
+Adding or removing text -> Change start index for every ability after that ability depending on HOW MANY CHARACTERS added/removed
+
+GET START INDEX
+GET TEXT AFTER START INDEX
+STOP AT 00
+
+
+
+
 Attack?
 2D 05 1C 00
 34 05 59 00
@@ -108,7 +122,8 @@ COMMAND CHUNK = CLEAN SLATE ; OFFSET 4360; dresspheres[123]
 06 00 20 20
 00 00 00 00
 30 00 00 00
-01 00 00 00
+01 00
+00 00
 50 00
 10 01 07 00  #MP COST -- TARGET/HP/MP -- CALC PS -- CRIT
 00 04 01 00           -- HIT -- POWER -- NUMBER OF ATTACKS -- ??
@@ -387,6 +402,8 @@ b000
 	unsigned short	reserve4;
 
 
+
+
 Ultima
 
 e1433900
@@ -397,7 +414,8 @@ e843ba00
 06802021
 00000000
 02000000
-00000000
+0000
+0000
 6400
 5a010200004601640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000012000000020000a101030300000001640000000000
 

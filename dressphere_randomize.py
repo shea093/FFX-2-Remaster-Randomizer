@@ -315,6 +315,15 @@ def set_dmg_info_batch():
             ability.dmg_info["Hit"] = int(hex_list[4], 16)
             ability.dmg_info["Power"] = int(hex_list[5], 16)
             ability.dmg_info["Number of Attacks"] = int(hex_list[6], 16)
+            cast_cut = ability.og_hex_chunk[68:76]
+            cast_time = reverse_two_bytes(cast_cut[4:8])
+            wait_time = reverse_two_bytes(cast_cut[0:4])
+            test = ""
+            ability.dmg_info["Cast Time"] = int(cast_time, 16)
+            ability.dmg_info["Wait Time"] = int(wait_time, 16)
+
+            #DEBUG, DELETE LATER
+            ability.dmg_info["Start Motion"] = ability.og_hex_chunk[24:26]
         #Start indexes for name / help text
         ability.name_start_index = int(reverse_two_bytes(ability.og_hex_chunk[0:4]),16)
         ability.unknown_text_variable = int(reverse_two_bytes(ability.og_hex_chunk[4:8]),16)
@@ -1132,6 +1141,7 @@ job_bin_string = job_bin_string + chunks_output[2]
 
 changed_ids = []
 changed_hit_ids = []
+phys_change = []
 
 
 def change_potencies(ability_list: list[Command]):
@@ -1154,14 +1164,27 @@ def change_potencies(ability_list: list[Command]):
     # Nerfs to knife abilities
     for i in range(267, 269):
         ability_list[i].dmg_info["Hit"] = 45
+        ability_list[i].dmg_info["Cast Time"] = 0
+        ability_list[i].dmg_info["Wait Time"] = 83
+        phys_change.append(i)
         changed_ids.append(i)
         changed_hit_ids.append(i)
+    for i in range(261, 266):
+        ability_list[i].dmg_info["Cast Time"] = 0
+        ability_list[i].dmg_info["Wait Time"] = 83
+        changed_ids.append(i)
+        phys_change.append(i)
     # Nerf to Stop Knife
     ability_list[266].dmg_info["Hit"] = 65
+    ability_list[266].dmg_info["Cast Time"] = 0
+    ability_list[266].dmg_info["Wait Time"] = 80
+    phys_change.append(266)
     changed_ids.append(266)
     changed_hit_ids.append(266)
     # Nerf to Quartet Knife
     ability_list[269].dmg_info["MP Cost"] = 35
+    ability_list[269].dmg_info["Cast Time"] = 0
+    ability_list[269].dmg_info["Wait Time"] = 80
     changed_ids.append(269)
     # Multiple Hit Cactling Gun
     ability_list[270].dmg_info["Power"] = 23
@@ -1173,20 +1196,25 @@ def change_potencies(ability_list: list[Command]):
             ability_list[i].dmg_info["MP Cost"] = ability_list[i].dmg_info["MP Cost"] * 2
             changed_ids.append(i)
 
+
+
+
     # Nerf magic attack potency. This would be good if not using randomizer
     # ability_list[44].dmg_info["MP Cost"] = 1
     # ability_list[44].dmg_info["Power"] = 5
+
     # Mug and Nab gil
     for i in range(372, 374):
+        ability_list[i].dmg_info["MP Cost"] = 10
         ability_list[i].dmg_info["Power"] = 10
         changed_ids.append(i)
     # Burst Shot
     ability_list[57].dmg_info["Power"] = 12
     changed_ids.append(57)
     # Scattershot/Burst
-    ability_list[59].dmg_info["Power"] = 12
+    ability_list[59].dmg_info["Power"] = 11
     changed_ids.append(59)
-    ability_list[60].dmg_info["Power"] = 12
+    ability_list[60].dmg_info["Power"] = 11
     changed_ids.append(60)
     # Cheapshot
     ability_list[52].dmg_info["Power"] = 8
@@ -1223,15 +1251,68 @@ def change_potencies(ability_list: list[Command]):
     for i in tier1magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
         ability_list[i].dmg_info["Power"] = 15
+        ability_list[i].dmg_info["Cast Time"] = 20
+        ability_list[i].dmg_info["Wait Time"] = 55
+        phys_change.append(i)
         changed_ids.append(i)
     for i in tier2magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
         ability_list[i].dmg_info["Power"] = 24
+        ability_list[i].dmg_info["Wait Time"] = 80
         changed_ids.append(i)
     for i in tier3magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
         ability_list[i].dmg_info["Power"] = 32
+        ability_list[i].dmg_info["Cast Time"] = 105
         changed_ids.append(i)
+    # Flare
+    ability_list[368].dmg_info["Calc PS"] = 9
+    ability_list[368].dmg_info["Power"] = 50
+    ability_list[368].dmg_info["Cast Time"] = 125
+    changed_ids.append(368)
+    # Ultima
+    ability_list[369].dmg_info["Calc PS"] = 9
+    ability_list[369].dmg_info["Power"] = 75
+    ability_list[369].dmg_info["Cast Time"] = 100
+    ability_list[369].dmg_info["Wait Time"] = 75
+    changed_ids.append(369)
+    # Holy
+    ability_list[370].dmg_info["Calc PS"] = 3
+    ability_list[370].dmg_info["Power"] = 3
+    ability_list[370].dmg_info["Cast Time"] = 115
+    changed_ids.append(370)
+    # Excalibur buff
+    ability_list[110].dmg_info["Power"] = 50
+    ability_list[110].dmg_info["MP Cost"] = 40
+    ability_list[110].dmg_info["Cast Time"] = 0
+    ability_list[110].dmg_info["Wait Time"] = 80
+    phys_change.append(110)
+    changed_ids.append(110)
+    # Phys attack cast-time changes
+    normal_phys_attacks = [81,101,102,103,104,105,106,107,108,109,111,112,113,114,115,116,119,139,140,141,142,143,144,145,146,
+        201,202,203,204,205,206,209,211,212,213,214,215,219,221,222,223]
+    for i in normal_phys_attacks:
+        ability_list[i].dmg_info["Cast Time"] = 0
+        ability_list[i].dmg_info["Wait Time"] = 73
+        changed_ids.append(i)
+        phys_change.append(i)
+    # Nerfs to Fiend hunter skills
+    for i in range (62,72):
+        ability_list[i].dmg_info["Power"] = 10
+        ability_list[i].dmg_info["Cast Time"] = 0
+        ability_list[i].dmg_info["Wait Time"] = 70
+        changed_ids.append(i)
+        phys_change.append(i)
+    # Psychic bomb
+    ability_list[486].dmg_info["Power"] = 8
+    ability_list[486].dmg_info["MP Cost"] = 20
+    changed_ids.append(486)
+    # Excellence
+    ability_list[495].dmg_info["MP Cost"] = 40
+    changed_ids.append(495)
+
+
+
 
 
 change_potencies(global_abilities)
@@ -1322,6 +1403,12 @@ def write_potencies():
                         + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],
                                                                bytecount=1)
                         + edited_chunk[initial_pos + 14:chunk_length])
+        castwait_initial_pos = 68
+        edited_chunk = (edited_chunk[0:castwait_initial_pos]
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],bytecount=2)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],bytecount=2)
+                        + edited_chunk[castwait_initial_pos + 8:chunk_length])
+
         if len(edited_chunk) != chunk_length:
             raise ValueError
         else:
@@ -1460,12 +1547,10 @@ def execute_randomizer(reset_bins=False):
         f.write(binary_converted_cmdbin)
     with open(output_aabin_path, 'wb') as f:
         f.write(binary_converted_aabin)
-    with open(output_monget_path, 'wb') as f:
-        f.write(binary_converted_mgetbin)
+    # with open(output_monget_path, 'wb') as f:
+    #     f.write(binary_converted_mgetbin)
     print("Files written successfully!")
 
-# for index, ability in enumerate(global_abilities):
-#     print(str(index) + ".\t ID: " + str(ability.id) + "\t\t" + str(ability.name) + "\t\t" + "AP: " + str(ability.ap))
 
 # print("--- Completed in %s seconds ---" % (time.time() - start_time))
 
