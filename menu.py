@@ -111,6 +111,7 @@ def menu():
     def option2():
         importlib.reload(dressphere_randomize)
         dressphere_randomize.execute_randomizer(reset_bins=False)
+        input("Press any key to continue...")
         main_menu()
 
     def option6():
@@ -139,7 +140,7 @@ def menu():
             print_menu()
             option = ''
             try:
-                option = int(input('Type a number then press Enter: '))
+                option = int(input('Enter your choice then press Enter: '))
                 if option < 0 or option > 8:
                     raise ValueError
             except:

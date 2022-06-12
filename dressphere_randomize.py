@@ -224,6 +224,7 @@ monmagic_global_chunks = get_big_chunks(segment_type="mon-magic")
 # Initiates the list of abilities
 # valid_ability_pooling is an argument for shuffle_abilities()
 # that returns only abilities that are intended to be shuffled
+
 def initiate_abilities(valid_ability_pooling=False, monster_magic=False) -> list[Command]:
     abilities = []
     if monster_magic is True:
@@ -257,10 +258,11 @@ def initiate_abilities(valid_ability_pooling=False, monster_magic=False) -> list
             abilities.append(auto)
     return abilities
 
-
+heading_chunk = get_big_chunks(get_all_segments=True,segment_type="command")[0]
+global_number_of_abilities = int(reverse_four_bytes(heading_chunk[32:40]),16)
+global_number_of_bytes_after_header = int(reverse_four_bytes(heading_chunk[48:56]),16)
 global_abilities = initiate_abilities()
 mon_magic_abilities = initiate_abilities(monster_magic=True)
-test = ""
 
 cmd_name_help_list = []
 with open(resource_path("Test Files/commandtext"), 'r', encoding = "utf_8") as cmdtext:
@@ -870,6 +872,7 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
 
             # Black Magic
             if (165 <= ability_index < 177) or ability_index == 369 or ability_index == 368:
+                test = ""
                 chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
                                                                                    sub_menu_stop_index:chunk_length]
                 chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
