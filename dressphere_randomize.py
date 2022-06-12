@@ -224,7 +224,7 @@ monmagic_global_chunks = get_big_chunks(segment_type="mon-magic")
 # Initiates the list of abilities
 # valid_ability_pooling is an argument for shuffle_abilities()
 # that returns only abilities that are intended to be shuffled
-def initiate_abilities(valid_ability_pooling=False, monster_magic=False):
+def initiate_abilities(valid_ability_pooling=False, monster_magic=False) -> list[Command]:
     abilities = []
     if monster_magic is True:
         monmagic_tuples = cut_monmagic_names()
@@ -658,7 +658,7 @@ def randomize_stat_pool(stat_pool_values=list):
     return stat_pool
 
 
-def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_list: list):
+def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_list: list) -> list[Command]:
     effect_animation_start_index = 16
     effect_animation_stop_index = 16 + 8
     attack_motion_start_index = 24
@@ -1144,7 +1144,6 @@ job_bin_string = job_bin_string + chunks_output[2]
 
 #
 #
-
 changed_ids = []
 changed_hit_ids = []
 phys_change = []
@@ -1375,119 +1374,6 @@ change_potencies(global_abilities)
 global_abilities = change_ability_jobs_to_shuffled(dresspheres, global_abilities)
 
 
-#
-# FOR POTENCY HEX CHUNK CHANGER
-#
-#
-#
-
-# hex_cut = ability.og_hex_chunk[76:76 + 12]
-# nth = 2
-# hex_list = [hex_cut[i:i + nth] for i in range(0, len(hex_cut), nth)]
-# # dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
-# ability.dmg_info["MP Cost"] = int(hex_list[0], 16)
-# ability.dmg_info["Target HP/MP"] = int(hex_list[1], 16)
-# ability.dmg_info["Calc PS"] = int(hex_list[2], 16)
-# ability.dmg_info["Crit"] = int(hex_list[3], 16)
-# ability.dmg_info["Hit"] = int(hex_list[4], 16)
-# ability.dmg_info["Power"] = int(hex_list[5], 16)
-def write_potencies():
-    for i in changed_ids:
-        edited_chunk = global_abilities[i].curr_hex_chunk
-        if len(edited_chunk) < 1:
-            edited_chunk = global_abilities[i].og_hex_chunk
-        chunk_length = int(len(edited_chunk))
-        initial_pos = 76
-        edited_chunk = (edited_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(
-            global_abilities[i].dmg_info["MP Cost"], bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Target HP/MP"],
-                                                               bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Calc PS"], bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Crit"], bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Hit"], bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Power"], bytecount=1)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],
-                                                               bytecount=1)
-                        + edited_chunk[initial_pos + 14:chunk_length])
-        castwait_initial_pos = 68
-        edited_chunk = (edited_chunk[0:castwait_initial_pos]
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],bytecount=2)
-                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],bytecount=2)
-                        + edited_chunk[castwait_initial_pos + 8:chunk_length])
-
-        if len(edited_chunk) != chunk_length:
-            raise ValueError
-        else:
-            global_abilities[i].curr_hex_chunk = edited_chunk
-
-
-write_potencies()
-# print_dmg_info()
-
-# MAKE STRING FOR COMMAND.BIN
-commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
-command_string_to_output = commands_shuffle_chunks[0]
-for cmd_search in global_abilities:
-    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
-    if cmd_search.type == "Auto-Ability":
-        pass
-    else:
-        if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
-            # print("AB NOT FOUND:"+ cmd_search.name)
-            command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
-        else:
-            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Auto-Ability":
-                # print("NOT IN THE POOL: " + cmd_search.name)
-                command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
-            command_string_to_output = command_string_to_output + cmd_search.curr_hex_chunk
-
-# print("middle chunk: "+str(len(command_string_to_output)-64))
-command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
-
-# MAKE STRING FOR A_ABILITY.BIN
-aa_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="auto-ability")
-aa_string_to_output = aa_shuffle_chunks[0]
-for cmd_search in global_abilities:
-    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
-    if cmd_search.type == "Command":
-        pass
-    else:
-        if len(cmd_search.curr_hex_chunk) != 352 and len(cmd_search.curr_hex_chunk) != 0:
-            # print("AB NOT FOUND:"+ cmd_search.name)
-            aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
-        else:
-            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Command":
-                # print("NOT IN THE POOL: " + cmd_search.name)
-                aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
-            aa_string_to_output = aa_string_to_output + cmd_search.curr_hex_chunk
-aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
-
-# print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
-# print("all chunk: "+str(len(command_string_to_output)))
-#
-# print(command_string_to_output)
-# print(global_abilities[88].og_hex_chunk)
-# print(global_abilities[88].og_hex_chunk)
-
-# for command in global_abilities:
-#     print("************************")
-#     print("ability id: " + command.id)
-#     print("ability name: " + command.name)
-#     print("************************")
-#     print("------------------------")
-# print(dresspheres[0].stat_formula(type="STR",tableprint=True))
-# print(dresspheres[26].stat_formula(type="ACC",tableprint=True))
-# print("****")
-
-
-
-# Special characters
-# 13 39 = Yuna Pet (Kogoro)          @9
-# 13 3A = Rikku Pet (Ghiki)          @ (Space)
-# 13 3B = Paine Pet (Flurry)         @!
-# 0A 88 = Blue text                  €y (before word to be Blue'd); €’ (after text to end Blue)
-# 96 = Summon ability help text?     ©
-# 0B 33 = R1 button                  ®3
 decode_dict = {
         '0': '◘', '30': '0', '31': '1', '32': '2', '33': '3', '34': '4', '35': '5', '36': '6', '37': '7', '38': '8',
         '39': '9', '3a': ' ', '3b': '!', '3c': '”', '3d': '#', '3e': '$', '3f': '%', '40': '&', '41': '’', '42': '(',
@@ -1549,10 +1435,188 @@ def decode_chunk(chunk_text_val: str):
 
     return output_str
 
-ending_chunk_test  = commands_shuffle_chunks[-1]
+ending_chunk_test  = get_big_chunks(get_all_segments=True,segment_type="command")[-1]
 c = decode_chunk(ending_chunk_test)
-print(c)
 
+# #Item
+# global_abilities[0].new_name_text = "Berries" # +3
+# global_abilities[0].new_help_text = "Eat some berries." # +5
+# #Gunplay
+# global_abilities[8].new_name_text = "Kate Bush"
+# #Blue bullet
+# global_abilities[10].new_help_text = "Bitchcraft of the witchiest witches in the wild west."
+def change_command_text():
+    global_abilities[3].new_name_text = "WAR Skills"
+    global_abilities[3].new_help_text = "Use job-locked Warrior abilities."
+    global_abilities[4].new_name_text = "BLM Skills"
+    global_abilities[4].new_help_text = "Use job-locked Black Mage abilities."
+    global_abilities[5].new_name_text = "WHM Skills"
+    global_abilities[5].new_help_text = "Use job-locked White Mage abilities."
+    global_abilities[6].new_name_text = "SAM Skills"
+    global_abilities[6].new_help_text = "Use job-locked Samurai abilities."
+    global_abilities[7].new_name_text = "DRK Skills"
+    global_abilities[7].new_help_text = "Use job-locked Dark Knight abilities."
+    global_abilities[545].new_name_text = "BSK Skills"
+    global_abilities[545].new_help_text = "Use job-locked Berserker abilities."
+
+# 3 swordplay; 4 blm; 5 whm; 6 bushido; 7 arcana, 545 instinct
+
+
+
+
+
+
+
+def change_command_indexes(index_start: int):
+    index_change = index_start
+    for ability in global_abilities[0:554]:
+        edited_chunk = ability.curr_hex_chunk
+        if len(edited_chunk) < 1:
+            edited_chunk = ability.og_hex_chunk
+        chunk_length = len(edited_chunk)
+        ability.name_start_index = ability.name_start_index + index_change
+        name_diff = ability.name_new_length - ability.name_og_length
+        index_change = index_change + name_diff
+        ability.help_start_index = ability.help_start_index + index_change
+        help_diff = ability.help_new_length - ability.help_og_length
+        index_change = index_change + help_diff
+        edited_chunk = convert_gamevariable_to_reversed_hex(ability.name_start_index,bytecount=2) + edited_chunk[4:8] + convert_gamevariable_to_reversed_hex(ability.help_start_index,bytecount=2) + edited_chunk[12:chunk_length]
+        ability.curr_hex_chunk = edited_chunk
+        if len(ability.curr_hex_chunk) != chunk_length:
+            raise ValueError
+
+    test = ""
+
+def write_text_hex():
+    output_string = ""
+    for ability in global_abilities[0:554]:
+        output_string = output_string + encode_text(ability.new_name_text) + "00" + encode_text(ability.new_help_text)+ "00"
+    return output_string
+
+change_command_text()
+change_command_indexes(0)
+output_text_hex = write_text_hex()
+
+#
+# FOR POTENCY HEX CHUNK CHANGER
+#
+#
+#
+
+# hex_cut = ability.og_hex_chunk[76:76 + 12]
+# nth = 2
+# hex_list = [hex_cut[i:i + nth] for i in range(0, len(hex_cut), nth)]
+# # dmg_info_names = ["MP Cost", "Target", "Calc PS", "Crit", "Hit", "Power"]
+# ability.dmg_info["MP Cost"] = int(hex_list[0], 16)
+# ability.dmg_info["Target HP/MP"] = int(hex_list[1], 16)
+# ability.dmg_info["Calc PS"] = int(hex_list[2], 16)
+# ability.dmg_info["Crit"] = int(hex_list[3], 16)
+# ability.dmg_info["Hit"] = int(hex_list[4], 16)
+# ability.dmg_info["Power"] = int(hex_list[5], 16)
+def write_potencies():
+    for i in changed_ids:
+        edited_chunk = global_abilities[i].curr_hex_chunk
+        if len(edited_chunk) < 1:
+            edited_chunk = global_abilities[i].og_hex_chunk
+        chunk_length = int(len(edited_chunk))
+        initial_pos = 76
+        edited_chunk = (edited_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(
+            global_abilities[i].dmg_info["MP Cost"], bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Target HP/MP"],
+                                                               bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Calc PS"], bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Crit"], bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Hit"], bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Power"], bytecount=1)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],
+                                                               bytecount=1)
+                        + edited_chunk[initial_pos + 14:chunk_length])
+        castwait_initial_pos = 68
+        edited_chunk = (edited_chunk[0:castwait_initial_pos]
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],bytecount=2)
+                        + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],bytecount=2)
+                        + edited_chunk[castwait_initial_pos + 8:chunk_length])
+
+        if len(edited_chunk) != chunk_length:
+            raise ValueError
+        else:
+            global_abilities[i].curr_hex_chunk = edited_chunk
+
+
+write_potencies()
+# print_dmg_info()
+
+
+
+
+# MAKE STRING FOR COMMAND.BIN
+commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
+command_string_to_output = commands_shuffle_chunks[0]
+for cmd_search in global_abilities:
+    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+    if cmd_search.type == "Auto-Ability":
+        pass
+    else:
+        if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
+            # print("AB NOT FOUND:"+ cmd_search.name)
+            command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+        else:
+            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Auto-Ability":
+                # print("NOT IN THE POOL: " + cmd_search.name)
+                command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+            command_string_to_output = command_string_to_output + cmd_search.curr_hex_chunk
+
+
+# print("middle chunk: "+str(len(command_string_to_output)-64))
+#command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
+command_string_to_output = command_string_to_output + output_text_hex
+
+
+
+
+# MAKE STRING FOR A_ABILITY.BIN
+aa_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="auto-ability")
+aa_string_to_output = aa_shuffle_chunks[0]
+for cmd_search in global_abilities:
+    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+    if cmd_search.type == "Command":
+        pass
+    else:
+        if len(cmd_search.curr_hex_chunk) != 352 and len(cmd_search.curr_hex_chunk) != 0:
+            # print("AB NOT FOUND:"+ cmd_search.name)
+            aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
+        else:
+            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Command":
+                # print("NOT IN THE POOL: " + cmd_search.name)
+                aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
+            aa_string_to_output = aa_string_to_output + cmd_search.curr_hex_chunk
+aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
+
+# print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
+# print("all chunk: "+str(len(command_string_to_output)))
+#
+# print(command_string_to_output)
+# print(global_abilities[88].og_hex_chunk)
+# print(global_abilities[88].og_hex_chunk)
+
+# for command in global_abilities:
+#     print("************************")
+#     print("ability id: " + command.id)
+#     print("ability name: " + command.name)
+#     print("************************")
+#     print("------------------------")
+# print(dresspheres[0].stat_formula(type="STR",tableprint=True))
+# print(dresspheres[26].stat_formula(type="ACC",tableprint=True))
+# print("****")
+
+
+# Special characters
+# 13 39 = Yuna Pet (Kogoro)          @9
+# 13 3A = Rikku Pet (Ghiki)          @ (Space)
+# 13 3B = Paine Pet (Flurry)         @!
+# 0A 88 = Blue text                  €y (before word to be Blue'd); €’ (after text to end Blue)
+# 96 = Summon ability help text?     ©
+# 0B 33 = R1 button                  ®3
 
 
 
