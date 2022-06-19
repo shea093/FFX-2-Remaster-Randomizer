@@ -5,6 +5,7 @@ from command import Command
 from services import *
 import sys
 import os
+import copy
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -290,6 +291,7 @@ for index, abi in enumerate(global_abilities):
 
 
 
+
 def set_ability_ap_batch():
     for ability in global_abilities:
         if ability.type == "Command":
@@ -361,7 +363,7 @@ def print_dmg_info():
 
 set_ability_ap_batch()
 set_dmg_info_batch()
-test = ""
+
 
 delete_autoability_indexes = []
 change_ap_indexes = []
@@ -389,18 +391,9 @@ def batch_AP_multiply():
 
 
 replace_ap_with_file_changes()
-batch_AP_multiply()
+# batch_AP_multiply()
 
 
-def translate_ability(hex_byte: str):
-    hex_byte_reverse = hex_byte[2:4] + hex_byte[0:2]
-    hex_byte_reverse = hex_byte_reverse.upper()
-    for ability in global_abilities:
-        if ability.search_by_id(hex_byte_reverse) != "Not found.":
-            return ability.search_by_id(hex_byte_reverse)
-        else:
-            pass
-    return "N/A"
 
 
 def initiate_dresspheres_new():
@@ -445,7 +438,7 @@ def initiate_dresspheres_new():
 #   "Mask" abilities have problematic hex so those will not be in the ability pool
 def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_branch=50):
     special_jobs = ["super_yuna1", "super-yuna2", "super-yuna3",
-                    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3"]
+                    "super-rikku1", "super-rikku3", "super_paine1", "super_paine2", "super_paine3","super-rikku2"]
     dresspheres_edited = dresspheres_list
 
     valid_abilities = initiate_abilities(valid_ability_pooling=True)
@@ -453,6 +446,13 @@ def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_bran
     auto_abilities_to_shuffle = valid_abilities[250:len(valid_abilities)]
     random.Random(seed).shuffle(commands_to_shuffle)
     random.Random(seed).shuffle(auto_abilities_to_shuffle)
+    for indcmd in range(85,96):
+        end_cmd = commands_to_shuffle.pop(indcmd)
+        commands_to_shuffle.insert(0,end_cmd)
+    for indaa in range(95,99):
+        end_aa = auto_abilities_to_shuffle.pop(indaa)
+        auto_abilities_to_shuffle.insert(0,end_aa)
+    test = ""
     seed_increment = 1
     # print("size before: ", len(commands_to_shuffle))
     commands_to_shuffle_repeat = commands_to_shuffle.copy()
@@ -506,6 +506,7 @@ def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_bran
                         global_abilities[f_index].mug_flag = mug_flaggu
                         if repeat_flaggu is True:
                             global_abilities[f_index].repeat_flag = True
+                            global_abilities[f_index].repeated_jobs.append(this_dress.dress_name)
                         else:
                             global_abilities[f_index].job = this_dress.dress_name
                 mug_flaggu = False
@@ -564,6 +565,7 @@ def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_bran
     # print("CHECKU CHECKU")
     # print("size after: " , len(commands_to_shuffle))
     # print(len(auto_abilities_to_shuffle))
+    test = ""
     return dresspheres_edited
 
 
@@ -660,7 +662,13 @@ def randomize_stat_pool(stat_pool_values=list):
     return stat_pool
 
 
+shared_abilities_added = []
+
+
 def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_list: list) -> list[Command]:
+    global global_number_of_abilities
+    global global_number_of_bytes_after_header
+
     effect_animation_start_index = 16
     effect_animation_stop_index = 16 + 8
     attack_motion_start_index = 24
@@ -690,6 +698,7 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
                        "Carnival Cancan",
                        "Slowdance", "Brakedance", "Jitterbug", "Dirty Dancing"]
     edited_abilities = []
+    shared_count = 0
 
     for ability_index, ability in enumerate(ability_list):
 
@@ -863,69 +872,85 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
             if ability.name == "Mix":
                 chunk_edited = chunk_edited[0:16] + "0000000000090505" + chunk_edited[16 + 16:chunk_length]
 
-            # Swordplay
-            if 101 <= ability_index < 113:
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000606" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
 
-            # Black Magic
-            if (165 <= ability_index < 177) or ability_index == 369 or ability_index == 368:
-                test = ""
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000101" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
-
-            # White Magic
-            if (179 <= ability_index < 191) or ability_index == 370 or ability_index == 371:
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000202" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
-
-            # Instinct
-            if 138 < ability_index <= 147:
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000A0A" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
-
-            # Bushido
-            if 113 <= ability_index < 125:
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000808" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
-
-            # Arcana
-            if (129 <= ability_index < 137) or (376 <= ability_index <= 378):
-                chunk_edited = chunk_edited[0:sub_shared_start_index] + "000909" + chunk_edited[
-                                                                                   sub_menu_stop_index:chunk_length]
-                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
-                                                                                     belongs_to_job_stop_index:chunk_length]
 
             shared_abi_indexes = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
                                   111, 112, 165, 166, 167, 168, 169, 170, 171, 172, 173,
                                   174, 175, 176, 369, 368, 179, 180, 181, 182, 183, 184, 185,
                                   186, 187, 188, 189, 190, 370, 371, 139, 140, 141, 142, 143, 144,
-                                  145, 146, 147, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
-                                  123, 124, 129, 130, 131, 132, 133, 134, 135, 136, 376, 377, 378]
+                                  145, 146, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+                                  123, 124, 129, 130, 131, 132, 133, 134, 135, 136, 376, 377, 378, 379]
 
             if ability.name == "Spare Change":
                 chunk_edited = ability.og_hex_chunk
+            if ability.name == "Bribe":
+                chunk_edited = ability.og_hex_chunk
             if ability_index in changed_hit_ids:
                 chunk_edited = chunk_edited[0:40] + "4e002060" + chunk_edited[48:chunk_length]
-            if (ability.repeat_flag is True) and (ability_index not in shared_abi_indexes):
+            if (ability.repeat_flag is True):
                 chunk_edited = chunk_edited[0:sub_menu_action_start_index] + "010000" + chunk_edited[
                                                                                         sub_menu_action_stop_index + 4:chunk_length]
+
+            if ability_index in shared_abi_indexes:
+                new_ability = copy.deepcopy(ability)
+                new_ability.id = hex(12842+shared_count)[2:].upper()
+                if len(chunk_edited) != len(ability.og_hex_chunk):
+                    raise ValueError
+                if (ability.repeat_flag is True):
+                    test = "a"
+                new_ability.curr_hex_chunk = chunk_edited
+                shared_abilities_added.append(new_ability)
+
+                job_examine_id = reverse_two_bytes(ability.id).lower()
+                job_abi_new_id = reverse_two_bytes(hex(12842+shared_count)[2:])
+                afeafeaf = ""
+
+                for jdress in dresspheres:
+                    if dress_search == jdress:
+                        for yndex, jbility_tuple in enumerate(jdress.abilities):
+                            if jbility_tuple[0] == job_examine_id:
+                                b = ""
+                                jdress.abilities[yndex] = (job_abi_new_id, jbility_tuple[1])
+                                jdress.refresh_ability_hex()
+                                a = ""
+                            if jbility_tuple[1] == job_examine_id:
+                                jdress.abilities[yndex] = (jbility_tuple[0],job_abi_new_id)
+                                jdress.refresh_ability_hex()
+                                a = ""
+                    for hjob_name in ability.repeated_jobs:
+                        if hjob_name == jdress.dress_name:
+                            for yndex, jbility_tuple in enumerate(jdress.abilities):
+                                if jbility_tuple[0] == job_examine_id:
+                                    b = ""
+                                    jdress.abilities[yndex] = (job_abi_new_id, jbility_tuple[1])
+                                    jdress.refresh_ability_hex()
+                                    a = ""
+                                if jbility_tuple[1] == job_examine_id:
+                                    jdress.abilities[yndex] = (jbility_tuple[0], job_abi_new_id)
+                                    jdress.refresh_ability_hex()
+                                    a = ""
+
+
+
+                shared_count = shared_count + 1
+
+
+                global_number_of_abilities = global_number_of_abilities + 1
+                global_number_of_bytes_after_header = global_number_of_bytes_after_header + 140
+
+
+                chunk_edited = ability.og_hex_chunk
+                chunk_edited = chunk_edited[0:belongs_to_job_start_index] + "0050" + chunk_edited[
+                                                                                     belongs_to_job_stop_index:chunk_length]
 
             if len(chunk_edited) != len(ability.og_hex_chunk):
                 raise ValueError
             ability.curr_hex_chunk = chunk_edited
             edited_abilities.append(ability)
+    test = ""
     return edited_abilities
+
+test
 
 
 def initiate_monsters() -> list[Dressphere]:
@@ -956,7 +981,7 @@ def initiate_monsters() -> list[Dressphere]:
 
 
 global_monsters = initiate_monsters()
-test =""
+
 
 # # LV * A/10 + (LV / B) + C - (LV^2) / 16 / D / E
 # global_monsters[0].stat_formula(type="STR",tableprint=True)
@@ -1036,9 +1061,9 @@ def randomize_monsters():
         if len(monster.big_chunk) != 280:
             raise ValueError
 
-test = ""
+
 randomize_monsters()
-test = ""
+
 
 
 
@@ -1124,22 +1149,7 @@ dresspheres = shuffle_abilities(dresspheres, percent_chance_of_branch=70)
 # print("$$$$")
 # print("$$$$")
 
-chunks_output = get_big_chunks(get_all_segments=True)
-dress_chunks = []
-county = 0
-dresspheres = replace_stats(dresspheres, randomize_stat_pool(pool_stats(dresspheres)))
 
-for dress in dresspheres:
-    dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
-    dress.big_chunk = dress.big_chunk.replace(dress.stat_hex_og, dress.stat_hex)
-    dress_chunks.append(dress.big_chunk)
-
-dress_number = len(dress_chunks)
-
-job_bin_string = chunks_output[0]
-for chunk in dress_chunks:
-    job_bin_string = job_bin_string + chunk
-job_bin_string = job_bin_string + chunks_output[2]
 
 #                     with filepath.open(mode="wb") as f:
 #                         f.write(binary_converted)
@@ -1155,10 +1165,10 @@ phys_change = []
 def change_potencies(ability_list: list[Command]):
     # Change Attack potency from 16 to 10
     for i in range(44, 50):
-        ability_list[i].dmg_info["Power"] = 10
+        ability_list[i].dmg_info["Power"] = 11
         changed_ids.append(i)
     # Make sure thief attacks are less
-    ability_list[46].dmg_info["Power"] = 5
+    ability_list[46].dmg_info["Power"] = 6
     # Trigger Happy Nerf
     ability_list[50].dmg_info["Power"] = 1
     changed_ids.append(50)
@@ -1231,7 +1241,7 @@ def change_potencies(ability_list: list[Command]):
     ability_list[117].dmg_info["Power"] = 12
     changed_ids.append(117)
     # Fireworks
-    ability_list[118].dmg_info["Power"] = 12
+    ability_list[118].dmg_info["Power"] = 11
     changed_ids.append(118)
 
     # Change ranged attack to Magic-Based
@@ -1258,15 +1268,15 @@ def change_potencies(ability_list: list[Command]):
     # Change Black Magic Potencies AND to "Special Magic" (based on Physical formula but affected by Magic Defence)
     for i in tier1magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
-        ability_list[i].dmg_info["Power"] = 15
+        ability_list[i].dmg_info["Power"] = 16
         ability_list[i].dmg_info["Cast Time"] = 20
         ability_list[i].dmg_info["Wait Time"] = 55
         phys_change.append(i)
         changed_ids.append(i)
     for i in tier2magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
-        ability_list[i].dmg_info["Power"] = 24
-        ability_list[i].dmg_info["Wait Time"] = 80
+        ability_list[i].dmg_info["Power"] = 23
+        ability_list[i].dmg_info["Cast Time"] = 80
         changed_ids.append(i)
     for i in tier3magic_ids:
         ability_list[i].dmg_info["Calc PS"] = 9
@@ -1275,22 +1285,22 @@ def change_potencies(ability_list: list[Command]):
         changed_ids.append(i)
     # Flare
     ability_list[368].dmg_info["Calc PS"] = 9
-    ability_list[368].dmg_info["Power"] = 50
+    ability_list[368].dmg_info["Power"] = 65
     ability_list[368].dmg_info["Cast Time"] = 125
     changed_ids.append(368)
     # Ultima
     ability_list[369].dmg_info["Calc PS"] = 9
-    ability_list[369].dmg_info["Power"] = 75
-    ability_list[369].dmg_info["Cast Time"] = 100
-    ability_list[369].dmg_info["Wait Time"] = 75
+    ability_list[369].dmg_info["Power"] = 89
+    ability_list[369].dmg_info["Cast Time"] = 125
+    ability_list[369].dmg_info["Wait Time"] = 125
     changed_ids.append(369)
     # Holy
     ability_list[370].dmg_info["Calc PS"] = 3
-    ability_list[370].dmg_info["Power"] = 3
-    ability_list[370].dmg_info["Cast Time"] = 115
+    ability_list[370].dmg_info["Power"] = 4
+    ability_list[370].dmg_info["Cast Time"] = 130
     changed_ids.append(370)
     # Excalibur buff
-    ability_list[110].dmg_info["Power"] = 50
+    ability_list[110].dmg_info["Power"] = 40
     ability_list[110].dmg_info["MP Cost"] = 40
     ability_list[110].dmg_info["Cast Time"] = 0
     ability_list[110].dmg_info["Wait Time"] = 80
@@ -1323,7 +1333,7 @@ def change_potencies(ability_list: list[Command]):
 
 
 
-change_potencies(global_abilities)
+#change_potencies(global_abilities)
 
 # for i in range (0,9):
 #     if i % 2 != 0:
@@ -1375,7 +1385,7 @@ change_potencies(global_abilities)
 
 
 global_abilities = change_ability_jobs_to_shuffled(dresspheres, global_abilities)
-
+dresspheres = replace_stats(dresspheres, randomize_stat_pool(pool_stats(dresspheres)))
 
 decode_dict = {
         '0': '◘', '30': '0', '31': '1', '32': '2', '33': '3', '34': '4', '35': '5', '36': '6', '37': '7', '38': '8',
@@ -1464,6 +1474,7 @@ def change_command_text():
 
 # 3 swordplay; 4 blm; 5 whm; 6 bushido; 7 arcana, 545 instinct
 
+test
 
 
 
@@ -1472,7 +1483,11 @@ def change_command_text():
 
 def change_command_indexes(index_start: int):
     index_change = index_start
-    for ability in global_abilities[0:554]:
+    shared_count = 0
+    shared_abi_names = []
+    for shared_abi in shared_abilities_added:
+        shared_abi_names.append(shared_abi.name)
+    for ind, ability in enumerate(global_abilities[0:554]):
         edited_chunk = ability.curr_hex_chunk
         if len(edited_chunk) < 1:
             edited_chunk = ability.og_hex_chunk
@@ -1488,7 +1503,30 @@ def change_command_indexes(index_start: int):
         if len(ability.curr_hex_chunk) != chunk_length:
             raise ValueError
 
-    test = ""
+        shared_abi_indexes = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+                                  111, 112, 165, 166, 167, 168, 169, 170, 171, 172, 173,
+                                  174, 175, 176, 369, 368, 179, 180, 181, 182, 183, 184, 185,
+                                  186, 187, 188, 189, 190, 370, 371, 139, 140, 141, 142, 143, 144,
+                                  145, 146, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+                                  123, 124, 129, 130, 131, 132, 133, 134, 135, 136, 376, 377, 378, 379]
+
+        if ind in shared_abi_indexes and ability.name in shared_abi_names:
+            test = ""
+            examine = shared_abilities_added[shared_count]
+            shared_edited_chunk = shared_abilities_added[shared_count].curr_hex_chunk
+            if len(shared_edited_chunk) < 1:
+                shared_edited_chunk = shared_abilities_added[shared_count].og_hex_chunk
+            shared_chunk_length = len(shared_edited_chunk)
+            shared_abilities_added[shared_count].name_start_index = ability.name_start_index
+            shared_abilities_added[shared_count].help_start_index = ability.help_start_index
+            shared_edited_chunk = convert_gamevariable_to_reversed_hex(ability.name_start_index, bytecount=2) + shared_edited_chunk[
+                                                                                                         4:8] + convert_gamevariable_to_reversed_hex(
+            ability.help_start_index, bytecount=2) + shared_edited_chunk[12:shared_chunk_length]
+            shared_abilities_added[shared_count].curr_hex_chunk = shared_edited_chunk
+            shared_count += 1
+            test = ""
+
+
 
 def write_text_hex():
     output_string = ""
@@ -1500,6 +1538,17 @@ change_command_text()
 change_command_indexes(0)
 output_text_hex = write_text_hex()
 
+
+def edit_size_head():
+    global heading_chunk
+    new_heading_chunk = heading_chunk[0:32] + convert_gamevariable_to_reversed_hex(global_number_of_abilities,bytecount=4) + heading_chunk[40:48] + convert_gamevariable_to_reversed_hex(global_number_of_bytes_after_header,bytecount=4) + heading_chunk[56:len(heading_chunk)]
+    if len(new_heading_chunk) != len(heading_chunk):
+        raise ValueError
+    else:
+        heading_chunk = new_heading_chunk
+
+edit_size_head()
+test
 #
 # FOR POTENCY HEX CHUNK CHANGER
 #
@@ -1517,6 +1566,7 @@ output_text_hex = write_text_hex()
 # ability.dmg_info["Hit"] = int(hex_list[4], 16)
 # ability.dmg_info["Power"] = int(hex_list[5], 16)
 def write_potencies():
+    #Need to get the shared ability names
     for i in changed_ids:
         edited_chunk = global_abilities[i].curr_hex_chunk
         if len(edited_chunk) < 1:
@@ -1539,61 +1589,51 @@ def write_potencies():
                         + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],bytecount=2)
                         + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],bytecount=2)
                         + edited_chunk[castwait_initial_pos + 8:chunk_length])
-
         if len(edited_chunk) != chunk_length:
             raise ValueError
         else:
             global_abilities[i].curr_hex_chunk = edited_chunk
 
+    for shared_abi in shared_abilities_added:
+        if shared_abi.name == global_abilities[i].name:
+            shared_edited_chunk = (shared_abi.curr_hex_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(
+        global_abilities[i].dmg_info["MP Cost"], bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Target HP/MP"],
+                                                           bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Calc PS"], bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Crit"], bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Hit"], bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Power"], bytecount=1)
+                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],
+                                                           bytecount=1)
+                    + shared_abi.curr_hex_chunk[initial_pos + 14:chunk_length])
+            shared_edited_chunk = (shared_edited_chunk[0:castwait_initial_pos]
+                            + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],
+                                                                   bytecount=2)
+                            + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],
+                                                                   bytecount=2)
+                            + shared_edited_chunk[castwait_initial_pos + 8:chunk_length])
+            if len(shared_edited_chunk) != chunk_length:
+                raise ValueError
+            else:
+                shared_abi.curr_hex_chunk = shared_edited_chunk
 
-write_potencies()
+
+
+
+#write_potencies()
 # print_dmg_info()
 
 
 
 
-# MAKE STRING FOR COMMAND.BIN
-commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
-command_string_to_output = commands_shuffle_chunks[0]
-for cmd_search in global_abilities:
-    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
-    if cmd_search.type == "Auto-Ability":
-        pass
-    else:
-        if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
-            # print("AB NOT FOUND:"+ cmd_search.name)
-            command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
-        else:
-            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Auto-Ability":
-                # print("NOT IN THE POOL: " + cmd_search.name)
-                command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
-            command_string_to_output = command_string_to_output + cmd_search.curr_hex_chunk
-
-
-# print("middle chunk: "+str(len(command_string_to_output)-64))
-#command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
-command_string_to_output = command_string_to_output + output_text_hex
 
 
 
 
-# MAKE STRING FOR A_ABILITY.BIN
-aa_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="auto-ability")
-aa_string_to_output = aa_shuffle_chunks[0]
-for cmd_search in global_abilities:
-    # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
-    if cmd_search.type == "Command":
-        pass
-    else:
-        if len(cmd_search.curr_hex_chunk) != 352 and len(cmd_search.curr_hex_chunk) != 0:
-            # print("AB NOT FOUND:"+ cmd_search.name)
-            aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
-        else:
-            if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Command":
-                # print("NOT IN THE POOL: " + cmd_search.name)
-                aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
-            aa_string_to_output = aa_string_to_output + cmd_search.curr_hex_chunk
-aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
+
+
+
 
 # print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
 # print("all chunk: "+str(len(command_string_to_output)))
@@ -1622,7 +1662,49 @@ aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
 # 0B 33 = R1 button                  ®3
 
 
+def translate_ability(hex_byte: str):
+    if hex_byte == "7232":
+        abc = ""
+    hex_byte_reverse = hex_byte[2:4] + hex_byte[0:2]
+    hex_byte_reverse = hex_byte_reverse.upper()
+    kogoro_numbers = list(range(201,210))
+    ghiki_numbers = list(range(211,220))
+    flurry_numbers = list(range(221,230))
+    # if hex_byte == "0000":
+    #     return "N/A"
+    for jnd, ability in enumerate(global_abilities):
+        if ability.id == hex_byte_reverse:
+            if jnd in kogoro_numbers or jnd in ghiki_numbers or jnd in flurry_numbers:
+                split_name = ability.search_by_id(hex_byte_reverse).split(sep=" ")
+                for ind, word in enumerate(split_name):
+                    if word == "@9":
+                        split_name[ind] = "Kogoro"
+                    elif word == "@":
+                        split_name[ind] = "Ghiki"
+                    elif word == "@!":
+                        split_name[ind] = "Flurry"
+                output_str = ""
+                for word in split_name:
+                    output_str = output_str + word + " "
+                return output_str
 
+        if ability.search_by_id(hex_byte_reverse) != "Not found.":
+            return ability.search_by_id(hex_byte_reverse)
+        else:
+            pass
+    for shability in shared_abilities_added:
+        if shability.search_by_id(hex_byte_reverse) != "Not found.":
+            return shability.search_by_id(hex_byte_reverse)
+        else:
+            pass
+    return "N/A"
+
+for a in global_abilities:
+    if a.repeat_flag is True:
+        print(a)
+        print(a.job)
+        for jb in a.repeated_jobs:
+            print("repeat:" + jb)
 #mon-get string
 
 mon_get_string = get_big_chunks(get_all_segments=True,segment_type="mon-get")[0]
@@ -1630,9 +1712,79 @@ for monster in global_monsters:
     mon_get_string = mon_get_string + monster.big_chunk
 
 
+def execute_randomizer(reset_bins=False, hard_mode_only=False):
+    chunks_output = get_big_chunks(get_all_segments=True)
+    dress_chunks = []
+    county = 0
 
 
-def execute_randomizer(reset_bins=False):
+
+    for dress in dresspheres:
+        if hard_mode_only is False:
+            dress.big_chunk = dress.big_chunk.replace(dress.ability_hex_og, dress.ability_hex)
+            dress.big_chunk = dress.big_chunk.replace(dress.stat_hex_og, dress.stat_hex)
+            dress_chunks.append(dress.big_chunk)
+        else:
+            dress_chunks.append(dress.big_chunk)
+
+    dress_number = len(dress_chunks)
+
+    job_bin_string = chunks_output[0]
+    for chunk in dress_chunks:
+        job_bin_string = job_bin_string + chunk
+    job_bin_string = job_bin_string + chunks_output[2]
+
+    # MAKE STRING FOR COMMAND.BIN
+    commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
+    command_string_to_output = heading_chunk
+    if hard_mode_only is True:
+        command_string_to_output = commands_shuffle_chunks[0]
+    for cmd_search in global_abilities:
+        # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+        if cmd_search.type == "Auto-Ability":
+            pass
+        else:
+            if len(cmd_search.curr_hex_chunk) != 280 and len(cmd_search.curr_hex_chunk) != 0:
+                # print("AB NOT FOUND:"+ cmd_search.name)
+                command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+            else:
+                if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Auto-Ability":
+                    # print("NOT IN THE POOL: " + cmd_search.name)
+                    command_string_to_output = command_string_to_output + cmd_search.og_hex_chunk
+                command_string_to_output = command_string_to_output + cmd_search.curr_hex_chunk
+    if hard_mode_only is False:
+        for cmd in shared_abilities_added:
+            test = ""
+            command_string_to_output = command_string_to_output + cmd.curr_hex_chunk
+        command_string_to_output = command_string_to_output + output_text_hex
+    else:
+        command_string_to_output = command_string_to_output + commands_shuffle_chunks[-1]
+
+    # print("middle chunk: "+str(len(command_string_to_output)-64))
+    # command_string_to_output = command_string_to_output + commands_shuffle_chunks[2]
+
+
+
+    # MAKE STRING FOR A_ABILITY.BIN
+    aa_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="auto-ability")
+    aa_string_to_output = aa_shuffle_chunks[0]
+    for cmd_search in global_abilities:
+        # print(cmd_search.name + " length: " + str(len(cmd_search.curr_hex_chunk)))
+        if cmd_search.type == "Command":
+            pass
+        else:
+            if len(cmd_search.curr_hex_chunk) != 352 and len(cmd_search.curr_hex_chunk) != 0:
+                # print("AB NOT FOUND:"+ cmd_search.name)
+                aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
+            else:
+                if len(cmd_search.curr_hex_chunk) == 0 and cmd_search.type != "Command":
+                    # print("NOT IN THE POOL: " + cmd_search.name)
+                    aa_string_to_output = aa_string_to_output + cmd_search.og_hex_chunk
+                aa_string_to_output = aa_string_to_output + cmd_search.curr_hex_chunk
+    aa_string_to_output = aa_string_to_output + aa_shuffle_chunks[2]
+
+
+
     os_prefix = os.getcwd()
     directory_name = str(seed)
     if reset_bins is True:

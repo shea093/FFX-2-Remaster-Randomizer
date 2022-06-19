@@ -102,8 +102,10 @@ def menu():
 
     def option1():
         importlib.reload(dressphere_randomize)
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
+        dressphere_randomize.write_potencies()
         dressphere_randomize.execute_randomizer(reset_bins=False)
-        importlib.reload(dressphere_randomize)
         importlib.reload(monster_edit)
         monster_edit.write_bins_new(reset_bins=False)
         main_menu()
@@ -122,6 +124,14 @@ def menu():
 
     def option3():
         importlib.reload(dressphere_randomize)
+        dressphere_randomize.global_abilities = dressphere_randomize.initiate_abilities()
+        dressphere_randomize.dresspheres = dressphere_randomize.initiate_dresspheres_new()
+        dressphere_randomize.set_ability_ap_batch()
+        dressphere_randomize.set_dmg_info_batch()
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
+        dressphere_randomize.write_potencies()
+        dressphere_randomize.execute_randomizer(reset_bins=False,hard_mode_only=True)
         importlib.reload(monster_edit)
         monster_edit.write_bins_new(reset_bins=False)
         main_menu()

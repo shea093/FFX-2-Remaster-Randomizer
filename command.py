@@ -20,6 +20,7 @@ class Command:
         self.unknown_text_variable = 0
         self.__mug_flag = False
         self.__repeat_flag = False
+        self.repeated_jobs = []
 
         dmg_info_names = ["MP Cost","Target HP/MP","Calc PS","Crit","Hit","Power"]
         for name in dmg_info_names:
@@ -28,6 +29,10 @@ class Command:
     @property
     def id(self):
         return self.__id
+
+    @id.setter
+    def id(self, value: str):
+        self.__id = value
 
     @property
     def new_name_text(self):
@@ -162,5 +167,8 @@ class Command:
             return "Not found."
 
     def __repr__(self):
-        return f'<Ability ID = {self.__id}, Ability Name = {self.__name}, Type = {self.__type}>'
+        if self.__type == "Mon-Magic":
+            return f'<{self.__name}>'
+        else:
+            return f'<Ability ID = {self.__id}, Ability Name = {self.__name}, Type = {self.__type}>'
 

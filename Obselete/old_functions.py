@@ -125,3 +125,40 @@ for byt in b:
 c = decode_chunk(endingchunklist)
 print(c)
 testy = ""
+
+
+
+#################
+byte_A = reverse_four_bytes("06000040") + reverse_four_bytes("17000000")
+byte_B = reverse_four_bytes("ed02ed02")
+
+monmaglast = get_big_chunks(get_all_segments=True,segment_type="mon-magic")[-1]
+monmag_string = decode_chunk(monmaglast)
+monmag_dicts = []
+
+mon_mag_split = monmag_string.split("◘")
+
+mon_mag_names = mon_mag_split[::2]
+mon_mag_helps = mon_mag_split[1::2]
+
+for index, monmag in enumerate(mon_magic_abilities):
+    monmag.name = mon_mag_names[index]
+    monmag.help_text = mon_mag_helps[index]
+    this_list = [monmag]
+    this_dict = {'Animation': reverse_two_bytes(monmag.og_hex_chunk[16:24]), 'Start Motion': monmag.og_hex_chunk[24:26],
+                 'Line1 reversed': reverse_four_bytes(monmag.og_hex_chunk[32:40]),
+                 'Line2 reversed': reverse_four_bytes(monmag.og_hex_chunk[40:48])}
+    this_list.append(this_dict)
+    monmag_dicts.append(this_list)
+
+test
+'032b032b'
+'011a011a'
+'00450045'
+'00c300c3'
+'4000000600000017'
+'01180118'
+'009a009a'
+'032a032a'
+'4100000600000031'
+'6001000600000013'
