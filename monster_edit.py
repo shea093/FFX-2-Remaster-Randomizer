@@ -8,8 +8,8 @@ from services import *
 from enemy import Enemy
 from pathlib import Path
 import pathlib
-from dressphere_execute import global_monsters
-from dressphere_execute import seed as this_seed
+from dressphere_randomize import global_monsters
+from dressphere_randomize import seed as this_seed
 
 file_iterations = 369
 item_list = item.initialize_items()

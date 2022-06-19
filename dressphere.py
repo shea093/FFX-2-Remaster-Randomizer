@@ -92,6 +92,13 @@ class Dressphere:
             abilityhex = abilityhex + ability[1]
         self.__ability_hex = abilityhex
 
+    def refresh_ability_hex(self):
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
+
     def separate_stat_string(self, hex: str, hpmp=False, target="Stats"):
         if target == "Stats":
             variables = {}

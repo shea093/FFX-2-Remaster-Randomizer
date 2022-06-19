@@ -1,5 +1,5 @@
-import TkinterTemplate
-import dressphere_execute
+import spoiler_tool
+import dressphere_randomize
 import menu
 
 def main():
