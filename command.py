@@ -21,6 +21,7 @@ class Command:
         self.__mug_flag = False
         self.__repeat_flag = False
         self.repeated_jobs = []
+        self.old_id = 0
 
         dmg_info_names = ["MP Cost","Target HP/MP","Calc PS","Crit","Hit","Power"]
         for name in dmg_info_names:

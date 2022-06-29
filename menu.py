@@ -102,8 +102,12 @@ def menu():
 
     def option1():
         importlib.reload(dressphere_randomize)
-        dressphere_randomize.batch_AP_multiply()
         dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
+        dressphere_randomize.set_ability_ap_batch()
+        dressphere_randomize.replace_ap_with_file_changes()
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
+
         dressphere_randomize.write_potencies()
         dressphere_randomize.execute_randomizer(reset_bins=False)
         importlib.reload(monster_edit)
@@ -112,6 +116,10 @@ def menu():
 
     def option2():
         importlib.reload(dressphere_randomize)
+        dressphere_randomize.set_ability_ap_batch()
+        dressphere_randomize.replace_ap_with_file_changes()
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
         dressphere_randomize.execute_randomizer(reset_bins=False)
         input("Press any key to continue...")
         main_menu()
@@ -126,9 +134,10 @@ def menu():
         importlib.reload(dressphere_randomize)
         dressphere_randomize.global_abilities = dressphere_randomize.initiate_abilities()
         dressphere_randomize.dresspheres = dressphere_randomize.initiate_dresspheres_new()
-        dressphere_randomize.set_ability_ap_batch()
         dressphere_randomize.set_dmg_info_batch()
+        dressphere_randomize.set_ability_ap_batch(hard_mode_only=True)
         dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
         dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
         dressphere_randomize.write_potencies()
         dressphere_randomize.execute_randomizer(reset_bins=False,hard_mode_only=True)

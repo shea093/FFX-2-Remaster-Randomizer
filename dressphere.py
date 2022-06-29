@@ -27,6 +27,7 @@ class Dressphere:
         self.__abilities = []
         self.__ability_hex = ""
         self.__ability_hex_og = ""
+        self.monster_unknown_variable_1 = ""
         for stat_name in stat_names:
             self.__stat_variables[stat_name] = 0
 

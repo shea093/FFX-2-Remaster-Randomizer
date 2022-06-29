@@ -292,8 +292,14 @@ for index, abi in enumerate(global_abilities):
 
 
 
-def set_ability_ap_batch():
-    for ability in global_abilities:
+def set_ability_ap_batch(hard_mode_only=False):
+    shared_abi_indexes = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+                          111, 112, 165, 166, 167, 168, 169, 170, 171, 172, 173,
+                          174, 175, 176, 369, 368, 179, 180, 181, 182, 183, 184, 185,
+                          186, 187, 188, 189, 190, 370, 371, 139, 140, 141, 142, 143, 144,
+                          145, 146, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+                          123, 124, 129, 130, 131, 132, 133, 134, 135, 136, 376, 377, 378, 379]
+    for index, ability in enumerate(global_abilities):
         if ability.type == "Command":
             hex_cut = ability.og_hex_chunk[268:268 + 4]
             hex_input = reverse_two_bytes(hex_cut)
@@ -301,6 +307,8 @@ def set_ability_ap_batch():
                 pass
             else:
                 ability.ap = int(hex_input, 16)
+            if (index in shared_abi_indexes) and hard_mode_only is False:
+                ability.ap = 0
         elif ability.type == "Auto-Ability":
             hex_cut = ability.og_hex_chunk[348:348 + 4]
             hex_input = reverse_two_bytes(hex_cut)
@@ -481,6 +489,8 @@ def shuffle_abilities(dresspheres_list: list[Dressphere], percent_chance_of_bran
             output_abilities = [this_dress.abilities[0]]
             if this_dress.dress_name == "whitemage" or this_dress.dress_name == "blackmage":
                 output_abilities = [dresspheres_edited[1].abilities[0]]
+            if this_dress.dress_name == "songstress":
+                output_abilities = [dresspheres_edited[4].abilities[0]]
             # Attempt to make gunner Physical
             # if this_dress.dress_name == "gunner":
             #     output_abilities = [dresspheres_edited[3].abilities[0]]
@@ -899,6 +909,7 @@ def change_ability_jobs_to_shuffled(dresspheres_list: list[Dressphere], ability_
                 if (ability.repeat_flag is True):
                     test = "a"
                 new_ability.curr_hex_chunk = chunk_edited
+                new_ability.old_id = ability.id
                 shared_abilities_added.append(new_ability)
 
                 job_examine_id = reverse_two_bytes(ability.id).lower()
@@ -1329,8 +1340,12 @@ def change_potencies(ability_list: list[Command]):
     ability_list[495].dmg_info["MP Cost"] = 40
     changed_ids.append(495)
 
-
-
+    for shared_abi in shared_abilities_added:
+        for changed_id1 in changed_ids:
+            glob_abi = global_abilities[changed_id1]
+            if glob_abi.id == shared_abi.old_id:
+                for key, value in glob_abi.dmg_info.items():
+                    shared_abi.dmg_info[key] = value
 
 
 #change_potencies(global_abilities)
@@ -1594,29 +1609,32 @@ def write_potencies():
         else:
             global_abilities[i].curr_hex_chunk = edited_chunk
 
+
     for shared_abi in shared_abilities_added:
-        if shared_abi.name == global_abilities[i].name:
-            shared_edited_chunk = (shared_abi.curr_hex_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(
-        global_abilities[i].dmg_info["MP Cost"], bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Target HP/MP"],
-                                                           bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Calc PS"], bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Crit"], bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Hit"], bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Power"], bytecount=1)
-                    + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Number of Attacks"],
-                                                           bytecount=1)
-                    + shared_abi.curr_hex_chunk[initial_pos + 14:chunk_length])
-            shared_edited_chunk = (shared_edited_chunk[0:castwait_initial_pos]
-                            + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Wait Time"],
-                                                                   bytecount=2)
-                            + convert_gamevariable_to_reversed_hex(global_abilities[i].dmg_info["Cast Time"],
-                                                                   bytecount=2)
-                            + shared_edited_chunk[castwait_initial_pos + 8:chunk_length])
-            if len(shared_edited_chunk) != chunk_length:
-                raise ValueError
-            else:
-                shared_abi.curr_hex_chunk = shared_edited_chunk
+        shared_edited_chunk = shared_abi.curr_hex_chunk
+        if len(shared_edited_chunk) < 1:
+            shared_edited_chunk = shared_abi.og_hex_chunk
+        shared_edited_chunk = (shared_edited_chunk[0:initial_pos] + convert_gamevariable_to_reversed_hex(
+    shared_abi.dmg_info["MP Cost"], bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Target HP/MP"],
+                                                       bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Calc PS"], bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Crit"], bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Hit"], bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Power"], bytecount=1)
+                + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Number of Attacks"],
+                                                       bytecount=1)
+                + shared_edited_chunk[initial_pos + 14:chunk_length])
+        shared_edited_chunk = (shared_edited_chunk[0:castwait_initial_pos]
+                        + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Wait Time"],
+                                                               bytecount=2)
+                        + convert_gamevariable_to_reversed_hex(shared_abi.dmg_info["Cast Time"],
+                                                               bytecount=2)
+                        + shared_edited_chunk[castwait_initial_pos + 8:chunk_length])
+        if len(shared_edited_chunk) != chunk_length:
+            raise ValueError
+        else:
+            shared_abi.curr_hex_chunk = shared_edited_chunk
 
 
 
@@ -1629,7 +1647,25 @@ def write_potencies():
 
 
 
-
+def write_ap_chunks():
+    for index, ability in enumerate(global_abilities):
+        edited_chunk = ability.curr_hex_chunk
+        if len(ability.curr_hex_chunk) < 1:
+            edited_chunk = ability.og_hex_chunk
+        if ability.type == "Command":
+            edited_chunk = edited_chunk[0:268] + str(
+                convert_gamevariable_to_reversed_hex(ability.ap, bytecount=2)) + edited_chunk[
+                                                                                 268 + 4:len(edited_chunk)]
+            if len(edited_chunk) != len(ability.og_hex_chunk):
+                raise ValueError
+            ability.curr_hex_chunk = edited_chunk
+        elif ability.type == "Auto-Ability":
+            edited_chunk = edited_chunk[0:348] + str(
+                convert_gamevariable_to_reversed_hex(ability.ap, bytecount=2)) + edited_chunk[
+                                                                                 348 + 4:len(edited_chunk)]
+            if len(edited_chunk) != len(ability.og_hex_chunk):
+                raise ValueError
+            ability.curr_hex_chunk = edited_chunk
 
 
 
@@ -1708,9 +1744,14 @@ for a in global_abilities:
 #mon-get string
 
 mon_get_string = get_big_chunks(get_all_segments=True,segment_type="mon-get")[0]
+test_monster_list = []
 for monster in global_monsters:
     mon_get_string = mon_get_string + monster.big_chunk
-
+    monster.monster_unknown_variable_1 = monster.og_big_chunk[4:6]
+    test_monster_list.append([monster.dress_name, monster.monster_unknown_variable_1])
+for thing in test_monster_list:
+    print(thing[0] + ", " + thing[1])
+test = ""
 
 def execute_randomizer(reset_bins=False, hard_mode_only=False):
     chunks_output = get_big_chunks(get_all_segments=True)
