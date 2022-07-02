@@ -412,6 +412,7 @@ def initiate_dresspheres_new():
     for index, job in enumerate(jobs_names):
         new_dressphere = Dressphere(job, index + 1)
         new_dressphere.hex_chunk = hex_chunks[index][16:16 + 232]
+        new_dressphere.og_big_chunk = hex_chunks[index]
         new_dressphere.big_chunk = hex_chunks[index]
         this_dressphere_list.append(new_dressphere)
 
@@ -1486,6 +1487,43 @@ def change_command_text():
     global_abilities[7].new_help_text = "Use job-locked Dark Knight abilities."
     global_abilities[545].new_name_text = "BSK Skills"
     global_abilities[545].new_help_text = "Use job-locked Berserker abilities."
+    for ability in global_abilities[44:554]:
+        if len(ability.new_help_text) < 1:
+            ability.new_help_text = ability.help_text
+        damage_type = ""
+        if ability.dmg_info["Calc PS"] == 0:
+            damage_type = "Strength"
+        elif ability.dmg_info["Calc PS"] == 1:
+            damage_type = "Strength (Def 0)"
+        elif ability.dmg_info["Calc PS"] == 2:
+            damage_type = "Magic"
+        elif ability.dmg_info["Calc PS"] == 3:
+            damage_type = "Magic (Mdef 0)"
+        elif ability.dmg_info["Calc PS"] == 4:
+            damage_type = "Fractional (Current)"
+        elif ability.dmg_info["Calc PS"] == 5:
+            damage_type = "Constant"
+        elif ability.dmg_info["Calc PS"] == 6:
+            damage_type = "Magic"
+        elif ability.dmg_info["Calc PS"] == 7:
+            damage_type = "Fractional (Maximum)"
+        elif ability.dmg_info["Calc PS"] == 8:
+            damage_type = "Constant"
+        elif ability.dmg_info["Calc PS"] == 9:
+            damage_type = "Magic"
+        elif ability.dmg_info["Calc PS"] == 11 or ability.dmg_info["Calc PS"] == 17:
+            damage_type = "User HP"
+        elif ability.dmg_info["Calc PS"] == 12:
+            damage_type = "Gil"
+        elif ability.dmg_info["Calc PS"] == 18:
+            damage_type = "Level"
+        else:
+            damage_type = "Other"
+
+        if ability.dmg_info["Power"] > 0:
+            ability.new_help_text = ability.new_help_text + "    DMG MOD: " + damage_type
+        else:
+            pass
 
 # 3 swordplay; 4 blm; 5 whm; 6 bushido; 7 arcana, 545 instinct
 
@@ -1552,6 +1590,7 @@ def write_text_hex():
 change_command_text()
 change_command_indexes(0)
 output_text_hex = write_text_hex()
+
 
 
 def edit_size_head():
@@ -1748,7 +1787,13 @@ test_monster_list = []
 for monster in global_monsters:
     mon_get_string = mon_get_string + monster.big_chunk
     monster.monster_unknown_variable_1 = monster.og_big_chunk[4:6]
+    size = 0
+    if monster.og_big_chunk[0:2] == "03" or monster.og_big_chunk[0:2] == "02":
+        size = int(monster.monster_unknown_variable_1, 16)
+        size = round(size * 0.6)
+        monster.monster_unknown_variable_1 = hex(size)[2:]
     test_monster_list.append([monster.dress_name, monster.monster_unknown_variable_1])
+    monster.big_chunk = monster.big_chunk[0:4] + monster.monster_unknown_variable_1 + monster.big_chunk[6:len(monster.big_chunk)]
 for thing in test_monster_list:
     print(thing[0] + ", " + thing[1])
 test = ""
