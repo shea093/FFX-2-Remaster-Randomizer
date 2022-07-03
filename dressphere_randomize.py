@@ -1487,43 +1487,43 @@ def change_command_text():
     global_abilities[7].new_help_text = "Use job-locked Dark Knight abilities."
     global_abilities[545].new_name_text = "BSK Skills"
     global_abilities[545].new_help_text = "Use job-locked Berserker abilities."
-    for ability in global_abilities[44:554]:
-        if len(ability.new_help_text) < 1:
-            ability.new_help_text = ability.help_text
-        damage_type = ""
-        if ability.dmg_info["Calc PS"] == 0:
-            damage_type = "Strength"
-        elif ability.dmg_info["Calc PS"] == 1:
-            damage_type = "Strength (Def 0)"
-        elif ability.dmg_info["Calc PS"] == 2:
-            damage_type = "Magic"
-        elif ability.dmg_info["Calc PS"] == 3:
-            damage_type = "Magic (Mdef 0)"
-        elif ability.dmg_info["Calc PS"] == 4:
-            damage_type = "Fractional (Current)"
-        elif ability.dmg_info["Calc PS"] == 5:
-            damage_type = "Constant"
-        elif ability.dmg_info["Calc PS"] == 6:
-            damage_type = "Magic"
-        elif ability.dmg_info["Calc PS"] == 7:
-            damage_type = "Fractional (Maximum)"
-        elif ability.dmg_info["Calc PS"] == 8:
-            damage_type = "Constant"
-        elif ability.dmg_info["Calc PS"] == 9:
-            damage_type = "Magic"
-        elif ability.dmg_info["Calc PS"] == 11 or ability.dmg_info["Calc PS"] == 17:
-            damage_type = "User HP"
-        elif ability.dmg_info["Calc PS"] == 12:
-            damage_type = "Gil"
-        elif ability.dmg_info["Calc PS"] == 18:
-            damage_type = "Level"
-        else:
-            damage_type = "Other"
-
-        if ability.dmg_info["Power"] > 0:
-            ability.new_help_text = ability.new_help_text + "    DMG MOD: " + damage_type
-        else:
-            pass
+    # for ability in global_abilities[44:554]:
+    #     if len(ability.new_help_text) < 1:
+    #         ability.new_help_text = ability.help_text
+    #     damage_type = ""
+    #     if ability.dmg_info["Calc PS"] == 0:
+    #         damage_type = "Strength"
+    #     elif ability.dmg_info["Calc PS"] == 1:
+    #         damage_type = "Strength (Def 0)"
+    #     elif ability.dmg_info["Calc PS"] == 2:
+    #         damage_type = "Magic"
+    #     elif ability.dmg_info["Calc PS"] == 3:
+    #         damage_type = "Magic (Mdef 0)"
+    #     elif ability.dmg_info["Calc PS"] == 4:
+    #         damage_type = "Fractional (Current)"
+    #     elif ability.dmg_info["Calc PS"] == 5:
+    #         damage_type = "Constant"
+    #     elif ability.dmg_info["Calc PS"] == 6:
+    #         damage_type = "Magic"
+    #     elif ability.dmg_info["Calc PS"] == 7:
+    #         damage_type = "Fractional (Maximum)"
+    #     elif ability.dmg_info["Calc PS"] == 8:
+    #         damage_type = "Constant"
+    #     elif ability.dmg_info["Calc PS"] == 9:
+    #         damage_type = "Magic"
+    #     elif ability.dmg_info["Calc PS"] == 11 or ability.dmg_info["Calc PS"] == 17:
+    #         damage_type = "User HP"
+    #     elif ability.dmg_info["Calc PS"] == 12:
+    #         damage_type = "Gil"
+    #     elif ability.dmg_info["Calc PS"] == 18:
+    #         damage_type = "Level"
+    #     else:
+    #         damage_type = "Other"
+    #
+    #     if ability.dmg_info["Power"] > 0:
+    #         ability.new_help_text = ability.new_help_text + "    DMG MOD: " + damage_type
+    #     else:
+    #         pass
 
 # 3 swordplay; 4 blm; 5 whm; 6 bushido; 7 arcana, 545 instinct
 
@@ -1706,8 +1706,67 @@ def write_ap_chunks():
                 raise ValueError
             ability.curr_hex_chunk = edited_chunk
 
+def initiate_odd_variables():
+    for ability in global_abilities:
+        if len(ability.curr_hex_chunk) < 32:
+            ability.odd_variables["sub-menu"] = ability.og_hex_chunk[26:28]
+            ability.odd_variables["flow-system"] = ability.og_hex_chunk[28:32]
+        else:
+            ability.odd_variables["sub-menu"] = ability.curr_hex_chunk [26:28]
+            ability.odd_variables["flow-system"] = ability.curr_hex_chunk[28:32]
+
+initiate_odd_variables()
+new_abilities = []
+
+def update_header(heading_chunk: str, number_of_abilities: int, bytes_after_header: int):
+    new_heading_chunk = heading_chunk[0:32] + convert_gamevariable_to_reversed_hex(number_of_abilities,
+                                                                                   bytecount=4) + heading_chunk[
+                                                                                                  40:48] + convert_gamevariable_to_reversed_hex(
+        bytes_after_header, bytecount=4) + heading_chunk[56:len(heading_chunk)]
+    if len(new_heading_chunk) != len(heading_chunk):
+        raise ValueError
+    else:
+        return new_heading_chunk
 
 
+def debug_new_abilities(global_ability_list: list[Command], new_ability_list: list[Command], output_text_to_edit: str, number_of_abilities_val: int, bytes_after_header_val: int, header_chunk: str):
+    index_change = len(output_text_to_edit)
+    debug_chunks = []
+    for i in range (1,483):
+        new_ability_list.append(copy.deepcopy(global_ability_list[55]))
+        number_of_abilities_val += 1
+        bytes_after_header_val += int(len(global_ability_list[55].og_hex_chunk)/2)
+    for ind, ability in enumerate(new_ability_list):
+        output_text_to_edit = output_text_to_edit + encode_text(ability.new_name_text) + "00" + encode_text(
+            ability.new_help_text) + "00"
+        edited_chunk = ability.curr_hex_chunk
+        if len(edited_chunk) < 1:
+            edited_chunk = ability.og_hex_chunk
+        chunk_length = len(edited_chunk)
+        ability.name_start_index = index_change
+        name_diff = ability.name_new_length
+        index_change = index_change + name_diff
+        ability.help_start_index = index_change
+        help_diff = ability.help_new_length
+        index_change = index_change + help_diff
+        edited_chunk = convert_gamevariable_to_reversed_hex(ability.name_start_index, bytecount=2) + edited_chunk[
+                                                                                                     4:8] + convert_gamevariable_to_reversed_hex(
+            ability.help_start_index, bytecount=2) + edited_chunk[12:chunk_length]
+        ability.curr_hex_chunk = edited_chunk
+        if len(ability.curr_hex_chunk) != chunk_length:
+            raise ValueError
+        debug_chunks.append(ability.curr_hex_chunk)
+    header_chunk = update_header(header_chunk,number_of_abilities_val,bytes_after_header_val)
+    return_dict = {"header-chunk": header_chunk, "new-abilities": new_ability_list, "debug-chunks": debug_chunks, "output-text-hex": output_text_to_edit,
+                   "no-of-abilities": number_of_abilities_val, "bytes-after-header": bytes_after_header_val}
+    return return_dict
+
+
+
+
+
+debug_dict = debug_new_abilities(global_abilities,new_abilities,output_text_hex,global_number_of_abilities,global_number_of_bytes_after_header,heading_chunk)
+test
 
 
 # print("ending chunk: " + str(len(commands_shuffle_chunks[2])))
@@ -1794,11 +1853,8 @@ for monster in global_monsters:
         monster.monster_unknown_variable_1 = hex(size)[2:]
     test_monster_list.append([monster.dress_name, monster.monster_unknown_variable_1])
     monster.big_chunk = monster.big_chunk[0:4] + monster.monster_unknown_variable_1 + monster.big_chunk[6:len(monster.big_chunk)]
-for thing in test_monster_list:
-    print(thing[0] + ", " + thing[1])
-test = ""
 
-def execute_randomizer(reset_bins=False, hard_mode_only=False):
+def execute_randomizer(reset_bins=False, hard_mode_only=False, debug=False):
     chunks_output = get_big_chunks(get_all_segments=True)
     dress_chunks = []
     county = 0
@@ -1822,6 +1878,10 @@ def execute_randomizer(reset_bins=False, hard_mode_only=False):
 
     # MAKE STRING FOR COMMAND.BIN
     commands_shuffle_chunks = get_big_chunks(get_all_segments=True, segment_type="command")
+
+    if debug == True:
+        heading_chunk = debug_dict["header-chunk"]
+
     command_string_to_output = heading_chunk
     if hard_mode_only is True:
         command_string_to_output = commands_shuffle_chunks[0]
@@ -1842,6 +1902,13 @@ def execute_randomizer(reset_bins=False, hard_mode_only=False):
         for cmd in shared_abilities_added:
             test = ""
             command_string_to_output = command_string_to_output + cmd.curr_hex_chunk
+        if debug is True:
+            for new_cmd in debug_dict["new-abilities"]:
+                new_cmd_chunk = new_cmd.curr_hex_chunk
+                if len(new_cmd_chunk) < 1:
+                    new_cmd_chunk = new_cmd.og_hex_chunk
+                command_string_to_output = command_string_to_output + new_cmd_chunk
+            output_text_hex = debug_dict["output-text-hex"]
         command_string_to_output = command_string_to_output + output_text_hex
     else:
         command_string_to_output = command_string_to_output + commands_shuffle_chunks[-1]

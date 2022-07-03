@@ -22,6 +22,7 @@ class Command:
         self.__repeat_flag = False
         self.repeated_jobs = []
         self.old_id = 0
+        self.odd_variables = {}
 
         dmg_info_names = ["MP Cost","Target HP/MP","Calc PS","Crit","Hit","Power"]
         for name in dmg_info_names:

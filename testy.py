@@ -60,6 +60,15 @@ stra = "0123456789"
 strb = stra[-4:]
 print(strb)
 
+global1 = 150
+
+def testin (globa_val: int):
+    globa_val = globa_val + 500
+    return globa_val
+
+a = testin(global1)
+test = ""
+
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E
