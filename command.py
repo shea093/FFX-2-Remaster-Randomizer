@@ -23,6 +23,7 @@ class Command:
         self.repeated_jobs = []
         self.old_id = 0
         self.odd_variables = {}
+        self.all_hex_segments = {}
 
         dmg_info_names = ["MP Cost","Target HP/MP","Calc PS","Crit","Hit","Power"]
         for name in dmg_info_names:

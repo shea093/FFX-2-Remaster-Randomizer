@@ -109,7 +109,7 @@ def menu():
         dressphere_randomize.write_ap_chunks()
 
         dressphere_randomize.write_potencies()
-        dressphere_randomize.execute_randomizer(reset_bins=False, debug=True)
+        dressphere_randomize.execute_randomizer(reset_bins=False, debug=False)
         importlib.reload(monster_edit)
         monster_edit.write_bins_new(reset_bins=False)
         main_menu()

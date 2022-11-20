@@ -69,6 +69,16 @@ def testin (globa_val: int):
 a = testin(global1)
 test = ""
 
+with open ("Testing in text/luca_enemies.txt") as f:
+    output_str = "["
+    for line in f.readlines():
+        output_str = output_str + '"' + line[0:4] + '",'
+    output_str = output_str + "]"
+print (output_str)
+
+
+
+
 # print(float("0." + str(1)))
 # #[lv x 0.1] + [(lv / 1B ) + 0C] - [lv^2] / 16[Constant] / C8 / 04
 # #[lv x 0.A] + [(lv / B ) + C] - [lv^2] / 16[Constant] / D / E

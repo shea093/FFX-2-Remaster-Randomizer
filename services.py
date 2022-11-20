@@ -138,3 +138,8 @@ def convert_gamevariable_to_reversed_hex(value: int, bytecount=1):
         output_prep = output_prep.zfill(8)
         output_prep = output_prep[6:] + output_prep[4:6] + output_prep[2:4] + output_prep[0:2]
         return output_prep
+
+    # Should replace with one liner at some point: swap = "".join(reversed([a[i:i + 2] for i in range(0, len(a), 2)]))
+
+def findOccurrences(s, ch):
+    return [i for i, letter in enumerate(s) if letter == ch]
