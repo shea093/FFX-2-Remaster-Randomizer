@@ -1,7 +1,7 @@
 import random
 
 from dressphere import Dressphere
-from dressphere_execute import get_big_chunks, dresspheres, seed, job_bin_to_hex, jobs_names
+from dressphere_randomize import get_big_chunks, dresspheres, seed, job_bin_to_hex, jobs_names
 from services import find_chunk, parse_chunk
 
 
@@ -125,3 +125,157 @@ for byt in b:
 c = decode_chunk(endingchunklist)
 print(c)
 testy = ""
+
+
+
+#################
+byte_A = reverse_four_bytes("06000040") + reverse_four_bytes("17000000")
+byte_B = reverse_four_bytes("ed02ed02")
+
+monmaglast = get_big_chunks(get_all_segments=True,segment_type="mon-magic")[-1]
+monmag_string = decode_chunk(monmaglast)
+monmag_dicts = []
+
+mon_mag_split = monmag_string.split("◘")
+
+mon_mag_names = mon_mag_split[::2]
+mon_mag_helps = mon_mag_split[1::2]
+
+for index, monmag in enumerate(mon_magic_abilities):
+    monmag.name = mon_mag_names[index]
+    monmag.help_text = mon_mag_helps[index]
+    this_list = [monmag]
+    this_dict = {'Animation': reverse_two_bytes(monmag.og_hex_chunk[16:24]), 'Start Motion': monmag.og_hex_chunk[24:26],
+                 'Line1 reversed': reverse_four_bytes(monmag.og_hex_chunk[32:40]),
+                 'Line2 reversed': reverse_four_bytes(monmag.og_hex_chunk[40:48])}
+    this_list.append(this_dict)
+    monmag_dicts.append(this_list)
+
+test
+'032b032b'
+'011a011a'
+'00450045'
+'00c300c3'
+'4000000600000017'
+'01180118'
+'009a009a'
+'032a032a'
+'4100000600000031'
+'6001000600000013'
+
+def btl_bins():
+    valid_battle_bin_names = []
+    with open ("Test Files/btl.txt",mode='r') as f:
+        for line in f.readlines():
+            valid_battle_bin_names.append(line.strip())
+
+    btl_sub_dirs = monster_edit.get_subdirectories(btl_path_name)
+    btl_bin_files = {}
+    for directory in btl_sub_dirs:
+        if directory.name in valid_battle_bin_names:
+            for file in directory.iterdir():
+                dir_compare = directory.name + ".bin"
+                if file.is_file() and (file.name == dir_compare):
+                    hex_data = read_hex(file)
+                    btl_bin_files[directory.name] = read_hex(file)
+
+    for bbin_directory, bbin_hex in btl_bin_files.items():
+        os_prefix = os.getcwd()
+        os_prefix = os_prefix + "/BTLBINS/"
+
+        bin_name = bbin_directory + ".bin"
+        os_filename = os_prefix + bin_name
+        # directory_path = os.path.join(os_prefix, bbin_directory)
+        filepath = pathlib.PureWindowsPath(os_filename)
+        binary_converted = binascii.unhexlify(bbin_hex)
+        with open(filepath, mode="wb") as f:
+            test
+            f.write(binary_converted)
+
+
+
+
+
+def test_ids():
+    test_ids = []
+    bin_enemy_index_directory = {}
+    for valid_id in valid_enemy_hex_ids:
+        valid_id_end_separate = " " + valid_id[0:2] + " " + valid_id [2:4] + " ff ff ff ff "
+        valid_id_find_index = btl_bin_hexes["lchb19_229.bin"].find(valid_id_end_separate)
+        if valid_id_find_index > 0:
+            valid_id_new_search = btl_bin_hexes["lchb19_229.bin"][valid_id_find_index-42:valid_id_find_index+len(valid_id_end_separate)]
+            id_found = []
+            for jalid_id in valid_enemy_hex_ids:
+                jalid_id_separate = " " + jalid_id[0:2] + " " + jalid_id[2:4] + " "
+                m = [m.start() for m in re.finditer(jalid_id_separate, valid_id_new_search)]
+                if m:
+                    id_with_m = [jalid_id,m]
+                    id_found.append(id_with_m)
+            bin_enemy_index_directory["lchb19_229.bin"] = id_found
+            break
+
+def bin_id_find_encounters_OLDER():
+    bin_enemy_index_directory = {}
+    for btl_bin_hex_name, btl_bin_hex in btl_bin_hexes.items():
+        test_ids = []
+        for valid_id in valid_enemy_hex_ids:
+            valid_id_end_separate = " " + valid_id[0:2] + " " + valid_id[2:4] + " ff ff ff ff "
+            valid_id_find_index = btl_bin_hex.find(valid_id_end_separate)
+            if valid_id_find_index > 0:
+                valid_id_new_search = btl_bin_hex[
+                                      valid_id_find_index - 42:valid_id_find_index + len(valid_id_end_separate)]
+                id_found = []
+                for jalid_id in valid_enemy_hex_ids:
+                    jalid_id_separate = " " + jalid_id[0:2] + " " + jalid_id[2:4] + " "
+                    m = [m.start() for m in re.finditer(jalid_id_separate, valid_id_new_search)]
+                    if m:
+                        id_with_m = [jalid_id, m]
+                        id_found.append(id_with_m)
+                bin_enemy_index_directory[btl_bin_hex_name] = id_found
+                break
+
+def bin_id_find_encounters_new():
+    bin_enemy_index_directory = {}
+    for btl_bin_hex_name, btl_bin_hex in btl_bin_hexes.items():
+        test_ids = []
+        for valid_id in valid_enemy_hex_ids:
+            valid_id_end_separate = " " + valid_id[0:2] + " " + valid_id[2:4] + " ff ff ff ff "
+            valid_id_find_index = btl_bin_hex.find(valid_id_end_separate)
+            if valid_id_find_index > 0:
+                valid_id_new_search = btl_bin_hex[
+                                      valid_id_find_index - 42:valid_id_find_index + len(valid_id_end_separate)]
+                id_found = []
+                for jalid_id in valid_enemy_hex_ids:
+                    jalid_id_separate = jalid_id[0:2] + " " + jalid_id[2:4] + " "
+                    m = [m.start() for m in re.finditer(jalid_id_separate, valid_id_new_search)]
+                    for jnd in range(0, len(m)):
+                        m[jnd] = m[jnd] + valid_id_find_index - 42
+                    if m:
+                        id_with_m = [jalid_id, m]
+                        id_found.append(id_with_m)
+                bin_enemy_index_directory[btl_bin_hex_name] = id_found
+
+def get_enemy_ids_of_enemy_matches(enemy_match_dir: dict):
+    return_list = []
+    for e in enemy_match_dir.values():
+        e_id = hex(e.enemy_id)[2:]
+        e_id = e_id[2:4] + e_id[0:2]
+        test
+        return_list.append(e_id)
+    return return_list
+
+
+oversoul_hex_pos,  #EXP
+                                       oversoul_hex_pos + 8,  #GIL
+                                       oversoul_hex_pos + 8 + 8,  #STEALGIL
+                                       oversoul_hex_pos + 8 + 8 + 8,  #AP
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4,  #ITEM RATE
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2,  #STEAL RATE
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2,  #NORMAL DROP
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4,  #NORMAL DROP NUM
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4,  #RARE DROP
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4 + 4,  #RARE DROP NUM,
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4 + 4 + 4,  # STEALITEM
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4,  # STEALITEM NUM
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4 + 4,  #BRIBE ITEM
+                                       oversoul_hex_pos + 8 + 8 + 8 + 4 + 2 + 2 + 4 + 4 + 4 + 4 + 4 + 4 + 4, # BRIBE ITEM NUM

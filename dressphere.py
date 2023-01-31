@@ -27,6 +27,7 @@ class Dressphere:
         self.__abilities = []
         self.__ability_hex = ""
         self.__ability_hex_og = ""
+        self.monster_unknown_variable_1 = ""
         for stat_name in stat_names:
             self.__stat_variables[stat_name] = 0
 
@@ -86,6 +87,13 @@ class Dressphere:
     @abilities.setter
     def abilities(self, value: list):
         self.__abilities = value
+        abilityhex = ""
+        for ability in self.abilities:
+            abilityhex = abilityhex + ability[0]
+            abilityhex = abilityhex + ability[1]
+        self.__ability_hex = abilityhex
+
+    def refresh_ability_hex(self):
         abilityhex = ""
         for ability in self.abilities:
             abilityhex = abilityhex + ability[0]

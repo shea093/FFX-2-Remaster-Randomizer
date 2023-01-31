@@ -29,6 +29,8 @@ class Enemy:
         self.__stat_hex_oversoul_positions = []
         self.__extra_hex_positions = []
         self.__extra_oversoul_positions = []
+        self.oversoul_boolean = None
+        self.item_edit_check = False
         for stat_name in stat_names:
             self.__stat_bank[stat_name] = 0
             self.__oversoul_stat_bank[stat_name] = 0
@@ -123,7 +125,7 @@ class Enemy:
 
     @property
     def stolen_item(self):
-        return self.__item_drop
+        return self.__stolen_item
 
     @stolen_item.setter
     def stolen_item(self, value: dict):

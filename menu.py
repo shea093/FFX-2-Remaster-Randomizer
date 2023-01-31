@@ -1,10 +1,10 @@
 import pathlib
-import dressphere_execute
-import TkinterTemplate
+import dressphere_randomize
+import spoiler_tool
 import importlib
 import sys
 import os
-import fileopen
+import monster_edit
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -51,13 +51,14 @@ def menu():
     line_breaker = "-----------------------"
 
     menu_options = {
-        1: 'Execute Dressphere Stat&Ability Randomizer',
-        2: 'Set Seed',
-        3: 'Print current seed',
-        4: 'Launch Dressphere Spoiler tool',
-        5: 'Execute Hard Mode + Monster Stat Randomizer',
-        6: 'Get default files (Reset)',
-        7: 'Exit'
+        1: 'Execute Randomizer and Hard Mode (Recommended)',
+        2: 'Execute only Dressphere Stat&Ability Randomizer',
+        3: 'Execute only Hard Mode',
+        4: 'Set Seed',
+        5: 'Print current seed',
+        6: 'Launch Dressphere Spoiler tool',
+        7: 'Get default files (Reset)',
+        8: 'Exit'
 
     }
 
@@ -67,7 +68,7 @@ def menu():
             print (key, '--', menu_options[key] )
         print(line_breaker)
 
-    def option2():
+    def option4():
         submenu_flag = True
         while(submenu_flag == True):
             submenu_2_flag = False
@@ -91,7 +92,7 @@ def menu():
 
 
 
-    def option3():
+    def option5():
         seed = read_seed()
         print(line_breaker)
         print("** The current seed is: " + str(seed) + " **")
@@ -100,25 +101,55 @@ def menu():
         main_menu()
 
     def option1():
-        importlib.reload(dressphere_execute)
-        dressphere_execute.execute_randomizer()
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
+        dressphere_randomize.set_ability_ap_batch()
+        dressphere_randomize.replace_ap_with_file_changes()
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
+
+        dressphere_randomize.write_potencies()
+        dressphere_randomize.execute_randomizer(reset_bins=False, debug=False)
+        importlib.reload(monster_edit)
+        monster_edit.write_bins_new(reset_bins=False)
         main_menu()
 
-    def option4():
-        importlib.reload(dressphere_execute)
-        importlib.reload(TkinterTemplate)
-        TkinterTemplate.initialize()
-        main_menu()
-
-    def option5():
-        importlib.reload(dressphere_execute)
-        importlib.reload(fileopen)
-        fileopen.write_bins_new(reset_bins=False)
+    def option2():
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.set_ability_ap_batch()
+        dressphere_randomize.replace_ap_with_file_changes()
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
+        dressphere_randomize.execute_randomizer(reset_bins=False)
+        input("Press any key to continue...")
         main_menu()
 
     def option6():
-        importlib.reload(fileopen)
-        fileopen.write_bins_new(reset_bins=True)
+        importlib.reload(dressphere_randomize)
+        importlib.reload(spoiler_tool)
+        spoiler_tool.initialize()
+        main_menu()
+
+    def option3():
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.global_abilities = dressphere_randomize.initiate_abilities()
+        dressphere_randomize.dresspheres = dressphere_randomize.initiate_dresspheres_new()
+        dressphere_randomize.set_dmg_info_batch()
+        dressphere_randomize.set_ability_ap_batch(hard_mode_only=True)
+        dressphere_randomize.batch_AP_multiply()
+        dressphere_randomize.write_ap_chunks()
+        dressphere_randomize.change_potencies(dressphere_randomize.global_abilities)
+        dressphere_randomize.write_potencies()
+        dressphere_randomize.execute_randomizer(reset_bins=False,hard_mode_only=True)
+        importlib.reload(monster_edit)
+        monster_edit.write_bins_new(reset_bins=False)
+        main_menu()
+
+    def option7():
+        importlib.reload(monster_edit)
+        importlib.reload(dressphere_randomize)
+        dressphere_randomize.execute_randomizer(reset_bins=True)
+        monster_edit.write_bins_new(reset_bins=True)
         main_menu()
 
     def main_menu():
@@ -128,8 +159,8 @@ def menu():
             print_menu()
             option = ''
             try:
-                option = int(input('Enter your choice: '))
-                if option < 0 or option > 6:
+                option = int(input('Enter your choice then press Enter: '))
+                if option < 0 or option > 8:
                     raise ValueError
             except:
                 print('Wrong input. Please enter a number ...')
@@ -147,6 +178,8 @@ def menu():
             elif option == 6:
                 option6()
             elif option == 7:
+                option7()
+            elif option == 8:
                 print(line_breaker)
                 print('Thanks for trying out the FFX-2 Randomizer!')
                 sys.exit()
